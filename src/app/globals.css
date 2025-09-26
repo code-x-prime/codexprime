@@ -8,8 +8,6 @@
   }
 }
 
-
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -37,7 +35,14 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
+    
+    /* Satoshi Font Variables */
+    --font-satoshi-regular: 'Satoshi Regular', sans-serif;
+    --font-satoshi-medium: 'Satoshi Medium', sans-serif;
+    --font-satoshi-bold: 'Satoshi Bold', sans-serif;
+    --font-satoshi-black: 'Satoshi Black', sans-serif;
   }
+  
   .dark {
     --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
@@ -66,13 +71,74 @@
   }
 }
 
-
-
 @layer base {
   * {
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-satoshi-regular;
+  }
+  
+  /* Satoshi Font Classes for easy usage */
+  .font-satoshi-regular {
+    font-family: var(--font-satoshi-regular);
+    font-weight: 400;
+  }
+  
+  .font-satoshi-medium {
+    font-family: var(--font-satoshi-medium);
+    font-weight: 500;
+  }
+  
+  .font-satoshi-bold {
+    font-family: var(--font-satoshi-bold);
+    font-weight: 700;
+  }
+  
+  .font-satoshi-black {
+    font-family: var(--font-satoshi-black);
+    font-weight: 900;
+  }
+  
+  /* Headings default to different Satoshi weights */
+  h1 {
+    @apply font-satoshi-black text-4xl;
+  }
+  
+  h2 {
+    @apply font-satoshi-bold text-3xl;
+  }
+  
+  h3 {
+    @apply font-satoshi-bold text-2xl;
+  }
+  
+  h4 {
+    @apply font-satoshi-medium text-xl;
+  }
+  
+  h5 {
+    @apply font-satoshi-medium text-lg;
+  }
+  
+  h6 {
+    @apply font-satoshi-medium text-base;
+  }
+  
+  /* Utility classes for quick font switching */
+  .heading-primary {
+    @apply font-satoshi-black text-5xl md:text-6xl;
+  }
+  
+  .heading-secondary {
+    @apply font-satoshi-bold text-3xl md:text-4xl;
+  }
+  
+  .text-body {
+    @apply font-satoshi-regular text-base;
+  }
+  
+  .text-caption {
+    @apply font-satoshi-medium text-sm;
   }
 }
