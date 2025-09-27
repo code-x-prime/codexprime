@@ -134,7 +134,7 @@ const HeroComponent = () => {
                                                         placeholder="Your Name"
                                                         value={formData.name}
                                                         onChange={(e) => handleInputChange('name', e.target.value)}
-                                                        className={`w-full p-3 rounded-lg border-2  outline-none bg-gray-100 text-black placeholder:text-gray-600 transition-colors ${errors.name
+                                                        className={`w-full p-3 rounded-lg border-2  outline-none bg-gray-100 text-black placeholder:text-gray-600 transition-colors focus:bg-gray-200 ${errors.name
                                                             ? 'border-red-400 focus:border-red-500'
                                                             : 'border-gray-200 focus:border-black'
                                                             }`}
@@ -150,7 +150,7 @@ const HeroComponent = () => {
                                                         placeholder="Your Email"
                                                         value={formData.email}
                                                         onChange={(e) => handleInputChange('email', e.target.value)}
-                                                        className={`w-full p-3 rounded-lg border-2  outline-none bg-gray-100 text-black placeholder:text-gray-600 transition-colors ${errors.email
+                                                        className={`w-full p-3 rounded-lg border-2  outline-none bg-gray-100 text-black placeholder:text-gray-600 transition-colors focus:bg-gray-200 ${errors.email
                                                             ? 'border-red-400 focus:border-red-500'
                                                             : 'border-gray-200 focus:border-black'
                                                             }`}
@@ -166,7 +166,7 @@ const HeroComponent = () => {
                                                         placeholder="Your Phone"
                                                         value={formData.phone}
                                                         onChange={(e) => handleInputChange('phone', e.target.value)}
-                                                        className={`w-full p-3 rounded-lg border-2  outline-none bg-gray-100 text-black placeholder:text-gray-600 transition-colors ${errors.phone
+                                                        className={`w-full p-3 rounded-lg border-2  outline-none bg-gray-100 text-black placeholder:text-gray-600 transition-colors focus:bg-gray-200 ${errors.phone
                                                             ? 'border-red-400 focus:border-red-500'
                                                             : 'border-gray-200 focus:border-black'
                                                             }`}
