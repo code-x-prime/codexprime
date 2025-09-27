@@ -189,7 +189,7 @@ const HeroComponent = () => {
                                                 <button
                                                     onClick={handleSubmit}
                                                     disabled={isSubmitting}
-                                                    className="w-full bg-black text-white py-4 px-6 rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
+                                                    className="w-full bg-black text-white py-4 px-6 rounded-lg font-medium hover:bg-gray-900 disabled:opacity-50 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
                                                 >
                                                     {isSubmitting ? 'Submitting...' : 'Get Free Consultation'}
                                                 </button>
