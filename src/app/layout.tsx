@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Navigation from "@/components/Navigation";
+import FloatingContactButton from "@/components/FloatingContactButton";
 
 const satoshiRegular = localFont({
   src: "./fonts/Satoshi-Regular.otf",
@@ -237,6 +238,7 @@ export default function RootLayout({
           <Navigation />
           {/* Montserrat Bold logo font name */}
           {children}
+          <FloatingContactButton />
         </ThemeProvider>
 
       </body>

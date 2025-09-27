@@ -80,6 +80,7 @@ const HeroComponent = () => {
 
     return (
         <div className="relative w-full md:h-[85dvh] md:bg-white p-2">
+            {/* Desktop Video Background */}
             <div className="hidden md:block absolute top-0 right-0 w-1/2 h-full overflow-hidden">
                 <video
                     autoPlay
@@ -88,36 +89,44 @@ const HeroComponent = () => {
                     playsInline
                     className="w-full h-full object-cover"
                 >
-                    <source src="https://hw-prod-static-assets.s3.ap-south-1.amazonaws.com/marketing/website/hellobg.webm" type="video/webm" />
+                    <source src="https://pub-a3d2b35862c1483894ffbee942bb995e.r2.dev/Untitled%20design.mp4" type="video/webm" />
                 </video>
                 <div className="absolute inset-0 bg-black/30"></div>
             </div>
 
+            {/* Mobile Background Image */}
+            <div
+                className="md:hidden absolute inset-0 bg-cover bg-center bg-no-repeat"
+                style={{
+                    backgroundImage: `url('https://pub-a3d2b35862c1483894ffbee942bb995e.r2.dev/photo-1460925895917-afdab827c52f%5B1%5D')`
+                }}
+            >
+                <div className="absolute inset-0 bg-black/75"></div>
+            </div>
+
             {/* Content Container */}
             <div className="relative z-10 min-h-full flex items-center">
-                <div className="w-full max-w-7xl mx-auto px-6 ">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-
+                <div className="w-full max-w-7xl mx-auto px-3 md:px-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center">
 
                         {/* Left Content */}
-                        <div className="text-black space-y-8 order-first lg:order-first p-10 md:p-5">
+                        <div className=" md:text-black text-white space-y-8 order-first lg:order-first p-5">
                             <div className="space-y-6">
-                                <p className="text-sm uppercase tracking-widest font-medium text-gray-600">
+                                <p className="text-sm uppercase tracking-widest font-medium text-gray-300 md:text-gray-600">
                                     TRANSFORM YOUR BUSINESS
                                 </p>
 
-                                <h1 className="text-4xl lg:text-6xl font-bold leading-tight text-gray-900">
+                                <h1 className="text-4xl lg:text-6xl font-bold leading-tight text-white md:text-gray-900">
                                     CodeXprime - Premier IT Services for Growing Businesses
                                 </h1>
                                 <div className="flex flex-col space-y-2">
-                                    <p className="text-lg text-gray-700 font-medium">
+                                    <p className="text-lg text-gray-100 md:text-gray-700 font-medium">
                                         Web Designing •  Digital Marketing •  Graphic Designing
                                     </p>
-                                    <p className="text-lg text-gray-700 font-medium">
+                                    <p className="text-lg text-gray-100 md:text-gray-700 font-medium">
                                         Web Development • MVP Development • IT Solutions
                                     </p>
                                 </div>
-
                             </div>
                         </div>
 
@@ -139,7 +148,7 @@ const HeroComponent = () => {
                                                         placeholder="Your Name"
                                                         value={formData.name}
                                                         onChange={(e) => handleInputChange('name', e.target.value)}
-                                                        className={`w-full p-4 sm:p-3 rounded border-2 outline-none bg-gray-100 text-black placeholder:text-gray-600 transition-colors focus:bg-gray-200 ${errors.name
+                                                        className={`w-full p-4 sm:p-3 rounded border-2 outline-none bg-gray-50 text-black placeholder:text-gray-600 transition-colors focus:bg-white ${errors.name
                                                             ? 'border-red-400 focus:border-red-500'
                                                             : 'border-gray-200 focus:border-black'
                                                             }`}
@@ -156,7 +165,7 @@ const HeroComponent = () => {
                                                         placeholder="Your Email"
                                                         value={formData.email}
                                                         onChange={(e) => handleInputChange('email', e.target.value)}
-                                                        className={`w-full p-4 sm:p-3 rounded border-2 outline-none bg-gray-100 text-black placeholder:text-gray-600 transition-colors focus:bg-gray-200 ${errors.email
+                                                        className={`w-full p-4 sm:p-3 rounded border-2 outline-none bg-gray-50 text-black placeholder:text-gray-600 transition-colors focus:bg-white ${errors.email
                                                             ? 'border-red-400 focus:border-red-500'
                                                             : 'border-gray-200 focus:border-black'
                                                             }`}
@@ -173,7 +182,7 @@ const HeroComponent = () => {
                                                         placeholder="Your Phone"
                                                         value={formData.phone}
                                                         onChange={(e) => handleInputChange('phone', e.target.value)}
-                                                        className={`w-full p-4 sm:p-3 rounded border-2 outline-none bg-gray-100 text-black placeholder:text-gray-600 transition-colors focus:bg-gray-200 ${errors.phone
+                                                        className={`w-full p-4 sm:p-3 rounded border-2 outline-none bg-gray-50 text-black placeholder:text-gray-600 transition-colors focus:bg-white ${errors.phone
                                                             ? 'border-red-400 focus:border-red-500'
                                                             : 'border-gray-200 focus:border-black'
                                                             }`}
@@ -190,7 +199,7 @@ const HeroComponent = () => {
                                                         rows={4}
                                                         value={formData.message}
                                                         onChange={(e) => handleInputChange('message', e.target.value)}
-                                                        className="w-full p-4 sm:p-3 rounded border-2 border-gray-200 bg-gray-100 text-black placeholder:text-gray-600 outline-none resize-none focus:border-black transition-colors"
+                                                        className="w-full p-4 sm:p-3 rounded border-2 border-gray-200 bg-gray-50 text-black placeholder:text-gray-600 outline-none resize-none focus:border-black focus:bg-white transition-colors"
                                                     />
                                                 </div>
 
