@@ -23,7 +23,7 @@ const Navigation = () => {
     ]
 
     return (
-        <div className='w-full h-16 text-black flex items-center justify-between bg-white shadow-sm px-4 lg:px-8'>
+        <div className='w-full h-[4.5rem] text-black flex items-center justify-between bg-white shadow-sm px-4 lg:px-8'>
             {/* Logo */}
             <Link href="/" className='flex items-center'>
                 <Image
