@@ -133,7 +133,7 @@ const HeroComponent = () => {
                         {/* Right Form */}
                         <div className="flex justify-center lg:justify-end order-first lg:order-last">
                             <div className="w-full max-w-md sm:max-w-md relative z-20">
-                                <div className="bg-white/95 backdrop-blur-sm rounded p-6 sm:p-8 shadow-2xl border border-gray-200">
+                                <div className="bg-white/90 backdrop-blur-sm rounded p-6 sm:p-8 shadow-2xl border border-gray-200">
                                     {!isSubmitted ? (
                                         <>
                                             <h3 className="text-2xl font-bold mb-6 text-gray-800">
