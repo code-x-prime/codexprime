@@ -102,43 +102,43 @@
   
   /* Headings default to different Satoshi weights */
   h1 {
-    @apply font-satoshi-black text-4xl;
+    @apply font-satoshi-black;
   }
   
   h2 {
-    @apply font-satoshi-bold text-3xl;
+    @apply font-satoshi-bold ;
   }
   
   h3 {
-    @apply font-satoshi-bold text-2xl;
+    @apply font-satoshi-bold ;
   }
   
   h4 {
-    @apply font-satoshi-medium text-xl;
+    @apply font-satoshi-medium ;
   }
   
   h5 {
-    @apply font-satoshi-medium text-lg;
+    @apply font-satoshi-medium;
   }
   
   h6 {
-    @apply font-satoshi-medium text-base;
+    @apply font-satoshi-medium;
   }
   
   /* Utility classes for quick font switching */
   .heading-primary {
-    @apply font-satoshi-black text-5xl md:text-6xl;
+    @apply font-satoshi-black;
   }
   
   .heading-secondary {
-    @apply font-satoshi-bold text-3xl md:text-4xl;
+    @apply font-satoshi-bold;
   }
   
   .text-body {
-    @apply font-satoshi-regular text-base;
+    @apply font-satoshi-regular;
   }
   
   .text-caption {
-    @apply font-satoshi-medium text-sm;
+    @apply font-satoshi-medium ;
   }
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import Navigation from "@/components/Navigation";
 
 const satoshiRegular = localFont({
   src: "./fonts/Satoshi-Regular.otf",
@@ -233,6 +234,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <Navigation />
           {/* Montserrat Bold logo font name */}
           {children}
         </ThemeProvider>

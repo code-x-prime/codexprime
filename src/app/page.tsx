@@ -3,7 +3,7 @@
 export default function Home() {
   return (
     <>
-      <h1>
+      {/* <h1>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit, maiores!
       </h1>
       <h2>
@@ -38,7 +38,7 @@ export default function Home() {
       </div>
       <div className="text-caption ">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit, maiores!
-      </div>
+      </div> */}
 
     </>
   );
