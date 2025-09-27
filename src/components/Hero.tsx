@@ -79,9 +79,8 @@ const HeroComponent = () => {
     };
 
     return (
-        <div className="relative w-full min-h-screen bg-white">
-            {/* Background Video - positioned on right side */}
-            <div className="absolute top-0 right-0 w-1/2 h-full overflow-hidden">
+        <div className="relative w-full md:h-[85dvh] md:bg-white p-2">
+            <div className="hidden md:block absolute top-0 right-0 w-1/2 h-full overflow-hidden">
                 <video
                     autoPlay
                     muted
@@ -95,32 +94,37 @@ const HeroComponent = () => {
             </div>
 
             {/* Content Container */}
-            <div className="relative z-10 min-h-screen flex items-center">
-                <div className="w-full max-w-7xl mx-auto px-6 lg:px-12">
+            <div className="relative z-10 min-h-full flex items-center">
+                <div className="w-full max-w-7xl mx-auto px-6 ">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
+
                         {/* Left Content */}
-                        <div className="text-black space-y-8">
+                        <div className="text-black space-y-8 order-first lg:order-first p-10 md:p-5">
                             <div className="space-y-6">
                                 <p className="text-sm uppercase tracking-widest font-medium text-gray-600">
                                     TRANSFORM YOUR BUSINESS
                                 </p>
 
                                 <h1 className="text-4xl lg:text-6xl font-bold leading-tight text-gray-900">
-                                    CodeXprime - Premier IT Services in Dwarka & Uttam Nagar Delhi
+                                    CodeXprime - Premier IT Services for Growing Businesses
                                 </h1>
-
-                                <p className="text-lg text-gray-700 font-medium">
-                                    Web Designing •  Digital Marketing •  Graphic Designing
-                                </p>
+                                <div className="flex flex-col space-y-2">
+                                    <p className="text-lg text-gray-700 font-medium">
+                                        Web Designing •  Digital Marketing •  Graphic Designing
+                                    </p>
+                                    <p className="text-lg text-gray-700 font-medium">
+                                        Web Development • MVP Development • IT Solutions
+                                    </p>
+                                </div>
 
                             </div>
                         </div>
 
                         {/* Right Form */}
-                        <div className="flex justify-center lg:justify-end">
-                            <div className="w-full max-w-md relative z-20">
-                                <div className="bg-white/95 backdrop-blur-sm rounded p-8 shadow-2xl border border-gray-100">
+                        <div className="flex justify-center lg:justify-end order-first lg:order-last">
+                            <div className="w-full max-w-md sm:max-w-md relative z-20">
+                                <div className="bg-white/95 backdrop-blur-sm rounded p-6 sm:p-8 shadow-2xl border border-gray-200">
                                     {!isSubmitted ? (
                                         <>
                                             <h3 className="text-2xl font-bold mb-6 text-gray-800">
@@ -130,11 +134,12 @@ const HeroComponent = () => {
                                             <div className="space-y-4">
                                                 <div>
                                                     <input
+                                                        aria-label="Your name"
                                                         type="text"
                                                         placeholder="Your Name"
                                                         value={formData.name}
                                                         onChange={(e) => handleInputChange('name', e.target.value)}
-                                                        className={`w-full p-3 rounded-lg border-2  outline-none bg-gray-100 text-black placeholder:text-gray-600 transition-colors focus:bg-gray-200 ${errors.name
+                                                        className={`w-full p-4 sm:p-3 rounded border-2 outline-none bg-gray-100 text-black placeholder:text-gray-600 transition-colors focus:bg-gray-200 ${errors.name
                                                             ? 'border-red-400 focus:border-red-500'
                                                             : 'border-gray-200 focus:border-black'
                                                             }`}
@@ -146,11 +151,12 @@ const HeroComponent = () => {
 
                                                 <div>
                                                     <input
+                                                        aria-label="Your email"
                                                         type="email"
                                                         placeholder="Your Email"
                                                         value={formData.email}
                                                         onChange={(e) => handleInputChange('email', e.target.value)}
-                                                        className={`w-full p-3 rounded-lg border-2  outline-none bg-gray-100 text-black placeholder:text-gray-600 transition-colors focus:bg-gray-200 ${errors.email
+                                                        className={`w-full p-4 sm:p-3 rounded border-2 outline-none bg-gray-100 text-black placeholder:text-gray-600 transition-colors focus:bg-gray-200 ${errors.email
                                                             ? 'border-red-400 focus:border-red-500'
                                                             : 'border-gray-200 focus:border-black'
                                                             }`}
@@ -162,11 +168,12 @@ const HeroComponent = () => {
 
                                                 <div>
                                                     <input
+                                                        aria-label="Your phone"
                                                         type="tel"
                                                         placeholder="Your Phone"
                                                         value={formData.phone}
                                                         onChange={(e) => handleInputChange('phone', e.target.value)}
-                                                        className={`w-full p-3 rounded-lg border-2  outline-none bg-gray-100 text-black placeholder:text-gray-600 transition-colors focus:bg-gray-200 ${errors.phone
+                                                        className={`w-full p-4 sm:p-3 rounded border-2 outline-none bg-gray-100 text-black placeholder:text-gray-600 transition-colors focus:bg-gray-200 ${errors.phone
                                                             ? 'border-red-400 focus:border-red-500'
                                                             : 'border-gray-200 focus:border-black'
                                                             }`}
@@ -178,18 +185,19 @@ const HeroComponent = () => {
 
                                                 <div>
                                                     <textarea
+                                                        aria-label="Optional message"
                                                         placeholder="Message (Optional)"
-                                                        rows={3}
+                                                        rows={4}
                                                         value={formData.message}
                                                         onChange={(e) => handleInputChange('message', e.target.value)}
-                                                        className="w-full p-3 rounded-lg border-2 border-gray-200 bg-gray-100 text-black placeholder:text-gray-600 outline-none resize-none focus:border-black transition-colors"
+                                                        className="w-full p-4 sm:p-3 rounded border-2 border-gray-200 bg-gray-100 text-black placeholder:text-gray-600 outline-none resize-none focus:border-black transition-colors"
                                                     />
                                                 </div>
 
                                                 <button
                                                     onClick={handleSubmit}
                                                     disabled={isSubmitting}
-                                                    className="w-full bg-black text-white py-4 px-6 rounded-lg font-medium hover:bg-gray-900 disabled:opacity-50 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
+                                                    className="w-full bg-black text-white py-5 sm:py-4 px-6 rounded font-medium hover:bg-gray-900 disabled:opacity-50 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02] text-lg"
                                                 >
                                                     {isSubmitting ? 'Submitting...' : 'Get Free Consultation'}
                                                 </button>
