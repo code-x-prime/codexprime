@@ -221,6 +221,9 @@ const HeroComponent = () => {
                                             </div>
                                             <h3 className="text-xl font-bold mb-2 text-gray-800">Thank You!</h3>
                                             <p className="text-gray-600">We will contact you soon.</p>
+                                            <p className="text-gray-500 text-sm mt-2">
+                                                Our team will try to call you within 12 hours.
+                                            </p>
                                         </div>
                                     )}
                                 </div>
