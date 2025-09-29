@@ -78,8 +78,39 @@ const HeroComponent = () => {
         }, 3000);
     };
 
+    // Simple Grid Lines Component
+    const AnimatedGrid = () => {
+        return (
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                {/* Simple Grid Lines Pattern */}
+                <div
+                    className="absolute inset-0 opacity-40"
+                    style={{
+                        backgroundImage: `
+                            linear-gradient(rgba(0, 0, 0, 0.18) 1px, transparent 1px),
+                            linear-gradient(90deg, rgba(0, 0, 0, 0.18) 1px, transparent 1px)
+                        `,
+                        backgroundSize: '80px 80px'
+                    }}
+                />
+
+                {/* Fade out gradient overlays for center disappearing effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-white/95 pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-white/60 pointer-events-none" />
+
+                {/* Center radial fade */}
+                <div
+                    className="absolute inset-0 pointer-events-none"
+                    style={{
+                        background: 'radial-gradient(circle at center, rgba(255,255,255,0.3) 20%, transparent 70%)'
+                    }}
+                />
+            </div>
+        );
+    };
+
     return (
-        <div className="relative w-full md:h-[85dvh] md:bg-white p-2">
+        <div className="relative w-full md:h-[85dvh] md:bg-white p-2 overflow-hidden">
             {/* Desktop Video Background */}
             <div className="hidden md:block absolute top-0 right-0 w-1/2 h-full overflow-hidden">
                 <video
@@ -109,21 +140,27 @@ const HeroComponent = () => {
                 <div className="w-full max-w-7xl mx-auto px-3 md:px-6">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center">
 
-                        {/* Left Content */}
-                        <div className=" md:text-black text-white space-y-8 order-first lg:order-first p-5">
-                            <div className="space-y-6">
+                        {/* Left Content with Grid Background */}
+                        <div className="relative md:text-black text-white space-y-8 order-first lg:order-first p-5">
+                            {/* Grid Background - Only on desktop, covers full left area */}
+                            <div className="hidden md:block absolute inset-0 -left-8 -right-8">
+                                <AnimatedGrid />
+                            </div>
+
+                            {/* Content */}
+                            <div className="relative z-20 space-y-6">
                                 <p className="text-sm uppercase tracking-widest font-medium text-gray-300 md:text-gray-600">
                                     TRANSFORM YOUR BUSINESS
                                 </p>
 
-                                <h1 className="text-4xl lg:text-6xl font-bold leading-tight text-white md:text-gray-900">
+                                <h1 className="text-4xl lg:text-6xl font-bold leading-tight text-white md:text-gray-900 drop-shadow-lg">
                                     CodeXprime - Premier IT Services for Growing Businesses
                                 </h1>
                                 <div className="flex flex-col space-y-2">
-                                    <p className="text-lg text-gray-100 md:text-gray-700 font-medium">
+                                    <p className="text-lg text-gray-100 md:text-gray-700 font-medium drop-shadow">
                                         Web Designing •  Digital Marketing •  Graphic Designing
                                     </p>
-                                    <p className="text-lg text-gray-100 md:text-gray-700 font-medium">
+                                    <p className="text-lg text-gray-100 md:text-gray-700 font-medium drop-shadow">
                                         Web Development • MVP Development • IT Solutions
                                     </p>
                                 </div>
@@ -133,7 +170,7 @@ const HeroComponent = () => {
                         {/* Right Form */}
                         <div className="flex justify-center lg:justify-end order-first lg:order-last">
                             <div className="w-full max-w-md sm:max-w-md relative z-20">
-                                <div className="bg-white/90 backdrop-blur-sm rounded p-6 sm:p-8 shadow-2xl border border-gray-200">
+                                <div className="bg-white/90 backdrop-blur-sm rounded-lg p-6 sm:p-8 shadow-2xl border border-gray-200/50">
                                     {!isSubmitted ? (
                                         <>
                                             <h3 className="text-2xl font-bold mb-6 text-gray-800">
@@ -148,9 +185,9 @@ const HeroComponent = () => {
                                                         placeholder="Your Name"
                                                         value={formData.name}
                                                         onChange={(e) => handleInputChange('name', e.target.value)}
-                                                        className={`w-full p-4 sm:p-3 rounded border-2 outline-none bg-gray-50 text-black placeholder:text-gray-600 transition-colors focus:bg-white ${errors.name
+                                                        className={`w-full p-4 sm:p-3 rounded-lg border-2 outline-none bg-gray-50 text-black placeholder:text-gray-600 transition-all duration-200 focus:bg-white focus:shadow-md ${errors.name
                                                             ? 'border-red-400 focus:border-red-500'
-                                                            : 'border-gray-200 focus:border-black'
+                                                            : 'border-gray-200 focus:border-blue-500'
                                                             }`}
                                                     />
                                                     {errors.name && (
@@ -165,9 +202,9 @@ const HeroComponent = () => {
                                                         placeholder="Your Email"
                                                         value={formData.email}
                                                         onChange={(e) => handleInputChange('email', e.target.value)}
-                                                        className={`w-full p-4 sm:p-3 rounded border-2 outline-none bg-gray-50 text-black placeholder:text-gray-600 transition-colors focus:bg-white ${errors.email
+                                                        className={`w-full p-4 sm:p-3 rounded-lg border-2 outline-none bg-gray-50 text-black placeholder:text-gray-600 transition-all duration-200 focus:bg-white focus:shadow-md ${errors.email
                                                             ? 'border-red-400 focus:border-red-500'
-                                                            : 'border-gray-200 focus:border-black'
+                                                            : 'border-gray-200 focus:border-blue-500'
                                                             }`}
                                                     />
                                                     {errors.email && (
@@ -182,9 +219,9 @@ const HeroComponent = () => {
                                                         placeholder="Your Phone"
                                                         value={formData.phone}
                                                         onChange={(e) => handleInputChange('phone', e.target.value)}
-                                                        className={`w-full p-4 sm:p-3 rounded border-2 outline-none bg-gray-50 text-black placeholder:text-gray-600 transition-colors focus:bg-white ${errors.phone
+                                                        className={`w-full p-4 sm:p-3 rounded-lg border-2 outline-none bg-gray-50 text-black placeholder:text-gray-600 transition-all duration-200 focus:bg-white focus:shadow-md ${errors.phone
                                                             ? 'border-red-400 focus:border-red-500'
-                                                            : 'border-gray-200 focus:border-black'
+                                                            : 'border-gray-200 focus:border-blue-500'
                                                             }`}
                                                     />
                                                     {errors.phone && (
@@ -199,14 +236,14 @@ const HeroComponent = () => {
                                                         rows={4}
                                                         value={formData.message}
                                                         onChange={(e) => handleInputChange('message', e.target.value)}
-                                                        className="w-full p-4 sm:p-3 rounded border-2 border-gray-200 bg-gray-50 text-black placeholder:text-gray-600 outline-none resize-none focus:border-black focus:bg-white transition-colors"
+                                                        className="w-full p-4 sm:p-3 rounded-lg border-2 border-gray-200 bg-gray-50 text-black placeholder:text-gray-600 outline-none resize-none focus:border-blue-500 focus:bg-white focus:shadow-md transition-all duration-200"
                                                     />
                                                 </div>
 
                                                 <button
                                                     onClick={handleSubmit}
                                                     disabled={isSubmitting}
-                                                    className="w-full bg-black text-white py-5 sm:py-4 px-6 rounded font-medium hover:bg-gray-900 disabled:opacity-50 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02] text-lg"
+                                                    className="w-full bg-gradient-to-r from-gray-900 to-black text-white py-5 sm:py-4 px-6 rounded-lg font-medium hover:from-gray-800 hover:to-gray-900 disabled:opacity-50 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02] text-lg"
                                                 >
                                                     {isSubmitting ? 'Submitting...' : 'Get Free Consultation'}
                                                 </button>
@@ -214,7 +251,7 @@ const HeroComponent = () => {
                                         </>
                                     ) : (
                                         <div className="text-center py-8">
-                                            <div className="w-16 h-16 bg-green-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+                                            <div className="w-16 h-16 bg-green-100 rounded-full mx-auto mb-4 flex items-center justify-center animate-pulse">
                                                 <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                                 </svg>
@@ -233,6 +270,17 @@ const HeroComponent = () => {
                     </div>
                 </div>
             </div>
+
+            <style jsx>{`
+                @keyframes float {
+                    0%, 100% { transform: translateY(0px); }
+                    50% { transform: translateY(-10px); }
+                }
+                
+                .bg-gradient-radial {
+                    background: radial-gradient(circle, var(--tw-gradient-stops));
+                }
+            `}</style>
         </div>
     );
 };

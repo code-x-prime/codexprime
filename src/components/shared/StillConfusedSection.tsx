@@ -9,17 +9,11 @@ const StillConfusedSection = () => {
     const phoneNumber = "+918882304322";
 
     return (
-        <section className="bg-black text-white py-12 px-6">
+        <section className="bg-black text-white py-10 px-6">
             <div className="max-w-6xl mx-auto text-center space-y-6">
                 <h2 className="text-3xl md:text-4xl font-bold">
                     Still Confused? <br className="md:hidden" /> Contact Us Now
                 </h2>
-
-                <p className="text-gray-300 text-lg max-w-2xl mx-auto">
-                    Whether you’re unsure where to start or just want to talk with an expert,
-                    we’re here to help you every step of the way.
-                </p>
-
 
                 <button
                     onClick={() => setShowCallDialog(true)}
