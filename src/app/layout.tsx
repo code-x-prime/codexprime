@@ -6,6 +6,8 @@ import Navigation from "@/components/Navigation";
 import FloatingContactButton from "@/components/FloatingContactButton";
 import Footer from '@/components/shared/Footer';
 import { Toaster } from "@/components/ui/sonner";
+import { Analytics } from "@vercel/analytics/next"
+
 
 const satoshiRegular = localFont({
   src: "./fonts/Satoshi-Regular.otf",
@@ -243,6 +245,7 @@ export default function RootLayout({
           <Toaster />
           <Footer />
           <FloatingContactButton />
+          <Analytics />
         </ThemeProvider>
 
       </body>
