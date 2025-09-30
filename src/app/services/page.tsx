@@ -29,24 +29,20 @@ export default function ServicesPage() {
                                     ))}
                                 </ul>
 
-                                <h4 className="mt-4 font-medium">Process</h4>
-                                <p className="text-gray-700">Discovery → Scope → Design → Build → Test → Launch. We adapt the process to the project scale and client&apos;s priorities.</p>
-
                                 <div className="mt-6">
                                     <Link href="/contact" className="inline-block bg-black text-white px-4 py-2 shadow">Talk to us about {s.title}</Link>
                                 </div>
                             </div>
 
-                            <aside className="mt-6 md:mt-0 md:col-span-1">
-                                <div className="p-6 border rounded bg-gray-50">
-                                    <h5 className="font-semibold">Quick facts</h5>
-                                    <p className="text-sm text-gray-700 mt-2">Typical engagement: 4-12 weeks depending on scope.</p>
-                                    <p className="text-sm text-gray-700 mt-2">Deliverables: Design, code, docs, deployment plan and 30-day support window.</p>
-                                </div>
-                            </aside>
                         </section>
                     ))}
                 </div>
+
+                {/* Shared Process section (single instance) */}
+                <section className="mt-12">
+                    <h3 className="text-2xl font-semibold text-gray-900">Our Process</h3>
+                    <p className="text-gray-700 mt-2">Discovery → Scope → Design → Build → Test → Launch. We adapt the process to the project scale and client&apos;s priorities. For most projects we run short, focused sprints with regular demos so you always know progress and priorities.</p>
+                </section>
 
                 <section className="mt-12">
                     <h3 className="text-xl font-semibold">How we price</h3>
