@@ -1,81 +1,97 @@
 import React from 'react';
-import { digital, graphic, mvp, web } from '@/assets';
-import Image from 'next/image';
 import HeadText from './Head-Text';
+import { FiMonitor, FiTrendingUp, FiPenTool, FiZap } from 'react-icons/fi';
+import { IconType } from 'react-icons';
 import { Lightbulb } from 'lucide-react';
+import Link from 'next/link';
 
-const ServicesSection = () => {
-    const services = [
+export const services: Array<{
+    id: string;
+    title: string;
+    description: string;
+    features?: string[];
+    Icon?: IconType;
+}> = [
         {
-
-            title: "Web Development",
-            description: "Custom websites and web applications built with modern technologies for optimal performance and user experience.",
-            features: ["React/Next.js", "Node.js", "Database Design", "API Integration"],
-            color: "from-blue-500 to-blue-600",
-            hoverColor: "group-hover:from-blue-600 group-hover:to-blue-700",
-            imgSrc: web
+            id: 'web-designing',
+            title: 'Web Designing',
+            description: 'Clean, conversion-focused website design optimized for clarity and usability.',
+            features: ["Advanced Techniques", 'Database Design', 'API Integration', 'Performance Optimization'],
+            Icon: FiMonitor,
         },
         {
-
-            title: "Digital Marketing",
-            description: "Comprehensive digital marketing strategies to boost your online presence and drive qualified leads to your business.",
-            features: ["SEO Optimization", "Social Media", "Google Ads", "Content Strategy"],
-            color: "from-green-500 to-green-600",
-            hoverColor: "group-hover:from-green-600 group-hover:to-green-700",
-            imgSrc: digital
+            id: 'digital-marketing',
+            title: 'Digital Marketing',
+            description: 'Strategies to grow visibility and attract qualified leads with measurable campaigns.',
+            features: ['SEO & Technical SEO', 'Social Media', 'Paid Ads (Google, Meta)', 'Content Strategy'],
+            Icon: FiTrendingUp,
         },
         {
-
-            title: "Graphic Design",
-            description: "Creative visual solutions that represent your brand identity and communicate your message effectively.",
-            features: ["Logo Design", "Branding", "Print Design", "UI/UX Design"],
-            color: "from-red-500 to-red-600",
-            hoverColor: "group-hover:from-red-600 group-hover:to-red-700",
-            imgSrc: graphic
+            id: 'graphic-design',
+            title: 'Graphic Design',
+            description: 'Brand and visual design that communicates clearly across web and print.',
+            features: ['Logo & Identity', 'Brand Guidelines', 'Print & Digital Assets', 'UI/UX Design'],
+            Icon: FiPenTool,
         },
         {
-
-            title: "MVP Development",
-            description: "Rapid development of Minimum Viable Products to validate your business ideas and get to market quickly.",
-            features: ["Fast Prototyping", "Core Features", "User Testing", "Iterative Design"],
-            color: "from-yellow-500 to-yellow-600",
-            hoverColor: "group-hover:from-yellow-600 group-hover:to-yellow-700",
-            imgSrc: mvp
+            id: 'mvp-development',
+            title: 'MVP Development',
+            description: 'Rapid delivery of core product experiences to validate ideas and learn quickly.',
+            features: ['Rapid Prototyping', 'Core Feature Focus', 'User Testing', 'Iterative Releases'],
+            Icon: FiZap,
         },
-
     ];
 
+const ServicesSection: React.FC = () => {
     return (
-        <section className="py-10 md:py-20 px-6 bg-gradient-to-br from-gray-50 to-white">
+        <section className="py-10 md:py-20 px-6 bg-white">
             <div className="max-w-7xl mx-auto">
-                {/* Header */}
-                <HeadText title="Services We Provide" icon={<Lightbulb className="w-4 h-4" />} icontitle="Our Expertise"
-                    description={"Transform your business with our comprehensive IT solutions. From web development to digital marketing, we deliver results that drive growth and success."} />
+                <HeadText
+                    title="Services"
+                    icon={<Lightbulb className="w-4 h-4" />}
+                    icontitle="What we do"
+                    description={
+                        'Practical services focussed on outcomes. Clear scope, simple delivery and measurable impact.'
+                    }
+                />
 
-                {/* Services Grid */}
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4">
-                    {services.map((service, index) => (
-                        <div
-                            key={index}
-                            className="group bg-white  p-4 md:p-6 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100"
-                        >
-                            <Image src={service.imgSrc} alt={service.title} className="my-2 object-cover rounded h-12 md:h-24" width={700} height={100} />
-                            {/* Icon */}
+                <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {services.slice(0, 4).map((svc) => {
+                        const Icon = svc.Icon;
+                        return (
+                            <Link
+                                key={svc.id}
+                                href={`/services#${svc.id}`}
+                                className="group block bg-white p-6 border border-gray-200 hover:border-black transition-colors"
+                            >
+                                <div className="flex items-start gap-4">
+                                    <div className="w-14 h-14 flex items-center justify-center text-black shrink-0 border border-gray-200">
+                                        {Icon ? <Icon className="w-6 h-6" /> : <Lightbulb className="w-6 h-6" />}
+                                    </div>
 
+                                    <div className="flex-1">
+                                        <h4 className="text-lg font-semibold text-black">{svc.title}</h4>
+                                        <p className="text-sm text-gray-700 mt-1">{svc.description}</p>
+                                    </div>
+                                </div>
 
-                            {/* Content */}
-                            <h3 className="text-lg md:text-2xl font-bold text-gray-900 mb-2 md:mb-4 group-hover:text-gray-800 transition-colors md:text-left text-center">
-                                {service.title}
-                            </h3>
+                                {svc.features && (
+                                    <div className="mt-4 text-sm text-gray-700">
+                                        <ul className="ml-4 list-disc space-y-1">
+                                            {svc.features.map((f, i) => (
+                                                <li key={i}>{f}</li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                )}
 
-                            <p className="text-gray-600 mb-3 md:mb-6 leading-relaxed text-xs md:text-sm">
-                                {service.description}
-                            </p>
-                        </div>
-                    ))}
+                                <div className="mt-4">
+                                    <span className="text-sm font-medium text-black underline group-hover:text-black">Learn more →</span>
+                                </div>
+                            </Link>
+                        );
+                    })}
                 </div>
-
-
             </div>
         </section>
     );

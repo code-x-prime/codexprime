@@ -1,4 +1,5 @@
 "use client"
+import { useRouter } from 'next/navigation'
 import React, { useMemo, useState } from 'react'
 
 type FaqItem = {
@@ -95,7 +96,8 @@ const DEFAULT_FAQS: FaqItem[] = [
 ]
 
 const Faq: React.FC<FaqProps> = ({ limit }) => {
-    const [showAll, setShowAll] = useState(false)
+    const [showAll] = useState(false)
+    const router = useRouter()
 
     const faqs = useMemo(() => DEFAULT_FAQS, [])
 
@@ -128,7 +130,7 @@ const Faq: React.FC<FaqProps> = ({ limit }) => {
             {shouldShowButton && (
                 <div className="mt-6 text-center">
                     <button
-                        onClick={() => setShowAll(true)}
+                        onClick={() => router.push('/faqs')}
                         className="inline-block bg-black text-white px-6 py-3  hover:bg-gray-900 transition"
                         aria-label="View all FAQs"
                     >

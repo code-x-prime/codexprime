@@ -7,14 +7,14 @@ import HeadText from "./Head-Text";
 import CustomVideoPlayer from "../CustomVideoPlayer";
 
 const testimonials = [
-    { name: "Ravi Sharma", videoUrl: "https://pub-a3d2b35862c1483894ffbee942bb995e.r2.dev/Untitled%20design.mp4" },
-    { name: "Anita Verma", videoUrl: "https://pub-a3d2b35862c1483894ffbee942bb995e.r2.dev/Untitled%20design.mp4" },
-    { name: "Karan Singh", videoUrl: "https://pub-a3d2b35862c1483894ffbee942bb995e.r2.dev/Untitled%20design.mp4" },
-    { name: "Priya Mehta", videoUrl: "https://pub-a3d2b35862c1483894ffbee942bb995e.r2.dev/Untitled%20design.mp4" },
-    { name: "Deepak Rao", videoUrl: "https://pub-a3d2b35862c1483894ffbee942bb995e.r2.dev/Untitled%20design.mp4" },
-    { name: "Sunita Jain", videoUrl: "https://pub-a3d2b35862c1483894ffbee942bb995e.r2.dev/Untitled%20design.mp4" },
-    { name: "Rajeev Kapoor", videoUrl: "https://pub-a3d2b35862c1483894ffbee942bb995e.r2.dev/Untitled%20design.mp4" },
-    { name: "Meena Gupta", videoUrl: "https://pub-a3d2b35862c1483894ffbee942bb995e.r2.dev/Untitled%20design.mp4" },
+    { name: "Ravi Sharma", videoUrl: "https://pub-a3d2b35862c1483894ffbee942bb995e.r2.dev/bgvideo.mp4" },
+    { name: "Anita Verma", videoUrl: "https://pub-a3d2b35862c1483894ffbee942bb995e.r2.dev/bgvideo.mp4" },
+    { name: "Karan Singh", videoUrl: "https://pub-a3d2b35862c1483894ffbee942bb995e.r2.dev/bgvideo.mp4" },
+    { name: "Priya Mehta", videoUrl: "https://pub-a3d2b35862c1483894ffbee942bb995e.r2.dev/bgvideo.mp4" },
+    { name: "Deepak Rao", videoUrl: "https://pub-a3d2b35862c1483894ffbee942bb995e.r2.dev/bgvideo.mp4" },
+    { name: "Sunita Jain", videoUrl: "https://pub-a3d2b35862c1483894ffbee942bb995e.r2.dev/bgvideo.mp4" },
+    { name: "Rajeev Kapoor", videoUrl: "https://pub-a3d2b35862c1483894ffbee942bb995e.r2.dev/bgvideo.mp4" },
+    { name: "Meena Gupta", videoUrl: "https://pub-a3d2b35862c1483894ffbee942bb995e.r2.dev/bgvideo.mp4" },
 ];
 
 const Testimonials = () => {
@@ -77,7 +77,7 @@ const Testimonials = () => {
                     <div className="flex">
                         {testimonials.map((t, idx) => (
                             <div key={idx} className="flex-none basis-1/2 sm:basis-1/4 md:basis-1/5 px-1 md:px-2 ">
-                                <div className="border border-gray-200 hover:border-black bg-gray-50 p-2 flex flex-col rounded overflow-hidden">
+                                <div className="border border-gray-200 hover:border-black bg-gray-50 p-1 flex flex-col  overflow-hidden">
                                     <div className="aspect-[9/16] bg-black relative overflow-hidden">
                                         <CustomVideoPlayer
                                             url={t.videoUrl}

@@ -110,7 +110,7 @@ const HeroComponent = () => {
     };
 
     return (
-        <div className="relative w-full md:h-[85dvh] md:bg-white p-2 overflow-hidden">
+        <div className="relative w-full lg:h-[85dvh] md:bg-white p-2 overflow-hidden">
             {/* Desktop Video Background */}
             <div className="hidden md:block absolute top-0 right-0 w-1/2 h-full overflow-hidden">
                 <video
@@ -120,7 +120,7 @@ const HeroComponent = () => {
                     playsInline
                     className="w-full h-full object-cover"
                 >
-                    <source src="https://pub-a3d2b35862c1483894ffbee942bb995e.r2.dev/Untitled%20design.mp4" type="video/webm" />
+                    <source src="https://pub-a3d2b35862c1483894ffbee942bb995e.r2.dev/bgvideo.mp4" type="video/webm" />
                 </video>
                 <div className="absolute inset-0 bg-black/30"></div>
             </div>
@@ -170,7 +170,7 @@ const HeroComponent = () => {
                         {/* Right Form */}
                         <div className="flex justify-center lg:justify-end order-first lg:order-last">
                             <div className="w-full max-w-md sm:max-w-md relative z-20">
-                                <div className="bg-white/90 backdrop-blur-sm rounded-lg p-6 sm:p-8 shadow-2xl border border-gray-200/50">
+                                <div className="bg-white/90 backdrop-blur-sm rounded p-6 sm:p-8 shadow-2xl border border-gray-200/50">
                                     {!isSubmitted ? (
                                         <>
                                             <h3 className="text-2xl font-bold mb-6 text-gray-800">
@@ -185,9 +185,9 @@ const HeroComponent = () => {
                                                         placeholder="Your Name"
                                                         value={formData.name}
                                                         onChange={(e) => handleInputChange('name', e.target.value)}
-                                                        className={`w-full p-4 sm:p-3 rounded-lg border-2 outline-none bg-gray-50 text-black placeholder:text-gray-600 transition-all duration-200 focus:bg-white focus:shadow-md ${errors.name
+                                                        className={`w-full p-4 sm:p-3 rounded border-2 outline-none bg-gray-50 text-black placeholder:text-gray-600 transition-all duration-200 focus:bg-white focus:shadow-md ${errors.name
                                                             ? 'border-red-400 focus:border-red-500'
-                                                            : 'border-gray-200 focus:border-blue-500'
+                                                            : 'border-gray-200 focus:border-black'
                                                             }`}
                                                     />
                                                     {errors.name && (
@@ -202,9 +202,9 @@ const HeroComponent = () => {
                                                         placeholder="Your Email"
                                                         value={formData.email}
                                                         onChange={(e) => handleInputChange('email', e.target.value)}
-                                                        className={`w-full p-4 sm:p-3 rounded-lg border-2 outline-none bg-gray-50 text-black placeholder:text-gray-600 transition-all duration-200 focus:bg-white focus:shadow-md ${errors.email
+                                                        className={`w-full p-4 sm:p-3 rounded border-2 outline-none bg-gray-50 text-black placeholder:text-gray-600 transition-all duration-200 focus:bg-white focus:shadow-md ${errors.email
                                                             ? 'border-red-400 focus:border-red-500'
-                                                            : 'border-gray-200 focus:border-blue-500'
+                                                            : 'border-gray-200 focus:border-black'
                                                             }`}
                                                     />
                                                     {errors.email && (
@@ -219,9 +219,9 @@ const HeroComponent = () => {
                                                         placeholder="Your Phone"
                                                         value={formData.phone}
                                                         onChange={(e) => handleInputChange('phone', e.target.value)}
-                                                        className={`w-full p-4 sm:p-3 rounded-lg border-2 outline-none bg-gray-50 text-black placeholder:text-gray-600 transition-all duration-200 focus:bg-white focus:shadow-md ${errors.phone
+                                                        className={`w-full p-4 sm:p-3 rounded border-2 outline-none bg-gray-50 text-black placeholder:text-gray-600 transition-all duration-200 focus:bg-white focus:shadow-md ${errors.phone
                                                             ? 'border-red-400 focus:border-red-500'
-                                                            : 'border-gray-200 focus:border-blue-500'
+                                                            : 'border-gray-200 focus:border-black'
                                                             }`}
                                                     />
                                                     {errors.phone && (
@@ -236,14 +236,14 @@ const HeroComponent = () => {
                                                         rows={4}
                                                         value={formData.message}
                                                         onChange={(e) => handleInputChange('message', e.target.value)}
-                                                        className="w-full p-4 sm:p-3 rounded-lg border-2 border-gray-200 bg-gray-50 text-black placeholder:text-gray-600 outline-none resize-none focus:border-blue-500 focus:bg-white focus:shadow-md transition-all duration-200"
+                                                        className="w-full p-4 sm:p-3 rounded border-2 border-gray-200 bg-gray-50 text-black placeholder:text-gray-600 outline-none resize-none focus:border-black focus:bg-white focus:shadow-md transition-all duration-200"
                                                     />
                                                 </div>
 
                                                 <button
                                                     onClick={handleSubmit}
                                                     disabled={isSubmitting}
-                                                    className="w-full bg-gradient-to-r from-gray-900 to-black text-white py-5 sm:py-4 px-6 rounded-lg font-medium hover:from-gray-800 hover:to-gray-900 disabled:opacity-50 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02] text-lg"
+                                                    className="w-full bg-gradient-to-r from-gray-900 to-black text-white py-5 sm:py-4 px-6 rounded font-medium hover:from-gray-800 hover:to-gray-900 disabled:opacity-50 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02] text-lg"
                                                 >
                                                     {isSubmitting ? 'Submitting...' : 'Get Free Consultation'}
                                                 </button>
