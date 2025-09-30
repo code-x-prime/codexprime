@@ -245,8 +245,8 @@ export default function RootLayout({
           <Toaster />
           <Footer />
           <FloatingContactButton />
-          <Analytics />
         </ThemeProvider>
+        <Analytics />
 
       </body>
     </html>
