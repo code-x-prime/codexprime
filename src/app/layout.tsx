@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import Navigation from "@/components/Navigation";
 import FloatingContactButton from "@/components/FloatingContactButton";
 import Footer from '@/components/shared/Footer';
+import { Toaster } from "@/components/ui/sonner";
 
 const satoshiRegular = localFont({
   src: "./fonts/Satoshi-Regular.otf",
@@ -239,6 +240,7 @@ export default function RootLayout({
           <Navigation />
           {/* Montserrat Bold logo font name */}
           {children}
+          <Toaster />
           <Footer />
           <FloatingContactButton />
         </ThemeProvider>

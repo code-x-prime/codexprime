@@ -1,10 +1,12 @@
 "use client";
 import React, { useState } from 'react';
+import { toast } from 'sonner';
 
 interface FormData {
     name: string;
     email: string;
     phone: string;
+    age?: string;
     message?: string;
 }
 
@@ -12,6 +14,7 @@ interface FormErrors {
     name?: string;
     email?: string;
     phone?: string;
+    age?: string;
 }
 
 const HeroComponent = () => {
@@ -43,6 +46,11 @@ const HeroComponent = () => {
             newErrors.phone = 'Phone number is required';
         }
 
+        if (formData.age && formData.age.trim()) {
+            const a = Number(formData.age.replace(/[^0-9]/g, ''));
+            if (isNaN(a) || a < 1 || a > 120) newErrors.phone = 'Enter a valid age';
+        }
+
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
@@ -58,24 +66,41 @@ const HeroComponent = () => {
         if (!validateForm()) return;
 
         setIsSubmitting(true);
-        await new Promise(resolve => setTimeout(resolve, 1000));
 
-        console.table({
-            'Name': formData.name,
-            'Email': formData.email,
-            'Phone': formData.phone,
-            'Message': formData.message || 'Not provided',
-            'Submitted At': new Date().toLocaleString()
-        });
+        try {
+            const res = await fetch('/api/form', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: formData.name,
+                    email: formData.email,
+                    mobileNumber: formData.phone,
+                    age: formData.age,
+                    message: formData.message,
+                }),
+            });
 
-        setIsSubmitted(true);
-        setIsSubmitting(false);
+            const json = await res.json();
+            if (!res.ok) {
+                toast.error(json?.error || 'Failed to send message');
+                setIsSubmitting(false);
+                return;
+            }
 
-        setTimeout(() => {
-            setIsSubmitted(false);
-            setFormData({ name: '', email: '', phone: '', message: '' });
-            setErrors({});
-        }, 3000);
+            toast.success(json?.message || 'Message sent');
+            setIsSubmitted(true);
+            setIsSubmitting(false);
+
+            setTimeout(() => {
+                setIsSubmitted(false);
+                setFormData({ name: '', email: '', phone: '', age: '', message: '' });
+                setErrors({});
+            }, 3000);
+        } catch (err) {
+            console.error(err);
+            toast.error('Network error. Please try again later.');
+            setIsSubmitting(false);
+        }
     };
 
     // Simple Grid Lines Component
@@ -228,6 +253,7 @@ const HeroComponent = () => {
                                                         <p className="text-red-500 text-sm mt-2">{errors.phone}</p>
                                                     )}
                                                 </div>
+
 
                                                 <div>
                                                     <textarea

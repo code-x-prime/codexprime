@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { toast } from "sonner";
 import { Phone, Mail, Clock, Send } from "lucide-react";
 import { FaWhatsapp, FaPhoneAlt } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
@@ -10,6 +11,7 @@ type FormData = {
     name: string;
     email: string;
     phone: string;
+    age?: string;
     message: string;
 };
 
@@ -116,6 +118,7 @@ const ContactSection = () => {
         name: "",
         email: "",
         phone: "",
+        age: "",
         message: "",
     });
 
@@ -130,7 +133,7 @@ const ContactSection = () => {
         setFormData((prev) => ({ ...prev, [field]: value }));
     };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const newErrors: typeof errors = {};
         if (!formData.name.trim()) newErrors.name = 'Name is required';
@@ -140,21 +143,54 @@ const ContactSection = () => {
         const cleaned = formData.phone.replace(/[^0-9]/g, '');
         if (!phoneRe.test(cleaned)) newErrors.phone = 'Enter a valid phone number';
 
+        // Age validation (optional)
+        if (formData.age && formData.age.trim()) {
+            const ageClean = formData.age.replace(/[^0-9]/g, '');
+            const ageNum = Number(ageClean || 0);
+            if (!ageClean || isNaN(ageNum) || ageNum < 1 || ageNum > 120) {
+                newErrors.age = 'Enter a valid age';
+            }
+        }
+
         setErrors(newErrors);
         if (Object.keys(newErrors).length > 0) return;
 
         setIsSubmitting(true);
-        console.log("Contact form submitted:", formData);
-        // simulate network
-        setTimeout(() => {
-            setIsSubmitting(false);
+
+        try {
+            const res = await fetch('/api/form', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: formData.name,
+                    email: formData.email,
+                    mobileNumber: formData.phone,
+                    age: formData.age,
+                    message: formData.message,
+                }),
+            });
+
+            const json = await res.json();
+
+            if (!res.ok) {
+                toast.error(json?.error || 'Failed to send message');
+                setIsSubmitting(false);
+                return;
+            }
+
+            toast.success(json?.message || 'Message sent');
             setIsSubmitted(true);
+            setIsSubmitting(false);
 
             setTimeout(() => {
-                setFormData({ name: "", email: "", phone: "", message: "" });
+                setFormData({ name: "", email: "", phone: "", age: "", message: "" });
                 setIsSubmitted(false);
-            }, 3500);
-        }, 1200);
+            }, 2500);
+        } catch (err) {
+            console.error(err);
+            toast.error('Network error. Please try again later.');
+            setIsSubmitting(false);
+        }
     };
 
     const openWhatsApp = () => {
