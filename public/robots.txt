@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /private/
+Sitemap: https://codexprime.in/sitemap.xml
+
+# Crawl-delay can be added if you want to slow down bots
+# Crawl-delay: 10
