@@ -82,3 +82,13 @@ export async function getSitemapData() {
         next: { revalidate: 3600 }
     });
 }
+
+export async function getHighlightsBlogs(params: { limit?: number; sort?: 'mix' | 'newest' | 'popular' } = {}) {
+    const queryParams = new URLSearchParams();
+    if (params.limit) queryParams.append('limit', String(params.limit));
+    if (params.sort) queryParams.append('sort', params.sort);
+    const qs = queryParams.toString();
+    return blogFetch(`/api/public/highlights${qs ? `?${qs}` : ''}`, {
+        next: { revalidate: 60 },
+    });
+}
