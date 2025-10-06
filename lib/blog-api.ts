@@ -1,94 +1,57 @@
-const BLOG_API_URL = process.env.NEXT_PUBLIC_BLOG_API_URL;
+
+
+const BLOG_API_URL = process.env.NEXT_PUBLIC_BLOG_API_URL || 'https://bloxly.vercel.app';
 const API_KEY = process.env.NEXT_PUBLIC_BLOG_API_KEY;
 
-interface FetchOptions extends RequestInit {
-    cache?: RequestCache;
-    next?: { revalidate?: number | false; tags?: string[] };
-}
+export async function blogFetch(endpoint: string, options: RequestInit = {}) {
+    if (!BLOG_API_URL) throw new Error('NEXT_PUBLIC_BLOG_API_URL not found');
+    if (!API_KEY) throw new Error('NEXT_PUBLIC_BLOG_API_KEY not found');
 
-async function blogFetch(endpoint: string, options: FetchOptions = {}) {
-    if (process.env.NODE_ENV !== 'production') {
-        console.log('🌐 Fetching from Blog API:', endpoint);
-        console.log('Options:', options);
-    }
-    if (!BLOG_API_URL) {
-        throw new Error('❌ NEXT_PUBLIC_BLOG_API_URL not found in .env.local');
-    }
-
-    if (!API_KEY) {
-        throw new Error('❌ NEXT_PUBLIC_BLOG_API_KEY not found in .env.local');
-    }
-
-    const url = `${BLOG_API_URL}${endpoint}`;
-
-    console.log('📡 API Request:', url);
-
-    try {
-        const response = await fetch(url, {
-            ...options,
-            headers: {
-                'x-api-key': API_KEY,
-                'Content-Type': 'application/json',
-                ...options.headers,
-            },
-        });
-
-        if (!response.ok) {
-            const errorText = await response.text();
-            if (process.env.NODE_ENV !== 'production') {
-                console.log(`❌ API Error Response: ${response.status} - ${errorText}`);
-            }
-            throw new Error(`API Error: ${response.status} - ${errorText}`);
-        }
-
-        return response.json();
-    } catch (error) {
-        console.error('❌ Fetch Error:', error);
-        throw error;
-    }
-}
-
-export async function getPosts(params: {
-    page?: number;
-    limit?: number;
-    category?: string;
-    tag?: string;
-} = {}) {
-    const queryParams = new URLSearchParams();
-    if (params.page) queryParams.append('page', params.page.toString());
-    if (params.limit) queryParams.append('limit', params.limit.toString());
-    if (params.category) queryParams.append('category', params.category);
-    if (params.tag) queryParams.append('tag', params.tag);
-
-    return blogFetch(`/api/public/posts?${queryParams}`, {
-        next: { revalidate: 60 }
+    const url = BLOG_API_URL + endpoint;
+    const res = await fetch(url, {
+        ...options,
+        headers: {
+            'x-api-key': API_KEY,
+            'Content-Type': 'application/json',
+            ...(options.headers || {}),
+        },
     });
+
+    if (!res.ok) {
+        const text = await res.text();
+        throw new Error(`API Error ${res.status}: ${text}`);
+    }
+
+    return res.json();
+}
+
+export async function getPosts({ page = 1, limit = 10, category, tag }: { page?: number; limit?: number; category?: string; tag?: string } = {}) {
+    const q = new URLSearchParams();
+    q.set('page', String(page));
+    q.set('limit', String(limit));
+    if (category) q.set('category', category);
+    if (tag) q.set('tag', tag);
+
+    return blogFetch('/api/public/posts?' + q.toString(), { next: { revalidate: 60 } });
 }
 
 export async function getPost(slug: string) {
-    return blogFetch(`/api/public/posts/${slug}`, {
-        next: { revalidate: 300 }
-    });
+    return blogFetch('/api/public/posts/' + slug, { next: { revalidate: 300 } });
 }
 
 export async function getCategories() {
-    return blogFetch('/api/public/categories', {
-        next: { revalidate: 600 }
-    });
+    return blogFetch('/api/public/categories', { next: { revalidate: 600 } });
 }
 
 export async function getSitemapData() {
-    return blogFetch('/api/public/sitemap', {
-        next: { revalidate: 3600 }
-    });
+    return blogFetch('/api/public/sitemap', { next: { revalidate: 3600 } });
 }
 
-export async function getHighlightsBlogs(params: { limit?: number; sort?: 'mix' | 'newest' | 'popular' } = {}) {
-    const queryParams = new URLSearchParams();
-    if (params.limit) queryParams.append('limit', String(params.limit));
-    if (params.sort) queryParams.append('sort', params.sort);
-    const qs = queryParams.toString();
-    return blogFetch(`/api/public/highlights${qs ? `?${qs}` : ''}`, {
-        next: { revalidate: 60 },
-    });
+export async function getHighlightsBlogs({ limit = 5, sort = 'mix' }: { limit?: number; sort?: string } = {}) {
+    const q = new URLSearchParams();
+    if (limit) q.set('limit', String(limit));
+    if (sort) q.set('sort', sort);
+    const qs = q.toString();
+
+    return blogFetch('/api/public/highlights' + (qs ? `?${qs}` : ''), { next: { revalidate: 60 } });
 }
