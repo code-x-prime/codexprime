@@ -1,5 +1,5 @@
 import HeroComponent from "@/components/Hero";
-import HighlightsBlogs from "@/components/HighlightsBlogs";
+// import HighlightsBlogs from "@/components/HighlightsBlogs";
 import ContactSection from "@/components/shared/ContactSection";
 import Faq from "@/components/shared/Faq";
 import Portfolio from "@/components/shared/Portfolio";
@@ -19,7 +19,7 @@ export default function Home() {
       <Process />
       <Testimonials />
       <Portfolio limit={3} />
-      <HighlightsBlogs />
+      {/* <HighlightsBlogs /> */}
       <Faq limit={4} />
       <ContactSection />
       <StillConfusedSection />
