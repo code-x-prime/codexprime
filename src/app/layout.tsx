@@ -124,6 +124,21 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-T58H5M96');`}
         </Script>
         {/* End Google Tag Manager */}
+
+        {/* Google Analytics (gtag.js) */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-YQSV9GJ8KV"
+          strategy="afterInteractive"
+        />
+        <Script id="ga4-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);} 
+            gtag('js', new Date());
+            gtag('config', 'G-YQSV9GJ8KV');
+          `}
+        </Script>
+        {/* End Google Analytics (gtag.js) */}
         {/* Additional SEO Meta Tags */}
         <meta name="geo.region" content="IN-DL" />
         <meta name="geo.placename" content="Delhi" />
