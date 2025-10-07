@@ -10,7 +10,7 @@ export const metadata = {
 export default function AboutPage() {
     return (
         <main className="min-h-screen bg-white py-16">
-            <div className="max-w-6xl mx-auto px-6">
+            <div className="max-w-6xl mx-auto px-3 md:px-6">
                 <HeadText
                     title="About CodeXprime"
                     icon={<></>}
