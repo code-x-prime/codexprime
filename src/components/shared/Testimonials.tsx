@@ -152,12 +152,12 @@ const Testimonials: React.FC = () => {
 
                                         {/* Review Content */}
                                         <div className="pt-2 h-full flex flex-col">
-                                            <p className="text-gray-800 text-sm sm:text-base leading-relaxed mb-4 sm:mb-6 font-medium flex-grow">
+                                            <p className="text-gray-800 text-sm sm:text-base leading-relaxed mb-2 sm:mb-6 font-medium flex-grow">
                                                 {t.quote}
                                             </p>
 
                                             {/* User Info */}
-                                            <div className="border-t border-gray-100 pt-3 sm:pt-4 mt-auto">
+                                            <div className="border-t border-gray-100 pt-2 sm:pt-4 mt-auto">
                                                 <div className="flex items-start justify-between mb-2 sm:mb-3">
                                                     <div className="flex-1 min-w-0">
                                                         <h4 className="font-semibold text-gray-900 text-base sm:text-lg truncate">

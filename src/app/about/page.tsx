@@ -1,6 +1,7 @@
 import React from 'react'
 import HeadText from '@/components/shared/Head-Text'
 import ContactSection from '@/components/shared/ContactSection'
+import Testimonials from '@/components/shared/Testimonials'
 
 export const metadata = {
     title: 'About | CodeXprime',
@@ -45,6 +46,7 @@ export default function AboutPage() {
                         </p>
                     </div>
 
+
                     <aside className="space-y-6">
                         <div className="border p-6 bg-gray-50 text-gray-800">
                             <h4 className="font-semibold mb-2">Quick facts</h4>
@@ -59,11 +61,13 @@ export default function AboutPage() {
                         </div>
                     </aside>
                 </section>
+                <Testimonials />
 
                 {/* timeline removed as requested */}
 
                 <ContactSection />
             </div>
+
         </main>
     )
 }
