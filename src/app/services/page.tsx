@@ -50,10 +50,6 @@ export default function ServicesPage() {
 
     const faqs = [
         {
-            q: 'How long does a typical website take?',
-            a: 'Most business websites take 2–4 weeks depending on scope, content readiness, and feedback cycles.'
-        },
-        {
             q: 'Do you provide SEO with development?',
             a: 'Yes. We implement on-page and technical SEO best practices during build, and offer ongoing SEO plans.'
         },
