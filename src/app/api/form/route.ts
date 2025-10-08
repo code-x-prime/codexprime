@@ -4,17 +4,17 @@ import nodemailer from "nodemailer";
 
 // Configure transporter using environment variables
 const transporter = nodemailer.createTransport({
-    host: process.env.NEXT_PUBLIC_SMTP_HOST,
-    port: Number(process.env.NEXT_PUBLIC_SMTP_PORT || 587),
-    secure: false,
-    auth: {
-        user: process.env.NEXT_PUBLIC_SMTP_USER,
-        pass: process.env.NEXT_PUBLIC_SMTP_PASSWORD,
-    },
+  host: process.env.NEXT_PUBLIC_SMTP_HOST,
+  port: Number(process.env.NEXT_PUBLIC_SMTP_PORT || 587),
+  secure: false,
+  auth: {
+    user: process.env.NEXT_PUBLIC_SMTP_USER,
+    pass: process.env.NEXT_PUBLIC_SMTP_PASSWORD,
+  },
 });
 
 function buildAdminTemplate({ name, email, mobileNumber, message, age }: { name: string; email: string; mobileNumber: string; message: string; age?: string }) {
-    return `
+  return `
     <!doctype html>
     <html>
       <head>
@@ -65,7 +65,7 @@ function buildAdminTemplate({ name, email, mobileNumber, message, age }: { name:
           </div>
 
           <p style="font-size:12px;color:#666;margin-top:18px">Submitted on: ${new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}</p>
-          <div style="font-size:13px;color:#6b7280;margin-top:12px;border-top:1px solid #eee;padding-top:12px">Contact: +91 8882304322 • <a href="mailto:hello@codexprime.in">hello@codexprime.in</a></div>
+          <div style="font-size:13px;color:#6b7280;margin-top:12px;border-top:1px solid #eee;padding-top:12px">Contact: +91 9354734436 • <a href="mailto:hello@codexprime.in">hello@codexprime.in</a></div>
         </div>
       </body>
     </html>
@@ -73,8 +73,8 @@ function buildAdminTemplate({ name, email, mobileNumber, message, age }: { name:
 }
 
 function buildUserTemplate({ name, message }: { name: string; message?: string }) {
-    // A polished, responsive confirmation email for the user
-    return `
+  // A polished, responsive confirmation email for the user
+  return `
     <!doctype html>
     <html>
       <head>
@@ -110,9 +110,9 @@ function buildUserTemplate({ name, message }: { name: string; message?: string }
 
            
 
-            <p class="muted">If this is urgent, please call us at +91 8882304322 or reply directly to this email.</p>
+            <p class="muted">If this is urgent, please call us at +91 9354734436 or reply directly to this email.</p>
           </div>
-          <div class="footer">© ${new Date().getFullYear()} CodeXprime • Phone: +91 8882304322 • Email: <a href="mailto:hello@codexprime.in">hello@codexprime.in</a></div>
+          <div class="footer">© ${new Date().getFullYear()} CodeXprime • Phone: +91 9354734436 • Email: <a href="mailto:hello@codexprime.in">hello@codexprime.in</a></div>
         </div>
       </body>
     </html>
@@ -120,63 +120,63 @@ function buildUserTemplate({ name, message }: { name: string; message?: string }
 }
 
 export async function POST(request: NextRequest) {
-    try {
-        // Ensure SMTP config exists
-        if (!process.env.NEXT_PUBLIC_SMTP_HOST || !process.env.NEXT_PUBLIC_SMTP_USER || !process.env.NEXT_PUBLIC_SMTP_PASSWORD) {
-            console.error("Missing SMTP environment variables");
-            return NextResponse.json({ error: "Email service configuration error" }, { status: 500 });
-        }
-
-        const payload = await request.json();
-        const { name, email, mobileNumber, message, age } = payload;
-
-        // Basic validation
-        if (!name || !email || !mobileNumber || !message) {
-            return NextResponse.json({ error: "Please fill in all required fields" }, { status: 400 });
-        }
-
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            return NextResponse.json({ error: "Please enter a valid email address" }, { status: 400 });
-        }
-
-        if (String(mobileNumber).replace(/\D/g, '').length < 10) {
-            return NextResponse.json({ error: "Please enter a valid mobile number" }, { status: 400 });
-        }
-
-        // Build and send admin email (include optional age)
-        const adminHtml = buildAdminTemplate({ name, email, mobileNumber, message, age });
-        const adminMail = {
-            from: process.env.NEXT_PUBLIC_FROM_EMAIL,
-            to: process.env.NEXT_PUBLIC_TO_EMAIL,
-            subject: `New Contact: ${name} | ${mobileNumber}`,
-            html: adminHtml,
-            replyTo: email,
-        };
-
-        await transporter.sendMail(adminMail);
-
-        // Send confirmation email to user (if allowed)
-        try {
-            const userHtml = buildUserTemplate({ name, message });
-            const userMail = {
-                from: process.env.NEXT_PUBLIC_FROM_EMAIL,
-                to: email,
-                subject: `We've received your message — CodeXprime`,
-                html: userHtml,
-            };
-
-            await transporter.sendMail(userMail);
-        } catch (uErr: unknown) {
-            // Log user mail failure but don't fail the whole request
-            const u = uErr as Record<string, unknown>;
-            const msg = uErr && typeof uErr === 'object' && 'message' in u ? String(u.message) : String(uErr);
-            console.warn('User confirmation email failed:', msg);
-        }
-
-        return NextResponse.json({ success: true, message: "Your message has been sent successfully!" }, { status: 200 });
-    } catch (error) {
-        console.error("Email sending error:", error);
-        return NextResponse.json({ error: "Failed to send message. Please try again later." }, { status: 500 });
+  try {
+    // Ensure SMTP config exists
+    if (!process.env.NEXT_PUBLIC_SMTP_HOST || !process.env.NEXT_PUBLIC_SMTP_USER || !process.env.NEXT_PUBLIC_SMTP_PASSWORD) {
+      console.error("Missing SMTP environment variables");
+      return NextResponse.json({ error: "Email service configuration error" }, { status: 500 });
     }
+
+    const payload = await request.json();
+    const { name, email, mobileNumber, message, age } = payload;
+
+    // Basic validation
+    if (!name || !email || !mobileNumber || !message) {
+      return NextResponse.json({ error: "Please fill in all required fields" }, { status: 400 });
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return NextResponse.json({ error: "Please enter a valid email address" }, { status: 400 });
+    }
+
+    if (String(mobileNumber).replace(/\D/g, '').length < 10) {
+      return NextResponse.json({ error: "Please enter a valid mobile number" }, { status: 400 });
+    }
+
+    // Build and send admin email (include optional age)
+    const adminHtml = buildAdminTemplate({ name, email, mobileNumber, message, age });
+    const adminMail = {
+      from: process.env.NEXT_PUBLIC_FROM_EMAIL,
+      to: process.env.NEXT_PUBLIC_TO_EMAIL,
+      subject: `New Contact: ${name} | ${mobileNumber}`,
+      html: adminHtml,
+      replyTo: email,
+    };
+
+    await transporter.sendMail(adminMail);
+
+    // Send confirmation email to user (if allowed)
+    try {
+      const userHtml = buildUserTemplate({ name, message });
+      const userMail = {
+        from: process.env.NEXT_PUBLIC_FROM_EMAIL,
+        to: email,
+        subject: `We've received your message — CodeXprime`,
+        html: userHtml,
+      };
+
+      await transporter.sendMail(userMail);
+    } catch (uErr: unknown) {
+      // Log user mail failure but don't fail the whole request
+      const u = uErr as Record<string, unknown>;
+      const msg = uErr && typeof uErr === 'object' && 'message' in u ? String(u.message) : String(uErr);
+      console.warn('User confirmation email failed:', msg);
+    }
+
+    return NextResponse.json({ success: true, message: "Your message has been sent successfully!" }, { status: 200 });
+  } catch (error) {
+    console.error("Email sending error:", error);
+    return NextResponse.json({ error: "Failed to send message. Please try again later." }, { status: 500 });
+  }
 }

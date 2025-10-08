@@ -68,10 +68,10 @@ const Footer: React.FC = () => {
                             </div>
                             <div className="min-w-0 flex-1">
                                 <a
-                                    href="tel:+918882304322"
+                                    href="tel:+919354734436"
                                     className="text-gray-700 font-medium text-sm sm:text-base hover:text-gray-900 transition-colors duration-200 block"
                                 >
-                                    +91 8882304322
+                                    +91 9354734436
                                 </a>
                                 <div className="text-gray-600 text-xs sm:text-sm mt-1">
                                     Call us for a quick chat

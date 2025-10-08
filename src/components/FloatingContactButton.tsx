@@ -10,7 +10,7 @@ const FloatingContactButton = () => {
     const [showCallDialog, setShowCallDialog] = useState(false);
     const [showWhatsAppDialog, setShowWhatsAppDialog] = useState(false);
 
-    const phoneNumber = "+918882304322";
+    const phoneNumber = "+919354734436";
     const whatsappMessage = "Hi! I'm interested in CodeXprime IT services. Can you help me?";
 
     const toggleMenu = () => {

@@ -6,7 +6,7 @@ import { Phone } from "lucide-react";
 
 const StillConfusedSection = () => {
     const [showCallDialog, setShowCallDialog] = useState(false);
-    const phoneNumber = "+918882304322";
+    const phoneNumber = "+919354734436";
 
     return (
         <section className="bg-black text-white py-10 px-6">

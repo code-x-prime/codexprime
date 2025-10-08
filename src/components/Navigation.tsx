@@ -56,16 +56,16 @@ const Navigation = () => {
                 <div className='flex flex-col items-end text-xs md:text-base'>
                     <span className='text-caption text-gray-500'>Get Expert Support</span>
                     <a
-                        href="tel:+918882304322"
+                        href="tel:+919354734436"
                         className='text-body font-semibold hover:text-gray-600 transition-colors duration-200'
                     >
-                        +91 888 230 4322
+                        +91 935 473 4436
                     </a>
                 </div>
 
                 {/* Mobile Call Button */}
                 {/* <a
-                    href="tel:+918882304322"
+                    href="tel:+919354734436"
                     className='hidden bg-black text-white px-3 py-2 rounded text-sm font-medium hover:bg-gray-800 transition-colors duration-200 '
                 >
                     Call Now
@@ -129,10 +129,10 @@ const Navigation = () => {
                         <h3 className='text-body font-semibold mb-2'>Ready to Start Your Project?</h3>
                         <p className='text-caption text-gray-600 mb-3'>Contact our expert team for consultation</p>
                         <a
-                            href="tel:+918882304322"
+                            href="tel:+919354734436"
                             className='inline-flex items-center justify-center w-full bg-black text-white py-3 px-4 text-body font-medium hover:bg-gray-800 transition-colors duration-200 gap-3'
                         >
-                            <PhoneCall /> +91 888 230 4322
+                            <PhoneCall /> +91 935 473 4436
                         </a>
                     </div>
 

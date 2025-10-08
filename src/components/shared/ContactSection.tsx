@@ -15,7 +15,7 @@ type FormData = {
     message: string;
 };
 
-const PHONE_NUMBER = '+918882304322';
+const PHONE_NUMBER = '+919354734436';
 const WHATSAPP_MESSAGE = "Hi, I'm interested in your services. Please help me with a free consultation.";
 
 const CallDialog = ({
@@ -339,7 +339,7 @@ const ContactSection = () => {
                                 </div>
                                 <div>
                                     <h4 className="font-bold text-gray-900 mb-1">Phone Number</h4>
-                                    <p className="text-gray-600">+91 8882304322</p>
+                                    <p className="text-gray-600">+91 9354734436</p>
                                 </div>
                             </div>
 
