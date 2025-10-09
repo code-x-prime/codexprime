@@ -100,11 +100,6 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  verification: {
-    google: 'your-google-verification-code', // Add your Google Search Console verification
-    // yandex: 'your-yandex-verification',
-    // bing: 'your-bing-verification',
-  },
 };
 
 export default function RootLayout({
@@ -258,7 +253,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               "logo": "https://codexprime.in/logo.png",
               "contactPoint": {
                 "@type": "ContactPoint",
-                "telephone": "+91-XXXXXXXXXX", // Add your phone
+                "telephone": "+91-9354734436",
                 "contactType": "customer service",
                 "areaServed": "IN",
                 "availableLanguage": ["en", "hi"]
