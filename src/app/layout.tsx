@@ -176,7 +176,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               "name": "CodeXprime",
               "description": "Premier IT services provider specializing in web development, graphic designing, digital marketing, Google Ads, and Meta Ads in Dwarka and Uttam Nagar, Delhi.",
               "url": "https://codexprime.in",
-              // "telephone": "+91-XXXXXXXXXX", // Add your phone number
+              "telephone": "+91-9354734436", // Add your phone number
               // "address": {
               //   "@type": "PostalAddress",
               //   "streetAddress": "Your Street Address", // Add your address
