@@ -115,8 +115,12 @@ export default function RootLayout({
   return (
     <html lang="en-IN">
       <head>
-        {/* Meta Pixel Code */}
-        <Script id="meta-pixel" strategy="afterInteractive">
+        {/* Preconnect to Meta/Facebook domains for faster loading */}
+        <link rel="preconnect" href="https://connect.facebook.net" />
+        <link rel="dns-prefetch" href="//connect.facebook.net" />
+
+        {/* Meta Pixel Code - Load early with beforeInteractive strategy */}
+        <Script id="meta-pixel-init" strategy="beforeInteractive">
           {`
             !function(f,b,e,v,n,t,s)
             {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -126,8 +130,14 @@ export default function RootLayout({
             t.src=v;s=b.getElementsByTagName(e)[0];
             s.parentNode.insertBefore(t,s)}(window, document,'script',
             'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', '1222146469943980');
-            fbq('track', 'PageView');
+          `}
+        </Script>
+        <Script id="meta-pixel-track" strategy="afterInteractive">
+          {`
+            if (typeof fbq !== 'undefined') {
+              fbq('init', '1222146469943980');
+              fbq('track', 'PageView');
+            }
           `}
         </Script>
         {/* End Meta Pixel Code */}
@@ -281,7 +291,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               '<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1222146469943980&ev=PageView&noscript=1" />',
           }}
         />
-        {/* End Meta Pixel (noscript) */}
         {/* End Meta Pixel (noscript) */}
         {/* Google Tag Manager (noscript) */}
         <noscript>
