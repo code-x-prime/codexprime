@@ -8,7 +8,6 @@ import Footer from '@/components/shared/Footer';
 import { Toaster } from "@/components/ui/sonner";
 import { Analytics } from "@vercel/analytics/next"
 import Script from "next/script"
-import Image from "next/image";
 
 
 const satoshiRegular = localFont({
@@ -275,16 +274,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       <body
         className={`${satoshiRegular.variable} ${satoshiMedium.variable} ${satoshiBold.variable} ${satoshiBlack.variable} font-satoshi-regular antialiased`}
       >
-        {/* Meta Pixel (noscript) */}
-        <noscript>
-          <Image
-            height="1"
-            width="1"
-            style={{ display: "none" }}
-            src="https://www.facebook.com/tr?id=1222146469943980&ev=PageView&noscript=1"
-            alt=""
-          />
-        </noscript>
+        {/* Meta Pixel (noscript) - injected as raw HTML to avoid next/image hostname checks */}
+        <noscript
+          dangerouslySetInnerHTML={{
+            __html:
+              '<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1222146469943980&ev=PageView&noscript=1" />',
+          }}
+        />
+        {/* End Meta Pixel (noscript) */}
         {/* End Meta Pixel (noscript) */}
         {/* Google Tag Manager (noscript) */}
         <noscript>
