@@ -6,6 +6,7 @@ import { FaWhatsapp, FaPhoneAlt } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 import { MdCheck } from "react-icons/md";
 import HeadText from './Head-Text';
+import { trackFormSubmission, trackContactInteraction, trackButtonClick } from '@/lib/posthog';
 
 type FormData = {
     name: string;
@@ -179,6 +180,17 @@ const ContactSection = () => {
             }
 
             toast.success(json?.message || 'Message sent');
+
+            // Track form submission
+            trackFormSubmission('contact_form', {
+                name: formData.name,
+                email: formData.email,
+                phone: formData.phone,
+                age: formData.age,
+                message_length: formData.message.length,
+                has_age: !!formData.age
+            });
+
             setIsSubmitted(true);
             setIsSubmitting(false);
 
@@ -305,14 +317,20 @@ const ContactSection = () => {
 
                                 <div className="mt-4 text-sm text-gray-500 flex gap-3 justify-center sm:justify-start">
                                     <button
-                                        onClick={() => setShowWhatsAppDialog(true)}
+                                        onClick={() => {
+                                            setShowWhatsAppDialog(true);
+                                            trackButtonClick('WhatsApp Quick', 'contact_form');
+                                        }}
                                         className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-3 py-2 "
                                     >
                                         <FaWhatsapp className="w-4 h-4" />
                                         WhatsApp
                                     </button>
                                     <button
-                                        onClick={() => setShowCallDialog(true)}
+                                        onClick={() => {
+                                            setShowCallDialog(true);
+                                            trackButtonClick('Call Quick', 'contact_form');
+                                        }}
                                         className="inline-flex items-center gap-2 bg-black hover:bg-gray-900 text-white px-3 py-2 "
                                     >
                                         <FaPhoneAlt className="w-4 h-4" />
@@ -373,6 +391,7 @@ const ContactSection = () => {
                         onClose={() => setShowCallDialog(false)}
                         onConfirm={() => {
                             callPhone();
+                            trackContactInteraction('call', { location: 'contact_page_dialog' });
                             setShowCallDialog(false);
                         }}
                     />
@@ -385,6 +404,7 @@ const ContactSection = () => {
                         onClose={() => setShowWhatsAppDialog(false)}
                         onConfirm={() => {
                             openWhatsApp();
+                            trackContactInteraction('whatsapp', { location: 'contact_page_dialog' });
                             setShowWhatsAppDialog(false);
                         }}
                     />

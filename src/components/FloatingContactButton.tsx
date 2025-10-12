@@ -4,6 +4,7 @@ import { FiPhone, FiX } from 'react-icons/fi';
 import { IoLogoWhatsapp } from 'react-icons/io';
 import CallDialog from './shared/CallDialog';
 import WhatsAppDialog from './shared/WhatsAppDialog';
+import { trackContactInteraction, trackButtonClick } from '@/lib/posthog';
 
 const FloatingContactButton = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -15,6 +16,7 @@ const FloatingContactButton = () => {
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
+        trackButtonClick('Floating Contact Toggle', 'floating_button', { action: isOpen ? 'close' : 'open' });
     };
 
     return (
@@ -26,7 +28,10 @@ const FloatingContactButton = () => {
                     }`}>
                     {/* WhatsApp Button */}
                     <button
-                        onClick={() => setShowWhatsAppDialog(true)}
+                        onClick={() => {
+                            setShowWhatsAppDialog(true);
+                            trackContactInteraction('whatsapp', { location: 'floating_button_desktop' });
+                        }}
                         className="flex items-center gap-3 bg-white hover:bg-gray-50 text-gray-800 border border-gray-300 px-4 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"
                     >
                         <IoLogoWhatsapp size={20} className="text-green-600" />
@@ -35,7 +40,10 @@ const FloatingContactButton = () => {
 
                     {/* Call Button */}
                     <button
-                        onClick={() => setShowCallDialog(true)}
+                        onClick={() => {
+                            setShowCallDialog(true);
+                            trackContactInteraction('call', { location: 'floating_button_desktop' });
+                        }}
                         className="flex items-center gap-3 bg-white hover:bg-gray-50 text-gray-800 border border-gray-300 px-4 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"
                     >
                         <FiPhone size={20} className="text-blue-600" />
@@ -74,14 +82,20 @@ const FloatingContactButton = () => {
             <div className="fixed bottom-0 left-0 right-0 md:hidden bg-white border-t border-gray-200  z-40">
                 <div className="flex ">
                     <button
-                        onClick={() => setShowWhatsAppDialog(true)}
+                        onClick={() => {
+                            setShowWhatsAppDialog(true);
+                            trackContactInteraction('whatsapp', { location: 'floating_button_mobile' });
+                        }}
                         className="flex-1 bg-green-600 hover:bg-green-500 border border-gray-300 text-gray-100 py-3 px-4  font-medium transition-colors flex items-center justify-center gap-2"
                     >
                         <IoLogoWhatsapp size={25} className="text-green-600 p-[0.5px] rounded-full bg-white" />
                         WhatsApp
                     </button>
                     <button
-                        onClick={() => setShowCallDialog(true)}
+                        onClick={() => {
+                            setShowCallDialog(true);
+                            trackContactInteraction('call', { location: 'floating_button_mobile' });
+                        }}
                         className="flex-1 bg-black hover:bg-gray-950 text-white py-3 px-4  font-medium transition-colors flex items-center justify-center gap-2"
                     >
                         <FiPhone size={20} />

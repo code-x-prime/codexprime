@@ -8,6 +8,8 @@ import Footer from '@/components/shared/Footer';
 import { Toaster } from "@/components/ui/sonner";
 import { Analytics } from "@vercel/analytics/next"
 import Script from "next/script"
+import PostHogProvider from "@/components/PostHogProvider";
+import PageTracker from "@/components/PageTracker";
 
 
 const satoshiRegular = localFont({
@@ -303,12 +305,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           enableSystem
           disableTransitionOnChange
         >
-          <Navigation />
-          {/* Montserrat Bold logo font name */}
-          {children}
-          <Toaster />
-          <Footer />
-          <FloatingContactButton />
+          <PostHogProvider>
+            <PageTracker>
+              <Navigation />
+              {/* Montserrat Bold logo font name */}
+              {children}
+              <Toaster />
+              <Footer />
+              <FloatingContactButton />
+            </PageTracker>
+          </PostHogProvider>
         </ThemeProvider>
         <Analytics />
 

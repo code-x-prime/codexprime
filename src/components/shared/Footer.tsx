@@ -1,8 +1,11 @@
+'use client'
+
 import React from 'react'
 import { Mail, Phone, MapPin } from 'lucide-react'
 import Image from 'next/image'
 import { biglogoremove } from '@/assets'
 import Link from 'next/link'
+import { trackFooterClick, trackContactInteraction } from '@/lib/posthog'
 
 const Footer: React.FC = () => {
     return (
@@ -14,7 +17,11 @@ const Footer: React.FC = () => {
                     {/* Company Info Section */}
                     <div className="sm:col-span-2 lg:col-span-2">
                         {/* Logo */}
-                        <Link href="/" className="inline-block mb-4">
+                        <Link
+                            href="/"
+                            className="inline-block mb-4"
+                            onClick={() => trackFooterClick('Logo', '/')}
+                        >
                             <Image src={biglogoremove} alt="CodeXprime Logo" width={150} height={40} className="h-10 w-auto object-cover" />
                         </Link>
 
@@ -35,22 +42,38 @@ const Footer: React.FC = () => {
                         <h4 className="text-gray-900 font-semibold mb-3 text-sm sm:text-base">Quick links</h4>
                         <ul className="space-y-2 text-gray-600 text-sm sm:text-base">
                             <li>
-                                <Link href="/" className="hover:text-gray-900 hover:underline transition-colors duration-200">
+                                <Link
+                                    href="/"
+                                    className="hover:text-gray-900 hover:underline transition-colors duration-200"
+                                    onClick={() => trackFooterClick('Home', '/')}
+                                >
                                     Home
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/services" className="hover:text-gray-900 hover:underline transition-colors duration-200">
+                                <Link
+                                    href="/services"
+                                    className="hover:text-gray-900 hover:underline transition-colors duration-200"
+                                    onClick={() => trackFooterClick('Services', '/services')}
+                                >
                                     Services
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/portfolio" className="hover:text-gray-900 hover:underline transition-colors duration-200">
+                                <Link
+                                    href="/portfolio"
+                                    className="hover:text-gray-900 hover:underline transition-colors duration-200"
+                                    onClick={() => trackFooterClick('Portfolio', '/portfolio')}
+                                >
                                     Portfolio
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/contact" className="hover:text-gray-900 hover:underline transition-colors duration-200">
+                                <Link
+                                    href="/contact"
+                                    className="hover:text-gray-900 hover:underline transition-colors duration-200"
+                                    onClick={() => trackFooterClick('Contact', '/contact')}
+                                >
                                     Contact
                                 </Link>
                             </li>
@@ -70,6 +93,7 @@ const Footer: React.FC = () => {
                                 <a
                                     href="tel:+919354734436"
                                     className="text-gray-700 font-medium text-sm sm:text-base hover:text-gray-900 transition-colors duration-200 block"
+                                    onClick={() => trackContactInteraction('call', { location: 'footer', phone: '+919354734436' })}
                                 >
                                     +91 9354734436
                                 </a>
@@ -88,6 +112,7 @@ const Footer: React.FC = () => {
                                 <a
                                     href="mailto:hello@codexprime.in"
                                     className="text-gray-700 font-medium text-sm sm:text-base hover:text-gray-900 transition-colors duration-200 block break-all"
+                                    onClick={() => trackContactInteraction('email', { location: 'footer', email: 'hello@codexprime.in' })}
                                 >
                                     hello@codexprime.in
                                 </a>
@@ -111,11 +136,19 @@ const Footer: React.FC = () => {
                         <div className="flex items-center gap-2 text-center pb-10 md:pb-0">
                             <span>Made with care</span>
                             <span className="text-gray-300">•</span>
-                            <Link href="/privacy" className="hover:text-gray-700 transition-colors duration-200">
+                            <Link
+                                href="/privacy"
+                                className="hover:text-gray-700 transition-colors duration-200"
+                                onClick={() => trackFooterClick('Privacy', '/privacy')}
+                            >
                                 Privacy
                             </Link>
                             <span className="text-gray-300">•</span>
-                            <Link href="/terms" className="hover:text-gray-700 transition-colors duration-200">
+                            <Link
+                                href="/terms"
+                                className="hover:text-gray-700 transition-colors duration-200"
+                                onClick={() => trackFooterClick('Terms', '/terms')}
+                            >
                                 Terms
                             </Link>
                         </div>

@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React, { useState } from 'react'
 import { PhoneCall } from 'lucide-react';
+import { trackNavigation, trackContactInteraction } from '@/lib/posthog';
 
 const Navigation = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -25,7 +26,11 @@ const Navigation = () => {
     return (
         <div className='w-full h-[4.5rem] text-black flex items-center justify-between bg-white shadow-sm px-4 lg:px-8'>
             {/* Logo */}
-            <Link href="/" className='flex items-center'>
+            <Link
+                href="/"
+                className='flex items-center'
+                onClick={() => trackNavigation('Logo', '/')}
+            >
                 <Image
                     src={biglogoremove}
                     alt='CodeXprime Logo'
@@ -43,6 +48,7 @@ const Navigation = () => {
                             <Link
                                 href={item.href}
                                 className='text-body hover:text-gray-600 transition-colors duration-200 font-medium'
+                                onClick={() => trackNavigation(item.label, item.href)}
                             >
                                 {item.label}
                             </Link>
@@ -58,6 +64,7 @@ const Navigation = () => {
                     <a
                         href="tel:+919354734436"
                         className='text-body font-semibold hover:text-gray-600 transition-colors duration-200'
+                        onClick={() => trackContactInteraction('call', { location: 'header', phone: '+919354734436' })}
                     >
                         +91 935 473 4436
                     </a>
@@ -115,7 +122,10 @@ const Navigation = () => {
                             <li key={index}>
                                 <Link
                                     href={item.href}
-                                    onClick={toggleMobileMenu}
+                                    onClick={() => {
+                                        toggleMobileMenu()
+                                        trackNavigation(`Mobile - ${item.label}`, item.href)
+                                    }}
                                     className='block text-body hover:text-gray-600 transition-colors duration-200 font-medium py-3 border-b border-gray-100'
                                 >
                                     {item.label}
@@ -131,6 +141,7 @@ const Navigation = () => {
                         <a
                             href="tel:+919354734436"
                             className='inline-flex items-center justify-center w-full bg-black text-white py-3 px-4 text-body font-medium hover:bg-gray-800 transition-colors duration-200 gap-3'
+                            onClick={() => trackContactInteraction('call', { location: 'mobile_menu', phone: '+919354734436' })}
                         >
                             <PhoneCall /> +91 935 473 4436
                         </a>
