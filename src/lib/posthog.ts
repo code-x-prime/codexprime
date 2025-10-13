@@ -2,12 +2,18 @@ import posthog from 'posthog-js'
 
 export const initPostHog = () => {
     if (typeof window !== 'undefined') {
-        posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
-            api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://app.posthog.com',
+        const apiKey = process.env.NEXT_PUBLIC_POSTHOG_KEY!
+        const host = process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://app.posthog.com'
+        
+        posthog.init(apiKey, {
+            api_host: host,
+            debug: true, // Enable debug mode
             loaded: () => {
-                if (process.env.NODE_ENV === 'development') console.log('PostHog loaded')
+                console.log('PostHog loaded successfully!')
+                console.log('PostHog API Key:', apiKey)
+                console.log('PostHog Host:', host)
             },
-            capture_pageview: false, // Disable automatic pageview capture, as we capture manually
+            capture_pageview: true, // Enable automatic pageview capture
             capture_pageleave: true, // Enable pageleave capture
         })
     }
