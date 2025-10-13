@@ -4,17 +4,23 @@ export const initPostHog = () => {
     if (typeof window !== 'undefined') {
         // Environment variables are automatically available in Next.js client-side
         const apiKey = process.env.NEXT_PUBLIC_POSTHOG_KEY!
-        const host = process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://app.posthog.com'
+        const host = process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com'
 
         console.log('🚀 Initializing PostHog with:', { apiKey: apiKey?.slice(0, 10) + '...', host })
 
         posthog.init(apiKey, {
             api_host: host,
+            ui_host: host, // Explicitly set UI host as well
             debug: process.env.NODE_ENV === 'development', // Enable debug in development
+            autocapture: true,
+            cross_subdomain_cookie: false,
+            secure_cookie: true,
+            persistence: 'localStorage+cookie',
             loaded: (posthog) => {
                 console.log('✅ PostHog loaded successfully')
                 console.log('🔧 PostHog config:', {
                     api_host: posthog.config.api_host,
+                    ui_host: posthog.config.ui_host,
                     session_recording_enabled: !posthog.config.disable_session_recording,
                     distinct_id: posthog.get_distinct_id(),
                 })
