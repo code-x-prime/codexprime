@@ -3,38 +3,32 @@ import posthog from 'posthog-js'
 export const initPostHog = () => {
     if (typeof window !== 'undefined') {
         // Environment variables are automatically available in Next.js client-side
-        const apiKey = process.env.NEXT_PUBLIC_POSTHOG_KEY!
+        const apiKey = process.env.NEXT_PUBLIC_POSTHOG_KEY
         const host = process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://app.posthog.com'
 
-        console.log('🚀 Initializing PostHog with:', { apiKey: apiKey?.slice(0, 10) + '...', host })
+        if (!apiKey) {
+            console.error('❌ PostHog API Key is missing! Check your .env.local file.')
+            return
+        }
+
+        console.log('🚀 Initializing PostHog with:', { 
+            apiKey: apiKey?.slice(0, 10) + '...', 
+            host
+        })
 
         posthog.init(apiKey, {
             api_host: host,
-            ui_host: host, // Explicitly set UI host as well
-            debug: process.env.NODE_ENV === 'development', // Enable debug in development
+            ui_host: host,
+            defaults: '2025-05-24', // Required for latest PostHog features
+            debug: true,
             autocapture: true,
             cross_subdomain_cookie: false,
             secure_cookie: true,
             persistence: 'localStorage+cookie',
-            loaded: (posthog) => {
-                console.log('✅ PostHog loaded successfully')
-                console.log('🔧 PostHog config:', {
-                    api_host: posthog.config.api_host,
-                    ui_host: posthog.config.ui_host,
-                    session_recording_enabled: !posthog.config.disable_session_recording,
-                    distinct_id: posthog.get_distinct_id(),
-                })
-
-                // Start session recording immediately
-                if (!posthog.config.disable_session_recording) {
-                    posthog.startSessionRecording()
-                    console.log('🎥 Session recording started automatically')
-                }
-            },
-            capture_pageview: true, // Enable automatic pageview capture
-            capture_pageleave: true, // Enable pageleave capture
-            disable_session_recording: false, // Explicitly enable session recording
-
+            
+            // Session Recording is enabled by default - no need to manually start
+            disable_session_recording: false,
+            
             // Session Replay Configuration
             session_recording: {
                 recordCrossOriginIframes: false,
@@ -47,6 +41,25 @@ export const initPostHog = () => {
                 ignoreClass: 'ph-ignore',
                 collectFonts: true,
                 inlineStylesheet: true,
+            },
+            
+            // Enable automatic captures
+            capture_pageview: true,
+            capture_pageleave: true,
+            
+            loaded: (ph: typeof posthog) => {
+                console.log('✅ PostHog loaded successfully')
+                console.log('🔧 PostHog config:', {
+                    api_host: ph.config.api_host,
+                    ui_host: ph.config.ui_host,
+                    session_recording_enabled: !ph.config.disable_session_recording,
+                    distinct_id: ph.get_distinct_id(),
+                    session_id: ph.get_session_id(),
+                    session_recording_started: ph.sessionRecordingStarted?.(),
+                })
+                
+                // Session recording should start automatically
+                console.log('🎥 Session recording status:', ph.sessionRecordingStarted?.() ? 'Active' : 'Inactive')
             },
         })
     }
