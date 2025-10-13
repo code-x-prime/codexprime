@@ -11,8 +11,8 @@ export const initPostHog = () => {
             return
         }
 
-        console.log('🚀 Initializing PostHog with:', { 
-            apiKey: apiKey?.slice(0, 10) + '...', 
+        console.log('🚀 Initializing PostHog with:', {
+            apiKey: apiKey?.slice(0, 10) + '...',
             host
         })
 
@@ -25,10 +25,10 @@ export const initPostHog = () => {
             cross_subdomain_cookie: false,
             secure_cookie: true,
             persistence: 'localStorage+cookie',
-            
+
             // Session Recording is enabled by default - no need to manually start
             disable_session_recording: false,
-            
+
             // Session Replay Configuration
             session_recording: {
                 recordCrossOriginIframes: false,
@@ -42,11 +42,11 @@ export const initPostHog = () => {
                 collectFonts: true,
                 inlineStylesheet: true,
             },
-            
+
             // Enable automatic captures
             capture_pageview: true,
             capture_pageleave: true,
-            
+
             loaded: (ph: typeof posthog) => {
                 console.log('✅ PostHog loaded successfully')
                 console.log('🔧 PostHog config:', {
@@ -57,7 +57,7 @@ export const initPostHog = () => {
                     session_id: ph.get_session_id(),
                     session_recording_started: ph.sessionRecordingStarted?.(),
                 })
-                
+
                 // Session recording should start automatically
                 console.log('🎥 Session recording status:', ph.sessionRecordingStarted?.() ? 'Active' : 'Inactive')
             },
