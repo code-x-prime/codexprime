@@ -11,16 +11,20 @@ export const initPostHog = () => {
             return
         }
 
-        console.log('🚀 Initializing PostHog with:', {
-            apiKey: apiKey?.slice(0, 10) + '...',
-            host
-        })
+        const isProduction = window.location.hostname === 'codexprime.in'
+        
+        if (!isProduction) {
+            console.log('🚀 Initializing PostHog with:', {
+                apiKey: apiKey?.slice(0, 10) + '...',
+                host
+            })
+        }
 
         posthog.init(apiKey, {
             api_host: host,
             ui_host: host,
             defaults: '2025-05-24', // Required for latest PostHog features
-            debug: true,
+            debug: !isProduction, // Only debug in development
             autocapture: true,
             cross_subdomain_cookie: false,
             secure_cookie: true,
@@ -48,30 +52,48 @@ export const initPostHog = () => {
             capture_pageleave: true,
 
             loaded: (ph: typeof posthog) => {
-                console.log('✅ PostHog loaded successfully')
-                console.log('🔧 PostHog config:', {
-                    api_host: ph.config.api_host,
-                    ui_host: ph.config.ui_host,
-                    session_recording_enabled: !ph.config.disable_session_recording,
-                    distinct_id: ph.get_distinct_id(),
-                    session_id: ph.get_session_id(),
-                    session_recording_started: ph.sessionRecordingStarted?.(),
+                const isProduction = window.location.hostname === 'codexprime.in'
+                
+                if (!isProduction) {
+                    console.log('✅ PostHog loaded successfully')
+                    console.log('🔧 PostHog config:', {
+                        api_host: ph.config.api_host,
+                        ui_host: ph.config.ui_host,
+                        session_recording_enabled: !ph.config.disable_session_recording,
+                        distinct_id: ph.get_distinct_id(),
+                        session_id: ph.get_session_id(),
+                        session_recording_started: ph.sessionRecordingStarted?.(),
+                    })
+                }
+
+                // Always force start recording (bypass all triggers)
+                if (!isProduction) {
+                    console.log('🎥 Force starting session recording...')
+                }
+                
+                ph.startSessionRecording({
+                    url_trigger: true,
+                    sampling: true,
+                    linked_flag: true,
+                    event_trigger: true
                 })
 
-                // Force start recording on localhost (bypassing URL triggers)
-                if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-                    console.log('🎥 Localhost detected - forcing session recording to start...')
-                    ph.startSessionRecording({
-                        url_trigger: true // Override URL trigger restriction
-                    })
-                    
-                    // Check again after forcing
-                    setTimeout(() => {
-                        console.log('🎥 Session recording status after force:', ph.sessionRecordingStarted?.() ? 'Active ✅' : 'Still Inactive ❌')
-                    }, 1000)
-                } else {
-                    console.log('🎥 Session recording status:', ph.sessionRecordingStarted?.() ? 'Active' : 'Inactive')
-                }
+                // Verify after 1 second
+                setTimeout(() => {
+                    const isRecording = ph.sessionRecordingStarted?.()
+                    if (!isProduction) {
+                        if (isRecording) {
+                            console.log('✅ Session recording is ACTIVE')
+                        } else {
+                            console.error('❌ Session recording failed to start - retrying...')
+                            // Try one more time with true parameter
+                            ph.startSessionRecording(true)
+                        }
+                    } else if (!isRecording) {
+                        // Production: Silent retry if not recording
+                        ph.startSessionRecording(true)
+                    }
+                }, 1000)
             },
         })
     }
