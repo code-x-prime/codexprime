@@ -10,6 +10,7 @@ import { Analytics } from "@vercel/analytics/next"
 import Script from "next/script"
 import PostHogProvider from "@/components/PostHogProvider";
 import PageTracker from "@/components/PageTracker";
+import { PostHogEmergencyDebug } from "@/components/PostHogEmergencyDebug";
 
 
 const satoshiRegular = localFont({
@@ -313,6 +314,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               <Toaster />
               <Footer />
               <FloatingContactButton />
+              <PostHogEmergencyDebug />
             </PageTracker>
           </PostHogProvider>
         </ThemeProvider>

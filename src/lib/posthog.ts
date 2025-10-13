@@ -14,10 +14,7 @@ export const initPostHog = () => {
         const isProduction = window.location.hostname === 'codexprime.in'
 
         if (!isProduction) {
-            console.log('🚀 Initializing PostHog with:', {
-                apiKey: apiKey?.slice(0, 10) + '...',
-                host
-            })
+            console.log('🚀 Initializing PostHog with:', { apiKey: apiKey?.slice(0, 10) + '...', host })
         }
 
         posthog.init(apiKey, {
@@ -94,6 +91,23 @@ export const initPostHog = () => {
                         ph.startSessionRecording(true)
                     }
                 }, 1000)
+
+                // Additional retry after 3 seconds (ultimate fallback)
+                setTimeout(() => {
+                    if (!ph.sessionRecordingStarted?.()) {
+                        if (!isProduction) {
+                            console.error('🔴 FINAL RETRY - Recording still not started!')
+                        }
+                        ph.startSessionRecording(true)
+
+                        // Check one last time after 2 more seconds
+                        setTimeout(() => {
+                            if (!isProduction) {
+                                console.log('🎬 Final status:', ph.sessionRecordingStarted?.() ? '✅ ACTIVE' : '❌ FAILED')
+                            }
+                        }, 2000)
+                    }
+                }, 3000)
             },
         })
     }
