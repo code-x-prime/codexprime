@@ -58,8 +58,20 @@ export const initPostHog = () => {
                     session_recording_started: ph.sessionRecordingStarted?.(),
                 })
 
-                // Session recording should start automatically
-                console.log('🎥 Session recording status:', ph.sessionRecordingStarted?.() ? 'Active' : 'Inactive')
+                // Force start recording on localhost (bypassing URL triggers)
+                if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                    console.log('🎥 Localhost detected - forcing session recording to start...')
+                    ph.startSessionRecording({
+                        url_trigger: true // Override URL trigger restriction
+                    })
+                    
+                    // Check again after forcing
+                    setTimeout(() => {
+                        console.log('🎥 Session recording status after force:', ph.sessionRecordingStarted?.() ? 'Active ✅' : 'Still Inactive ❌')
+                    }, 1000)
+                } else {
+                    console.log('🎥 Session recording status:', ph.sessionRecordingStarted?.() ? 'Active' : 'Inactive')
+                }
             },
         })
     }
