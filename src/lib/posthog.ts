@@ -4,15 +4,26 @@ export const initPostHog = () => {
     if (typeof window !== 'undefined') {
         // Environment variables are automatically available in Next.js client-side
         const apiKey = process.env.NEXT_PUBLIC_POSTHOG_KEY!
-        const host = process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com'
+        const host = process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://app.posthog.com'
+
+        console.log('🚀 Initializing PostHog with:', { apiKey: apiKey?.slice(0, 10) + '...', host })
 
         posthog.init(apiKey, {
             api_host: host,
             debug: process.env.NODE_ENV === 'development', // Enable debug in development
-            defaults: '2025-05-24', // Required for proper session recording
-            loaded: () => {
-                // Only log in development, don't show API keys
-                console.log('✅ Analytics loaded')
+            loaded: (posthog) => {
+                console.log('✅ PostHog loaded successfully')
+                console.log('🔧 PostHog config:', {
+                    api_host: posthog.config.api_host,
+                    session_recording_enabled: !posthog.config.disable_session_recording,
+                    distinct_id: posthog.get_distinct_id(),
+                })
+
+                // Start session recording immediately
+                if (!posthog.config.disable_session_recording) {
+                    posthog.startSessionRecording()
+                    console.log('🎥 Session recording started automatically')
+                }
             },
             capture_pageview: true, // Enable automatic pageview capture
             capture_pageleave: true, // Enable pageleave capture
