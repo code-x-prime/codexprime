@@ -12,7 +12,7 @@ export const initPostHog = () => {
         }
 
         const isProduction = window.location.hostname === 'codexprime.in'
-        
+
         if (!isProduction) {
             console.log('🚀 Initializing PostHog with:', {
                 apiKey: apiKey?.slice(0, 10) + '...',
@@ -53,7 +53,7 @@ export const initPostHog = () => {
 
             loaded: (ph: typeof posthog) => {
                 const isProduction = window.location.hostname === 'codexprime.in'
-                
+
                 if (!isProduction) {
                     console.log('✅ PostHog loaded successfully')
                     console.log('🔧 PostHog config:', {
@@ -70,7 +70,7 @@ export const initPostHog = () => {
                 if (!isProduction) {
                     console.log('🎥 Force starting session recording...')
                 }
-                
+
                 ph.startSessionRecording({
                     url_trigger: true,
                     sampling: true,
