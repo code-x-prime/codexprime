@@ -2,24 +2,22 @@ import posthog from 'posthog-js'
 
 export const initPostHog = () => {
     if (typeof window !== 'undefined') {
+        // Environment variables are automatically available in Next.js client-side
         const apiKey = process.env.NEXT_PUBLIC_POSTHOG_KEY!
         const host = process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://app.posthog.com'
-        
+
         posthog.init(apiKey, {
             api_host: host,
-            debug: true, // Enable debug mode
+            debug: false, // Disable debug mode
             loaded: () => {
-                console.log('PostHog loaded successfully!')
-                console.log('PostHog API Key:', apiKey)
-                console.log('PostHog Host:', host)
+                // Only log in development, don't show API keys
+                console.log('✅ Analytics loaded')
             },
             capture_pageview: true, // Enable automatic pageview capture
             capture_pageleave: true, // Enable pageleave capture
         })
     }
-}
-
-// Track page views
+}// Track page views
 export const trackPageView = (url?: string) => {
     if (typeof window !== 'undefined') {
         posthog.capture('$pageview', {
