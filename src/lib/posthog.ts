@@ -4,17 +4,19 @@ export const initPostHog = () => {
     if (typeof window !== 'undefined') {
         // Environment variables are automatically available in Next.js client-side
         const apiKey = process.env.NEXT_PUBLIC_POSTHOG_KEY!
-        const host = process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://app.posthog.com'
+        const host = process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com'
 
         posthog.init(apiKey, {
             api_host: host,
-            debug: false, // Disable debug mode
+            debug: process.env.NODE_ENV === 'development', // Enable debug in development
+            defaults: '2025-05-24', // Required for proper session recording
             loaded: () => {
                 // Only log in development, don't show API keys
                 console.log('✅ Analytics loaded')
             },
             capture_pageview: true, // Enable automatic pageview capture
             capture_pageleave: true, // Enable pageleave capture
+            disable_session_recording: false, // Explicitly enable session recording
 
             // Session Replay Configuration
             session_recording: {
@@ -140,6 +142,24 @@ export const forceSessionRecording = () => {
         posthog.startSessionRecording()
         console.log('🎥 Force started session recording for debugging')
     }
+}
+
+// Check PostHog configuration
+export const checkPostHogConfig = () => {
+    if (typeof window !== 'undefined') {
+        const config = {
+            isLoaded: posthog.__loaded,
+            apiHost: posthog.config?.api_host,
+            apiKey: posthog.config?.token ? 'Set' : 'Not set',
+            sessionRecordingEnabled: !posthog.config?.disable_session_recording,
+            distinctId: posthog.get_distinct_id(),
+            sessionId: posthog.get_session_id(),
+            sessionRecordingStarted: posthog.sessionRecordingStarted?.(),
+        }
+        console.log('🔧 PostHog Configuration:', config)
+        return config
+    }
+    return null
 }
 
 export default posthog

@@ -27,6 +27,9 @@ export function PostHogDebug() {
                 sessionId: id,
                 distinctId: posthog.get_distinct_id(),
                 isLoaded: posthog.__loaded,
+                config: posthog.config,
+                apiHost: posthog.config?.api_host,
+                sessionRecordingStarted: posthog.sessionRecordingStarted?.(),
             })
         }
 
