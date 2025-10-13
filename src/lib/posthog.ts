@@ -4,7 +4,7 @@ export const initPostHog = () => {
     if (typeof window !== 'undefined') {
         // Environment variables are automatically available in Next.js client-side
         const apiKey = process.env.NEXT_PUBLIC_POSTHOG_KEY!
-        const host = process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com'
+        const host = process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://app.posthog.com'
 
         console.log('🚀 Initializing PostHog with:', { apiKey: apiKey?.slice(0, 10) + '...', host })
 
