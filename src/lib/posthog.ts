@@ -15,6 +15,20 @@ export const initPostHog = () => {
             },
             capture_pageview: true, // Enable automatic pageview capture
             capture_pageleave: true, // Enable pageleave capture
+
+            // Session Replay Configuration
+            session_recording: {
+                recordCrossOriginIframes: false,
+                maskAllInputs: false,
+                maskInputOptions: {
+                    password: true,
+                },
+                maskTextSelector: '[data-sensitive]',
+                blockSelector: '[data-private]',
+                ignoreClass: 'ph-ignore',
+                collectFonts: true,
+                inlineStylesheet: true,
+            },
         })
     }
 }// Track page views
@@ -93,6 +107,39 @@ export const trackTimeOnPage = (timeInSeconds: number) => {
         time_seconds: timeInSeconds,
         page_url: typeof window !== 'undefined' ? window.location.href : '',
     })
+}
+
+// Session Recording Controls
+export const startSessionRecording = () => {
+    if (typeof window !== 'undefined') {
+        posthog.startSessionRecording()
+        console.log('🎥 Session recording started manually')
+    }
+}
+
+export const stopSessionRecording = () => {
+    if (typeof window !== 'undefined') {
+        posthog.stopSessionRecording()
+        console.log('⏹️ Session recording stopped')
+    }
+}
+
+// Get session recording status
+export const getSessionRecordingStatus = () => {
+    if (typeof window !== 'undefined') {
+        const isRecording = posthog.sessionRecordingStarted()
+        console.log('🎥 Session recording status:', isRecording ? 'Recording' : 'Not recording')
+        return isRecording
+    }
+    return false
+}
+
+// Force session recording for debugging
+export const forceSessionRecording = () => {
+    if (typeof window !== 'undefined') {
+        posthog.startSessionRecording()
+        console.log('🎥 Force started session recording for debugging')
+    }
 }
 
 export default posthog
