@@ -7,13 +7,12 @@ import ServicesSection from "@/components/shared/ServicesSection";
 import StillConfusedSection from "@/components/shared/StillConfusedSection";
 import Testimonials from "@/components/shared/Testimonials";
 import WhyChooseUsSection from "@/components/shared/WhyChooseUsSection";
-import { PostHogDebug } from "@/components/PostHogDebug";
 
 
 export default function Home() {
   return (
     <>
-      <PostHogDebug />
+
       <HeroComponent />
       <ServicesSection />
       <WhyChooseUsSection />

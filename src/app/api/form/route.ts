@@ -2,6 +2,27 @@
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
+// Allowed origins for CORS - update with your front-end origins
+const ALLOWED_ORIGINS = [
+  'https://landing-page-nine-khaki-75.vercel.app',
+  'http://localhost:3000',
+];
+
+function corsHeaders(origin: string | null) {
+  const allowed = origin && ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+  return {
+    'Access-Control-Allow-Origin': allowed,
+    'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    'Access-Control-Allow-Credentials': 'true',
+  };
+}
+
+export function OPTIONS(request: NextRequest) {
+  const origin = request.headers.get('origin');
+  return new NextResponse(null, { status: 204, headers: corsHeaders(origin) });
+}
+
 // Configure transporter using environment variables
 const transporter = nodemailer.createTransport({
   host: process.env.NEXT_PUBLIC_SMTP_HOST,
@@ -121,10 +142,11 @@ function buildUserTemplate({ name, message }: { name: string; message?: string }
 
 export async function POST(request: NextRequest) {
   try {
+    const origin = request.headers.get('origin');
     // Ensure SMTP config exists
     if (!process.env.NEXT_PUBLIC_SMTP_HOST || !process.env.NEXT_PUBLIC_SMTP_USER || !process.env.NEXT_PUBLIC_SMTP_PASSWORD) {
       console.error("Missing SMTP environment variables");
-      return NextResponse.json({ error: "Email service configuration error" }, { status: 500 });
+      return NextResponse.json({ error: "Email service configuration error" }, { status: 500, headers: corsHeaders(origin) });
     }
 
     const payload = await request.json();
@@ -132,16 +154,16 @@ export async function POST(request: NextRequest) {
 
     // Basic validation
     if (!name || !email || !mobileNumber || !message) {
-      return NextResponse.json({ error: "Please fill in all required fields" }, { status: 400 });
+      return NextResponse.json({ error: "Please fill in all required fields" }, { status: 400, headers: corsHeaders(origin) });
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      return NextResponse.json({ error: "Please enter a valid email address" }, { status: 400 });
+      return NextResponse.json({ error: "Please enter a valid email address" }, { status: 400, headers: corsHeaders(origin) });
     }
 
     if (String(mobileNumber).replace(/\D/g, '').length < 10) {
-      return NextResponse.json({ error: "Please enter a valid mobile number" }, { status: 400 });
+      return NextResponse.json({ error: "Please enter a valid mobile number" }, { status: 400, headers: corsHeaders(origin) });
     }
 
     // Build and send admin email (include optional age)
@@ -174,9 +196,9 @@ export async function POST(request: NextRequest) {
       console.warn('User confirmation email failed:', msg);
     }
 
-    return NextResponse.json({ success: true, message: "Your message has been sent successfully!" }, { status: 200 });
+    return NextResponse.json({ success: true, message: "Your message has been sent successfully!" }, { status: 200, headers: corsHeaders(origin) });
   } catch (error) {
     console.error("Email sending error:", error);
-    return NextResponse.json({ error: "Failed to send message. Please try again later." }, { status: 500 });
+    return NextResponse.json({ error: "Failed to send message. Please try again later." }, { status: 500, headers: corsHeaders((request as NextRequest).headers.get('origin')) });
   }
 }
