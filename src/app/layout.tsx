@@ -10,7 +10,6 @@ import { Analytics } from "@vercel/analytics/next"
 import Script from "next/script"
 import PostHogProvider from "@/components/PostHogProvider";
 import PageTracker from "@/components/PageTracker";
-import { PostHogEmergencyDebug } from "@/components/PostHogEmergencyDebug";
 
 
 const satoshiRegular = localFont({
@@ -134,6 +133,29 @@ export default function RootLayout({
           {`
             if (typeof fbq !== 'undefined') {
               fbq('init', '1222146469943980');
+              fbq('track', 'PageView');
+            }
+          `}
+        </Script>
+        {/* Additional Meta Pixel (second pixel) - load early */}
+        <Script id="meta-pixel-init-2" strategy="beforeInteractive">
+          {`
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '1327356755537742');
+            fbq('track', 'PageView');
+          `}
+        </Script>
+        <Script id="meta-pixel-track-2" strategy="afterInteractive">
+          {`
+            if (typeof fbq !== 'undefined') {
+              fbq('init', '1327356755537742');
               fbq('track', 'PageView');
             }
           `}
@@ -289,6 +311,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               '<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1222146469943980&ev=PageView&noscript=1" />',
           }}
         />
+        {/* Additional Meta Pixel noscript for second pixel */}
+        <noscript
+          dangerouslySetInnerHTML={{
+            __html:
+              '<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1327356755537742&ev=PageView&noscript=1" />',
+          }}
+        />
         {/* End Meta Pixel (noscript) */}
         {/* Google Tag Manager (noscript) */}
         <noscript>
@@ -314,7 +343,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               <Toaster />
               <Footer />
               <FloatingContactButton />
-              <PostHogEmergencyDebug />
             </PageTracker>
           </PostHogProvider>
         </ThemeProvider>
