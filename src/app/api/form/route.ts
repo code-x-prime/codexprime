@@ -4,7 +4,7 @@ import nodemailer from "nodemailer";
 
 // Allowed origins for CORS - update with your front-end origins
 const ALLOWED_ORIGINS = [
-  'https://landing-page-nine-khaki-75.vercel.app',
+  'https://landing.codexprime.in',
   'http://localhost:3000',
 ];
 
