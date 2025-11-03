@@ -176,6 +176,19 @@ export default function RootLayout({
             gtag('config', 'G-YQSV9GJ8KV');
           `}
         </Script>
+        {/* Google Ads (gtag for AW) */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=AW-17680263266"
+          strategy="afterInteractive"
+        />
+        <Script id="gtag-aw-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);} 
+            gtag('js', new Date());
+            gtag('config', 'AW-17680263266');
+          `}
+        </Script>
         {/* End Google Analytics (gtag.js) */}
         {/* Additional SEO Meta Tags */}
         <meta name="geo.region" content="IN-DL" />
@@ -311,7 +324,8 @@ export default function RootLayout({
           }}
         />
         {/* End Meta Pixel (noscript) */}
-        {/* Google Tag Manager noscript removed */}
+
+
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
