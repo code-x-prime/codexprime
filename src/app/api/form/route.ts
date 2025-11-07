@@ -1,204 +1,198 @@
-// API route for /api/form (lowercase). Implementation follows.
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
-// Allowed origins for CORS - update with your front-end origins
-const ALLOWED_ORIGINS = [
-  'https://landing.codexprime.in',
-  'http://localhost:3000',
-];
+const ALLOWED_ORIGINS =
+  process.env.NEXT_PUBLIC_ALLOWED_ORIGINS?.split(",") || [];
 
 function corsHeaders(origin: string | null) {
-  const allowed = origin && ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+  const allowed =
+    origin && ALLOWED_ORIGINS.includes(origin)
+      ? origin
+      : ALLOWED_ORIGINS[0];
   return {
-    'Access-Control-Allow-Origin': allowed,
-    'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-    'Access-Control-Allow-Credentials': 'true',
+    "Access-Control-Allow-Origin": allowed,
+    "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type, Authorization",
+    "Access-Control-Allow-Credentials": "true",
   };
 }
 
 export function OPTIONS(request: NextRequest) {
-  const origin = request.headers.get('origin');
+  const origin = request.headers.get("origin");
   return new NextResponse(null, { status: 204, headers: corsHeaders(origin) });
 }
 
-// Configure transporter using environment variables
 const transporter = nodemailer.createTransport({
   host: process.env.NEXT_PUBLIC_SMTP_HOST,
-  port: Number(process.env.NEXT_PUBLIC_SMTP_PORT || 587),
-  secure: false,
+  port: Number(process.env.NEXT_PUBLIC_SMTP_PORT || 465),
+  secure: true,
   auth: {
     user: process.env.NEXT_PUBLIC_SMTP_USER,
     pass: process.env.NEXT_PUBLIC_SMTP_PASSWORD,
   },
 });
 
-function buildAdminTemplate({ name, email, mobileNumber, message, age }: { name: string; email: string; mobileNumber: string; message: string; age?: string }) {
+// 🌟 Professional ADMIN Template
+function buildAdminTemplate({
+  name,
+  email,
+  mobileNumber,
+  message,
+  age,
+}: {
+  name: string;
+  email: string;
+  mobileNumber: string;
+  message: string;
+  age?: string;
+}) {
   return `
-    <!doctype html>
-    <html>
-      <head>
-        <meta charset="utf-8" />
-        <title>New Contact Form Submission - CodeXprime</title>
-        <style>
-          body { font-family: Arial, sans-serif; color: #111; }
-          .container{ max-width:680px;margin:0 auto;padding:20px;background:#ffffff;border:1px solid #e6e6e6 }
-          .header{ background:#111;padding:18px;color:#fff;text-align:center }
-          .field{ margin:16px 0 }
-          .label{ font-weight:700;color:#374151;margin-bottom:6px }
-          .value{ background:#fafafa;padding:12px;border-left:4px solid #111 }
-          a{ color: #111; text-decoration:none }
-        </style>
-      </head>
-      <body>
-        <div class="container">
-          <div class="header">
-            <h2>New Contact Form Submission</h2>
-            <p>CodeXprime</p>
-          </div>
+  <html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      body { background:#f5f5f5; font-family:'Segoe UI',Arial,sans-serif; margin:0; padding:30px; }
+      .card { background:#fff; max-width:700px; margin:auto; border-radius:12px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.1); }
+      .header { background:#000; color:#fff; text-align:center; padding:20px 0; }
+      .header h2 { margin:0; font-size:22px; letter-spacing:1px; }
+      .content { padding:28px; color:#111; line-height:1.6; }
+      .field { margin-bottom:18px; }
+      .label { font-weight:600; color:#333; }
+      .value { background:#fafafa; border-left:4px solid #000; padding:10px 14px; margin-top:5px; border-radius:6px; }
+      .footer { background:#fafafa; padding:16px 22px; font-size:13px; color:#555; border-top:1px solid #eee; text-align:center; }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="header">
+        <h2>📩 New Contact Form Submission</h2>
+      </div>
+      <div class="content">
+        <div class="field"><div class="label">👤 Name:</div><div class="value">${name}</div></div>
+        <div class="field"><div class="label">📧 Email:</div><div class="value">${email}</div></div>
+        <div class="field"><div class="label">📱 Mobile:</div><div class="value">${mobileNumber}</div></div>
+        ${age
+      ? `<div class="field"><div class="label">🎂 Age:</div><div class="value">${age}</div></div>`
+      : ""
+    }
+        <div class="field"><div class="label">💬 Message:</div><div class="value">${message.replace(
+      /\n/g,
+      "<br>"
+    )}</div></div>
 
-          <div class="field">
-            <div class="label">Name</div>
-            <div class="value">${name}</div>
-          </div>
+        <p style="font-size:12px;color:#666;margin-top:25px;text-align:right;">Submitted on: ${new Date().toLocaleString(
+      "en-IN",
+      { timeZone: "Asia/Kolkata" }
+    )}</p>
+      </div>
 
-          <div class="field">
-            <div class="label">Email</div>
-            <div class="value">${email}</div>
-          </div>
-
-          <div class="field">
-            <div class="label">Mobile Number</div>
-            <div class="value">${mobileNumber}</div>
-          </div>
-
-          ${age ? `
-          <div class="field">
-            <div class="label">Age</div>
-            <div class="value">${age}</div>
-          </div>
-          ` : ''}
-
-          <div class="field">
-            <div class="label">Message</div>
-            <div class="value">${message.replace(/\n/g, "<br>")}</div>
-          </div>
-
-          <p style="font-size:12px;color:#666;margin-top:18px">Submitted on: ${new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}</p>
-          <div style="font-size:13px;color:#6b7280;margin-top:12px;border-top:1px solid #eee;padding-top:12px">Contact: +91 9354734436 • <a href="mailto:hello@codexprime.in">hello@codexprime.in</a></div>
-        </div>
-      </body>
-    </html>
-  `;
+      <div class="footer">
+        <strong>Code X Prime</strong><br/>
+        Your Trusted IT Service Partner<br/>
+        <span style="color:#000;">Web Development | Digital Marketing | Graphic Design | MVP Development</span><br/><br/>
+        📞 +91 935 473 4436 • ✉️ <a href="mailto:hello@codexprime.in" style="color:#000;text-decoration:none;">hello@codexprime.in</a><br/>
+        🌐 <a href="https://www.codexprime.in" style="color:#000;text-decoration:none;">www.codexprime.in</a><br/><br/>
+        <em>We build digital experiences that grow your business.</em>
+      </div>
+    </div>
+  </body>
+  </html>`;
 }
 
-function buildUserTemplate({ name, message }: { name: string; message?: string }) {
-  // A polished, responsive confirmation email for the user
+// 🌟 Professional CLIENT Template (With Signature)
+function buildUserTemplate({
+  name,
+  message,
+}: {
+  name: string;
+  message?: string;
+}) {
   return `
-    <!doctype html>
-    <html>
-      <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <title>Thanks for contacting CodeXprime</title>
-        <style>
-          body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:#f9fafb; margin:0; padding:18px; }
-          .card { max-width:680px; margin:0 auto; background:#ffffff; overflow:hidden; border:1px solid #e6e6e6 }
-          .hero { background:#111; padding:20px; color:white; text-align:center }
-          .logo { height:48px; display:inline-block; vertical-align:middle }
-          .title { margin:8px 0 0; font-size:20px; font-weight:700 }
-          .body { padding:20px; color:#111827; }
-          .greeting { font-size:18px; margin:0 0 12px }
-          .muted { color:#374151; font-size:14px }
-          .message-box { background:#fafafa; border:1px solid #eee; padding:12px 14px; margin:14px 0; color:#374151; white-space:pre-wrap }
-          .cta { display:block; text-align:center; margin:18px 0 }
-          .btn { display:inline-block; background:#111; color:white; padding:10px 18px; text-decoration:none; font-weight:600 }
-          .footer { padding:16px 18px; color:#6b7280; font-size:13px; text-align:center; border-top:1px solid #f1f1f1 }
-          @media (max-width:520px){ .body{padding:16px} .hero{padding:16px} }
-        </style>
-      </head>
-      <body>
-        <div class="card">
-          <div class="hero">
-            <div class="title">Thanks for contacting CodeXprime</div>
-          </div>
-          <div class="body">
-            <p class="greeting">Hi ${name},</p>
-            <p class="muted">Thanks for reaching out — we received your message and one of our team members will respond within 24 business hours. Below is a copy of your message for your records.</p>
+  <html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      body { background:#f5f5f5; font-family:'Segoe UI',Arial,sans-serif; margin:0; padding:30px; }
+      .card { background:#fff; max-width:700px; margin:auto; border-radius:12px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.1); }
+      .header { background:#000; color:#fff; text-align:center; padding:22px 0; }
+      .header h2 { margin:0; font-size:22px; letter-spacing:1px; }
+      .body { padding:28px; color:#111; line-height:1.7; }
+      .message-box { background:#fafafa; border-left:4px solid #000; padding:14px 16px; margin:20px 0; border-radius:6px; color:#333; }
+      .footer { background:#fafafa; padding:16px 22px; font-size:13px; color:#555; border-top:1px solid #eee; text-align:center; }
+      a { color:#000; text-decoration:none; font-weight:500; }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="header">
+        <h2>Thank You for Contacting Code X Prime</h2>
+      </div>
 
-            <div class="message-box">${(message || '').replace(/\n/g, '<br>')}</div>
+      <div class="body">
+        <p>Hi <strong>${name}</strong>,</p>
+        <p>We’ve received your message and our team will get back to you within 24 business hours. Here’s a copy of your message:</p>
 
-           
+        <div class="message-box">${(message || "").replace(/\n/g, "<br>")}</div>
 
-            <p class="muted">If this is urgent, please call us at +91 9354734436 or reply directly to this email.</p>
-          </div>
-          <div class="footer">© ${new Date().getFullYear()} CodeXprime • Phone: +91 9354734436 • Email: <a href="mailto:hello@codexprime.in">hello@codexprime.in</a></div>
-        </div>
-      </body>
-    </html>
-  `;
+        <p>If this is urgent, feel free to call us at <strong>+91 935 473 4436</strong> or reply directly to this email.</p>
+
+        <p style="margin-top:22px;">Best Regards,<br/><strong>The Code X Prime Team</strong></p>
+      </div>
+
+      <div class="footer">
+        <strong>Code X Prime</strong><br/>
+        Your Trusted IT Service Partner<br/>
+        Web Development | Digital Marketing | Graphic Design | MVP Development<br/><br/>
+        📞 +91 935 473 4436 • ✉️ <a href="mailto:hello@codexprime.in">hello@codexprime.in</a><br/>
+        🌐 <a href="https://www.codexprime.in">www.codexprime.in</a><br/><br/>
+        <em>We build digital experiences that grow your business.</em>
+      </div>
+    </div>
+  </body>
+  </html>`;
 }
 
 export async function POST(request: NextRequest) {
+  const origin = request.headers.get("origin");
   try {
-    const origin = request.headers.get('origin');
-    // Ensure SMTP config exists
-    if (!process.env.NEXT_PUBLIC_SMTP_HOST || !process.env.NEXT_PUBLIC_SMTP_USER || !process.env.NEXT_PUBLIC_SMTP_PASSWORD) {
-      console.error("Missing SMTP environment variables");
-      return NextResponse.json({ error: "Email service configuration error" }, { status: 500, headers: corsHeaders(origin) });
-    }
+    const { name, email, mobileNumber, message, age } = await request.json();
 
-    const payload = await request.json();
-    const { name, email, mobileNumber, message, age } = payload;
-
-    // Basic validation
     if (!name || !email || !mobileNumber || !message) {
-      return NextResponse.json({ error: "Please fill in all required fields" }, { status: 400, headers: corsHeaders(origin) });
+      return NextResponse.json(
+        { error: "All fields are required" },
+        { status: 400, headers: corsHeaders(origin) }
+      );
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return NextResponse.json({ error: "Please enter a valid email address" }, { status: 400, headers: corsHeaders(origin) });
-    }
+    const adminRecipients =
+      process.env.NEXT_PUBLIC_TO_EMAIL?.split(",") || [];
 
-    if (String(mobileNumber).replace(/\D/g, '').length < 10) {
-      return NextResponse.json({ error: "Please enter a valid mobile number" }, { status: 400, headers: corsHeaders(origin) });
-    }
-
-    // Build and send admin email (include optional age)
-    const adminHtml = buildAdminTemplate({ name, email, mobileNumber, message, age });
-    const adminMail = {
-      from: process.env.NEXT_PUBLIC_FROM_EMAIL,
-      to: process.env.NEXT_PUBLIC_TO_EMAIL,
+    // Send to Admin
+    await transporter.sendMail({
+      from: `"Code X Prime" <${process.env.NEXT_PUBLIC_FROM_EMAIL}>`,
+      to: adminRecipients,
       subject: `New Contact: ${name} | ${mobileNumber}`,
-      html: adminHtml,
+      html: buildAdminTemplate({ name, email, mobileNumber, message, age }),
       replyTo: email,
-    };
+    });
 
-    await transporter.sendMail(adminMail);
+    // Send to Client
+    await transporter.sendMail({
+      from: `"Code X Prime" <${process.env.NEXT_PUBLIC_FROM_EMAIL}>`,
+      to: email,
+      subject: `Thanks for contacting Code X Prime`,
+      html: buildUserTemplate({ name, message }),
+    });
 
-    // Send confirmation email to user (if allowed)
-    try {
-      const userHtml = buildUserTemplate({ name, message });
-      const userMail = {
-        from: process.env.NEXT_PUBLIC_FROM_EMAIL,
-        to: email,
-        subject: `We've received your message — CodeXprime`,
-        html: userHtml,
-      };
-
-      await transporter.sendMail(userMail);
-    } catch (uErr: unknown) {
-      // Log user mail failure but don't fail the whole request
-      const u = uErr as Record<string, unknown>;
-      const msg = uErr && typeof uErr === 'object' && 'message' in u ? String(u.message) : String(uErr);
-      console.warn('User confirmation email failed:', msg);
-    }
-
-    return NextResponse.json({ success: true, message: "Your message has been sent successfully!" }, { status: 200, headers: corsHeaders(origin) });
+    return NextResponse.json(
+      { success: true, message: "Message sent successfully!" },
+      { status: 200, headers: corsHeaders(origin) }
+    );
   } catch (error) {
-    console.error("Email sending error:", error);
-    return NextResponse.json({ error: "Failed to send message. Please try again later." }, { status: 500, headers: corsHeaders((request as NextRequest).headers.get('origin')) });
+    console.error("Mail error:", error);
+    return NextResponse.json(
+      { error: "Failed to send email. Please try again later." },
+      { status: 500, headers: corsHeaders(origin) }
+    );
   }
 }
