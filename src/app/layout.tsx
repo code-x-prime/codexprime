@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
 import Navigation from "@/components/Navigation";
 import FloatingContactButton from "@/components/FloatingContactButton";
 import Footer from '@/components/shared/Footer';
@@ -206,15 +205,7 @@ export default function RootLayout({
               "name": "CodeXprime",
               "description": "Premier IT services provider specializing in web development, graphic designing, digital marketing, Google Ads, and Meta Ads in Dwarka and Uttam Nagar, Delhi.",
               "url": "https://codexprime.in",
-              "telephone": "+91-9354734436", // Add your phone number
-              // "address": {
-              //   "@type": "PostalAddress",
-              //   "streetAddress": "Your Street Address", // Add your address
-              //   "addressLocality": "Dwarka",
-              //   "addressRegion": "Delhi",
-              //   "postalCode": "110075",
-              //   "addressCountry": "IN"
-              // },
+              "telephone": "+91-9354734436",
               "geo": {
                 "@type": "GeoCoordinates",
                 "latitude": 28.7041,
@@ -326,23 +317,16 @@ export default function RootLayout({
         {/* End Meta Pixel (noscript) */}
 
 
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <PostHogProvider>
-            <PageTracker>
-              <Navigation />
-              {/* Montserrat Bold logo font name */}
-              {children}
-              <Toaster />
-              <Footer />
-              <FloatingContactButton />
-            </PageTracker>
-          </PostHogProvider>
-        </ThemeProvider>
+        <PostHogProvider>
+          <PageTracker>
+            <Navigation />
+            {/* Montserrat Bold logo font name */}
+            {children}
+            <Toaster />
+            <Footer />
+            <FloatingContactButton />
+          </PageTracker>
+        </PostHogProvider>
         <Analytics />
 
       </body>
