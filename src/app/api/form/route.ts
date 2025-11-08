@@ -24,14 +24,14 @@ export function OPTIONS(request: NextRequest) {
 
 // ✅ Brevo SMTP (super-fast + works on HTTPS)
 const transporter = nodemailer.createTransport({
-  pool: true,
-  host: process.env.NEXT_PUBLIC_SMTP_HOST, // smtp-relay.brevo.com
-  port: Number(process.env.NEXT_PUBLIC_SMTP_PORT || 587),
+  host: "smtp-relay.brevo.com",
+  port: 587,
   secure: false,
   auth: {
     user: process.env.NEXT_PUBLIC_SMTP_USER,
     pass: process.env.NEXT_PUBLIC_SMTP_PASSWORD,
   },
+  tls: { rejectUnauthorized: false },
 });
 
 // 🌟 ADMIN TEMPLATE (no rounded corners)
