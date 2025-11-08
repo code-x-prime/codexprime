@@ -22,7 +22,9 @@ export function OPTIONS(request: NextRequest) {
   return new NextResponse(null, { status: 204, headers: corsHeaders(origin) });
 }
 
+// ✅ FAST Transporter with Pool
 const transporter = nodemailer.createTransport({
+  pool: true,
   host: process.env.NEXT_PUBLIC_SMTP_HOST,
   port: Number(process.env.NEXT_PUBLIC_SMTP_PORT || 465),
   secure: true,
@@ -32,7 +34,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// 🌟 Professional ADMIN Template
+// 🌟 ADMIN TEMPLATE
 function buildAdminTemplate({
   name,
   email,
@@ -79,7 +81,6 @@ function buildAdminTemplate({
       /\n/g,
       "<br>"
     )}</div></div>
-
         <p style="font-size:12px;color:#666;margin-top:25px;text-align:right;">Submitted on: ${new Date().toLocaleString(
       "en-IN",
       { timeZone: "Asia/Kolkata" }
@@ -99,7 +100,7 @@ function buildAdminTemplate({
   </html>`;
 }
 
-// 🌟 Professional CLIENT Template (With Signature)
+// 🌟 CLIENT TEMPLATE
 function buildUserTemplate({
   name,
   message,
@@ -154,6 +155,7 @@ function buildUserTemplate({
 
 export async function POST(request: NextRequest) {
   const origin = request.headers.get("origin");
+
   try {
     const { name, email, mobileNumber, message, age } = await request.json();
 
@@ -167,27 +169,30 @@ export async function POST(request: NextRequest) {
     const adminRecipients =
       process.env.NEXT_PUBLIC_TO_EMAIL?.split(",") || [];
 
-    // Send to Admin
-    await transporter.sendMail({
-      from: `"Code X Prime" <${process.env.NEXT_PUBLIC_FROM_EMAIL}>`,
-      to: adminRecipients,
-      subject: `New Contact: ${name} | ${mobileNumber}`,
-      html: buildAdminTemplate({ name, email, mobileNumber, message, age }),
-      replyTo: email,
-    });
-
-    // Send to Client
-    await transporter.sendMail({
-      from: `"Code X Prime" <${process.env.NEXT_PUBLIC_FROM_EMAIL}>`,
-      to: email,
-      subject: `Thanks for contacting Code X Prime`,
-      html: buildUserTemplate({ name, message }),
-    });
-
-    return NextResponse.json(
+    // ✅ Send response early (fast UI)
+    const response = NextResponse.json(
       { success: true, message: "Message sent successfully!" },
       { status: 200, headers: corsHeaders(origin) }
     );
+
+    // ✅ Send both mails in background, parallel
+    Promise.all([
+      transporter.sendMail({
+        from: `"Code X Prime" <${process.env.NEXT_PUBLIC_FROM_EMAIL}>`,
+        to: adminRecipients,
+        subject: `New Contact: ${name} | ${mobileNumber}`,
+        html: buildAdminTemplate({ name, email, mobileNumber, message, age }),
+        replyTo: email,
+      }),
+      transporter.sendMail({
+        from: `"Code X Prime" <${process.env.NEXT_PUBLIC_FROM_EMAIL}>`,
+        to: email,
+        subject: `Thanks for contacting Code X Prime`,
+        html: buildUserTemplate({ name, message }),
+      }),
+    ]).catch((err) => console.error("Mail send error:", err));
+
+    return response;
   } catch (error) {
     console.error("Mail error:", error);
     return NextResponse.json(
