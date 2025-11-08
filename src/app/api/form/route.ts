@@ -1,6 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
+const ALLOWED_ORIGINS = [
+  "https://codexprime.in",
+  "https://www.codexprime.in",
+  "https://landing.codexprime.in",
+  "http://localhost:3000",
+];
+
 // Email configuration
 const transporter = nodemailer.createTransport({
   host: process.env.NEXT_PUBLIC_SMTP_HOST,
@@ -80,7 +87,7 @@ function buildUserTemplate({ name, message }: { name: string; message?: string }
     <div class="header"><h2>Thank You for Contacting Code X Prime</h2></div>
     <div class="body">
       <p>Hi <strong>${name}</strong>,</p>
-      <p>We’ve received your message and our team will get back to you soon. Here’s your message:</p>
+      <p>We've received your message and our team will get back to you soon. Here's your message:</p>
       <div class="message-box">${(message || "").replace(/\n/g, "<br>")}</div>
       <p>If this is urgent, call us at <strong>+91 935 473 4436</strong> or reply to this email.</p>
       <p>Best Regards,<br/><strong>The Code X Prime Team</strong></p>
@@ -97,18 +104,51 @@ function buildUserTemplate({ name, message }: { name: string; message?: string }
   </html>`;
 }
 
+// 🔧 CORS Headers Helper
+function setCorsHeaders(response: NextResponse, origin: string | null): NextResponse {
+  if (origin && ALLOWED_ORIGINS.includes(origin)) {
+    response.headers.set("Access-Control-Allow-Origin", origin);
+    response.headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+    response.headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    response.headers.set("Access-Control-Max-Age", "86400"); // 24 hours
+  }
+  return response;
+}
+
+// ✅ Handle OPTIONS (Preflight Request)
+export async function OPTIONS(request: NextRequest) {
+  const origin = request.headers.get("origin");
+  const response = NextResponse.json({}, { status: 200 });
+  return setCorsHeaders(response, origin);
+}
+
+// ✅ Handle POST
 export async function POST(request: NextRequest) {
+  const origin = request.headers.get("origin");
+
+  // Check if origin is allowed
+  if (origin && !ALLOWED_ORIGINS.includes(origin)) {
+    const response = NextResponse.json(
+      { error: "CORS policy: Origin not allowed" },
+      { status: 403 }
+    );
+    return response;
+  }
 
   try {
     const { name, email, mobileNumber, message, age } = await request.json();
 
     if (!name || !email || !mobileNumber || !message) {
-      return NextResponse.json({ error: "All fields are required" }, { status: 400 });
+      const response = NextResponse.json(
+        { error: "All fields are required" },
+        { status: 400 }
+      );
+      return setCorsHeaders(response, origin);
     }
 
     const adminRecipients = process.env.NEXT_PUBLIC_TO_EMAIL?.split(",") || [];
 
-    // 📨 Send both mails in parallel (fastest)
+    // 📨 Send both mails in parallel
     await Promise.all([
       transporter.sendMail({
         from: `"Code X Prime" <${process.env.NEXT_PUBLIC_FROM_EMAIL}>`,
@@ -125,9 +165,17 @@ export async function POST(request: NextRequest) {
       }),
     ]);
 
-    return NextResponse.json({ success: true, message: "Message sent successfully!" });
+    const response = NextResponse.json({
+      success: true,
+      message: "Message sent successfully!",
+    });
+    return setCorsHeaders(response, origin);
   } catch (error) {
     console.error("Mail error:", error);
-    return NextResponse.json({ error: "Failed to send email. Please try again later." }, { status: 500 });
+    const response = NextResponse.json(
+      { error: "Failed to send email. Please try again later." },
+      { status: 500 }
+    );
+    return setCorsHeaders(response, origin);
   }
 }
