@@ -26,7 +26,7 @@ export function OPTIONS(request: NextRequest) {
 const transporter = nodemailer.createTransport({
   host: "smtp-relay.brevo.com",
   port: 587,
-
+  secure: false,
   auth: {
     user: process.env.NEXT_PUBLIC_SMTP_USER,
     pass: process.env.NEXT_PUBLIC_SMTP_PASSWORD,
