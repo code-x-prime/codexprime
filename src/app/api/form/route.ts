@@ -22,19 +22,19 @@ export function OPTIONS(request: NextRequest) {
   return new NextResponse(null, { status: 204, headers: corsHeaders(origin) });
 }
 
-// ✅ FAST Transporter with Pool
+// ✅ Brevo SMTP (super-fast + works on HTTPS)
 const transporter = nodemailer.createTransport({
   pool: true,
-  host: process.env.NEXT_PUBLIC_SMTP_HOST,
-  port: Number(process.env.NEXT_PUBLIC_SMTP_PORT || 465),
-  secure: true,
+  host: process.env.NEXT_PUBLIC_SMTP_HOST, // smtp-relay.brevo.com
+  port: Number(process.env.NEXT_PUBLIC_SMTP_PORT || 587),
+  secure: false,
   auth: {
     user: process.env.NEXT_PUBLIC_SMTP_USER,
     pass: process.env.NEXT_PUBLIC_SMTP_PASSWORD,
   },
 });
 
-// 🌟 ADMIN TEMPLATE
+// 🌟 ADMIN TEMPLATE (no rounded corners)
 function buildAdminTemplate({
   name,
   email,
@@ -54,13 +54,13 @@ function buildAdminTemplate({
     <meta charset="utf-8" />
     <style>
       body { background:#f5f5f5; font-family:'Segoe UI',Arial,sans-serif; margin:0; padding:30px; }
-      .card { background:#fff; max-width:700px; margin:auto; border-radius:12px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.1); }
-      .header { background:#000; color:#fff; text-align:center; padding:20px 0; }
+      .card { background:#fff; max-width:700px; margin:auto; border:1px solid #e5e5e5; box-shadow:0 2px 6px rgba(0,0,0,0.08); }
+      .header { background:#000; color:#fff; text-align:center; padding:18px 0; }
       .header h2 { margin:0; font-size:22px; letter-spacing:1px; }
-      .content { padding:28px; color:#111; line-height:1.6; }
+      .content { padding:24px; color:#111; line-height:1.6; }
       .field { margin-bottom:18px; }
       .label { font-weight:600; color:#333; }
-      .value { background:#fafafa; border-left:4px solid #000; padding:10px 14px; margin-top:5px; border-radius:6px; }
+      .value { background:#fafafa; border-left:4px solid #000; padding:10px 14px; margin-top:5px; }
       .footer { background:#fafafa; padding:16px 22px; font-size:13px; color:#555; border-top:1px solid #eee; text-align:center; }
     </style>
   </head>
@@ -73,20 +73,10 @@ function buildAdminTemplate({
         <div class="field"><div class="label">👤 Name:</div><div class="value">${name}</div></div>
         <div class="field"><div class="label">📧 Email:</div><div class="value">${email}</div></div>
         <div class="field"><div class="label">📱 Mobile:</div><div class="value">${mobileNumber}</div></div>
-        ${age
-      ? `<div class="field"><div class="label">🎂 Age:</div><div class="value">${age}</div></div>`
-      : ""
-    }
-        <div class="field"><div class="label">💬 Message:</div><div class="value">${message.replace(
-      /\n/g,
-      "<br>"
-    )}</div></div>
-        <p style="font-size:12px;color:#666;margin-top:25px;text-align:right;">Submitted on: ${new Date().toLocaleString(
-      "en-IN",
-      { timeZone: "Asia/Kolkata" }
-    )}</p>
+        ${age ? `<div class="field"><div class="label">🎂 Age:</div><div class="value">${age}</div></div>` : ""}
+        <div class="field"><div class="label">💬 Message:</div><div class="value">${message.replace(/\n/g, "<br>")}</div></div>
+        <p style="font-size:12px;color:#666;margin-top:25px;text-align:right;">Submitted on: ${new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}</p>
       </div>
-
       <div class="footer">
         <strong>Code X Prime</strong><br/>
         Your Trusted IT Service Partner<br/>
@@ -100,7 +90,7 @@ function buildAdminTemplate({
   </html>`;
 }
 
-// 🌟 CLIENT TEMPLATE
+// 🌟 CLIENT TEMPLATE (no rounded corners)
 function buildUserTemplate({
   name,
   message,
@@ -114,11 +104,11 @@ function buildUserTemplate({
     <meta charset="utf-8" />
     <style>
       body { background:#f5f5f5; font-family:'Segoe UI',Arial,sans-serif; margin:0; padding:30px; }
-      .card { background:#fff; max-width:700px; margin:auto; border-radius:12px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.1); }
-      .header { background:#000; color:#fff; text-align:center; padding:22px 0; }
+      .card { background:#fff; max-width:700px; margin:auto; border:1px solid #e5e5e5; box-shadow:0 2px 6px rgba(0,0,0,0.08); }
+      .header { background:#000; color:#fff; text-align:center; padding:20px 0; }
       .header h2 { margin:0; font-size:22px; letter-spacing:1px; }
-      .body { padding:28px; color:#111; line-height:1.7; }
-      .message-box { background:#fafafa; border-left:4px solid #000; padding:14px 16px; margin:20px 0; border-radius:6px; color:#333; }
+      .body { padding:24px; color:#111; line-height:1.7; }
+      .message-box { background:#fafafa; border-left:4px solid #000; padding:14px 16px; margin:20px 0; color:#333; }
       .footer { background:#fafafa; padding:16px 22px; font-size:13px; color:#555; border-top:1px solid #eee; text-align:center; }
       a { color:#000; text-decoration:none; font-weight:500; }
     </style>
@@ -166,16 +156,15 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const adminRecipients =
-      process.env.NEXT_PUBLIC_TO_EMAIL?.split(",") || [];
+    const adminRecipients = process.env.NEXT_PUBLIC_TO_EMAIL?.split(",") || [];
 
-    // ✅ Send response early (fast UI)
+    // Instant frontend response
     const response = NextResponse.json(
       { success: true, message: "Message sent successfully!" },
       { status: 200, headers: corsHeaders(origin) }
     );
 
-    // ✅ Send both mails in background, parallel
+    // Send mails in background (parallel)
     Promise.all([
       transporter.sendMail({
         from: `"Code X Prime" <${process.env.NEXT_PUBLIC_FROM_EMAIL}>`,
