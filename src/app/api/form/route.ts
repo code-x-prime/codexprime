@@ -1,23 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
-// ✅ Only allow requests from same domain (no external CORS)
-function isAllowedHost(request: NextRequest) {
-  const origin = request.headers.get("origin") || "";
-  const host = process.env.NEXT_PUBLIC_SITE_URL || "https://www.codexprime.in";
-  return origin === host || origin === "http://localhost:3000";
-}
-
-// ✅ Brevo SMTP (Fast + Secure)
+// Email configuration
 const transporter = nodemailer.createTransport({
-  host: "smtp-relay.brevo.com",
+  host: process.env.NEXT_PUBLIC_SMTP_HOST,
   port: 587,
   secure: false,
   auth: {
     user: process.env.NEXT_PUBLIC_SMTP_USER,
     pass: process.env.NEXT_PUBLIC_SMTP_PASSWORD,
   },
-  tls: { rejectUnauthorized: false },
 });
 
 // 🌟 ADMIN TEMPLATE
@@ -106,11 +98,6 @@ function buildUserTemplate({ name, message }: { name: string; message?: string }
 }
 
 export async function POST(request: NextRequest) {
-
-  // 🚫 Block all requests from unknown origins
-  if (!isAllowedHost(request)) {
-    return NextResponse.json({ error: "Unauthorized origin" }, { status: 403 });
-  }
 
   try {
     const { name, email, mobileNumber, message, age } = await request.json();
