@@ -3,13 +3,12 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import FloatingContactButton from "@/components/FloatingContactButton";
-import Footer from '@/components/shared/Footer';
+import Footer from "@/components/shared/Footer";
 import { Toaster } from "@/components/ui/sonner";
-import { Analytics } from "@vercel/analytics/next"
-import Script from "next/script"
+import { Analytics } from "@vercel/analytics/next";
+import Script from "next/script";
 import PostHogProvider from "@/components/PostHogProvider";
 import PageTracker from "@/components/PageTracker";
-
 
 const satoshiRegular = localFont({
   src: "./fonts/Satoshi-Regular.otf",
@@ -38,9 +37,10 @@ const satoshiBlack = localFont({
 export const metadata: Metadata = {
   title: {
     default: "CodeXprime - Premier IT Services in Dwarka & Uttam Nagar Delhi",
-    template: "%s | CodeXprime - IT Services Delhi"
+    template: "%s | CodeXprime - IT Services Delhi",
   },
-  description: "CodeXprime provides top-quality IT services in Dwarka and Uttam Nagar, Delhi. Expert web development, graphic designing, digital marketing, Google Ads, Meta Ads, and complete IT solutions for businesses.",
+  description:
+    "CodeXprime provides top-quality IT services in Dwarka and Uttam Nagar, Delhi. Expert web development, graphic designing, digital marketing, Google Ads, Meta Ads, and complete IT solutions for businesses.",
   keywords: [
     "IT services Delhi",
     "web development Dwarka",
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     "IT company Dwarka",
     "web design Uttam Nagar",
     "SEO services Delhi",
-    "social media marketing"
+    "social media marketing",
   ],
   authors: [{ name: "CodeXprime Team" }],
   creator: "CodeXprime",
@@ -63,32 +63,34 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://codexprime.in'),
+  metadataBase: new URL("https://codexprime.in"),
   alternates: {
-    canonical: '/',
+    canonical: "/",
   },
   openGraph: {
     title: "CodeXprime - Premier IT Services in Dwarka & Uttam Nagar Delhi",
-    description: "Expert IT solutions including web development, graphic designing, digital marketing, Google Ads, and Meta Ads services in Dwarka and Uttam Nagar, Delhi.",
-    url: 'https://codexprime.in',
-    siteName: 'CodeXprime',
-    locale: 'en_IN',
-    type: 'website',
+    description:
+      "Expert IT solutions including web development, graphic designing, digital marketing, Google Ads, and Meta Ads services in Dwarka and Uttam Nagar, Delhi.",
+    url: "https://codexprime.in",
+    siteName: "CodeXprime",
+    locale: "en_IN",
+    type: "website",
     images: [
       {
-        url: '/og-image.png',
+        url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: 'CodeXprime - IT Services in Delhi',
-      }
+        alt: "CodeXprime - IT Services in Delhi",
+      },
     ],
   },
   twitter: {
-    card: 'summary_large_image',
+    card: "summary_large_image",
     title: "CodeXprime - Premier IT Services in Dwarka & Uttam Nagar Delhi",
-    description: "Expert IT solutions including web development, graphic designing, digital marketing, Google Ads, and Meta Ads services in Dwarka and Uttam Nagar, Delhi.",
-    creator: '@codexprime_',
-    images: ['/og-image.png'],
+    description:
+      "Expert IT solutions including web development, graphic designing, digital marketing, Google Ads, and Meta Ads services in Dwarka and Uttam Nagar, Delhi.",
+    creator: "@codexprime_",
+    images: ["/og-image.png"],
   },
   robots: {
     index: true,
@@ -96,9 +98,9 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
   },
 };
@@ -175,15 +177,16 @@ export default function RootLayout({
             gtag('config', 'G-YQSV9GJ8KV');
           `}
         </Script>
-        {/* Google Ads (gtag for AW) */}
+        {/* Google tag (gtag.js) */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=AW-17680263266"
           strategy="afterInteractive"
+          async
         />
         <Script id="gtag-aw-init" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);} 
+            function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', 'AW-17680263266');
           `}
@@ -202,62 +205,66 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "LocalBusiness",
-              "name": "CodeXprime",
-              "description": "Premier IT services provider specializing in web development, graphic designing, digital marketing, Google Ads, and Meta Ads in Dwarka and Uttam Nagar, Delhi.",
-              "url": "https://codexprime.in",
-              "telephone": "+91-9354734436",
-              "geo": {
+              name: "CodeXprime",
+              description:
+                "Premier IT services provider specializing in web development, graphic designing, digital marketing, Google Ads, and Meta Ads in Dwarka and Uttam Nagar, Delhi.",
+              url: "https://codexprime.in",
+              telephone: "+91-9354734436",
+              geo: {
                 "@type": "GeoCoordinates",
-                "latitude": 28.7041,
-                "longitude": 77.1025
+                latitude: 28.7041,
+                longitude: 77.1025,
               },
-              "openingHours": "Mo-Sa 09:00-18:00",
-              "sameAs": [
+              openingHours: "Mo-Sa 09:00-18:00",
+              sameAs: [
                 "https://www.facebook.com/codexprime", // Add your social media
                 "https://www.instagram.com/codexprime_official",
                 "https://www.linkedin.com/company/codexprime",
-                "https://twitter.com/codexprime_"
+                "https://twitter.com/codexprime_",
               ],
-              "serviceArea": {
+              serviceArea: {
                 "@type": "GeoCircle",
-                "geoMidpoint": {
+                geoMidpoint: {
                   "@type": "GeoCoordinates",
-                  "latitude": 28.7041,
-                  "longitude": 77.1025
+                  latitude: 28.7041,
+                  longitude: 77.1025,
                 },
-                "geoRadius": "25000"
+                geoRadius: "25000",
               },
-              "hasOfferCatalog": {
+              hasOfferCatalog: {
                 "@type": "OfferCatalog",
-                "name": "IT Services",
-                "itemListElement": [
+                name: "IT Services",
+                itemListElement: [
                   {
                     "@type": "Offer",
-                    "itemOffered": {
+                    itemOffered: {
                       "@type": "Service",
-                      "name": "Web Development",
-                      "description": "Custom website development and design services"
-                    }
+                      name: "Web Development",
+                      description:
+                        "Custom website development and design services",
+                    },
                   },
                   {
                     "@type": "Offer",
-                    "itemOffered": {
+                    itemOffered: {
                       "@type": "Service",
-                      "name": "Graphic Designing",
-                      "description": "Professional graphic design and branding services"
-                    }
+                      name: "Graphic Designing",
+                      description:
+                        "Professional graphic design and branding services",
+                    },
                   },
                   {
                     "@type": "Offer",
-                    "itemOffered": {
+                    itemOffered: {
                       "@type": "Service",
-                      "name": "Digital Marketing",
-                      "description": "Complete digital marketing solutions including Google Ads and Meta Ads"
-                    }
-                  }
-                ]
-              }
-            })
+                      name: "Digital Marketing",
+                      description:
+                        "Complete digital marketing solutions including Google Ads and Meta Ads",
+                    },
+                  },
+                ],
+              },
+            }),
           }}
         />
 
@@ -268,30 +275,34 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
-              "name": "CodeXprime",
-              "alternateName": "CodeX Prime",
-              "url": "https://codexprime.in",
-              "logo": "https://codexprime.in/logo.png",
-              "contactPoint": {
+              name: "CodeXprime",
+              alternateName: "CodeX Prime",
+              url: "https://codexprime.in",
+              logo: "https://codexprime.in/logo.png",
+              contactPoint: {
                 "@type": "ContactPoint",
-                "telephone": "+91-9354734436",
-                "contactType": "customer service",
-                "areaServed": "IN",
-                "availableLanguage": ["en", "hi"]
+                telephone: "+91-9354734436",
+                contactType: "customer service",
+                areaServed: "IN",
+                availableLanguage: ["en", "hi"],
               },
-              "sameAs": [
+              sameAs: [
                 "https://www.facebook.com/codexprime",
                 "https://www.instagram.com/codexprime",
-                "https://www.linkedin.com/company/codexprime"
-              ]
-            })
+                "https://www.linkedin.com/company/codexprime",
+              ],
+            }),
           }}
         />
 
         {/* Preconnect to external domains */}
         <link rel="preconnect" href="https://www.google-analytics.com" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
 
         {/* DNS Prefetch */}
         <link rel="dns-prefetch" href="//www.google-analytics.com" />
@@ -316,7 +327,6 @@ export default function RootLayout({
         />
         {/* End Meta Pixel (noscript) */}
 
-
         <PostHogProvider>
           <PageTracker>
             <Navigation />
@@ -328,10 +338,7 @@ export default function RootLayout({
           </PageTracker>
         </PostHogProvider>
         <Analytics />
-
       </body>
     </html>
   );
 }
-
-
