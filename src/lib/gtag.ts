@@ -9,9 +9,9 @@ declare global {
         gtag: (
             command: 'config' | 'event' | 'js' | 'set',
             targetId: string | Date,
-            config?: Record<string, any>
+            config?: Record<string, string | number | boolean>
         ) => void;
-        dataLayer: any[];
+        dataLayer: unknown[];
     }
 }
 
@@ -39,7 +39,7 @@ export const trackConversion = (
         return;
     }
 
-    const conversionData: Record<string, any> = {
+    const conversionData: Record<string, string | number> = {
         send_to: conversionId,
     };
 
@@ -68,7 +68,7 @@ export const trackConversion = (
  */
 export const trackEvent = (
     eventName: string,
-    eventParams?: Record<string, any>
+    eventParams?: Record<string, string | number | boolean>
 ) => {
     if (typeof window === 'undefined' || !window.gtag) {
         console.warn('gtag is not available');
@@ -90,14 +90,13 @@ export const trackPageView = (url: string, title?: string) => {
         return;
     }
 
-    window.gtag('event', 'page_view', {
+    const params: Record<string, string | number | boolean> = {
         page_path: url,
-        page_title: title,
-    });
-};
+    };
 
-export default {
-    trackConversion,
-    trackEvent,
-    trackPageView,
+    if (title) {
+        params.page_title = title;
+    }
+
+    window.gtag('event', 'page_view', params);
 };

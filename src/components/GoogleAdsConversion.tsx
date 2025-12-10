@@ -63,8 +63,8 @@ export default function GoogleAdsConversion({
 }: GoogleAdsConversionProps) {
     useEffect(() => {
         // Ensure gtag is available before tracking
-        if (typeof window !== 'undefined' && (window as any).gtag) {
-            const conversionData: any = {
+        if (typeof window !== 'undefined' && (window as Window & { gtag?: (...args: unknown[]) => void }).gtag) {
+            const conversionData: Record<string, string | number> = {
                 'send_to': conversionId
             };
 
@@ -79,7 +79,7 @@ export default function GoogleAdsConversion({
             }
 
             // Track the conversion
-            (window as any).gtag('event', 'conversion', conversionData);
+            (window as Window & { gtag: (...args: unknown[]) => void }).gtag('event', 'conversion', conversionData);
 
             console.log('✅ Google Ads conversion tracked:', conversionId, conversionData);
         } else {
