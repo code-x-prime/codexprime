@@ -164,34 +164,25 @@ export default function RootLayout({
         {/* End Meta Pixel Code */}
         {/* Google Tag Manager removed as requested */}
 
-        {/* Google Analytics (gtag.js) */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-YQSV9GJ8KV"
-          strategy="afterInteractive"
-        />
-        <Script id="ga4-init" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);} 
-            gtag('js', new Date());
-            gtag('config', 'G-YQSV9GJ8KV');
-          `}
-        </Script>
-        {/* Google tag (gtag.js) */}
+        {/* Google tag (gtag.js) - Combined GA4 & Google Ads */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=AW-17680263266"
           strategy="afterInteractive"
-          async
         />
-        <Script id="gtag-aw-init" strategy="afterInteractive">
+        <Script id="gtag-init" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
+            
+            // Google Ads Conversion Tracking
             gtag('config', 'AW-17680263266');
+            
+            // Google Analytics 4
+            gtag('config', 'G-YQSV9GJ8KV');
           `}
         </Script>
-        {/* End Google Analytics (gtag.js) */}
+        {/* End Google tag */}
         {/* Additional SEO Meta Tags */}
         <meta name="geo.region" content="IN-DL" />
         <meta name="geo.placename" content="Delhi" />
