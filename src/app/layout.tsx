@@ -9,7 +9,6 @@ import { Analytics } from "@vercel/analytics/next";
 import Script from "next/script";
 import PostHogProvider from "@/components/PostHogProvider";
 import PageTracker from "@/components/PageTracker";
-import SnowfallEffect from "@/components/Snowfall";
 
 const satoshiRegular = localFont({
   src: "./fonts/Satoshi-Regular.otf",
@@ -320,7 +319,6 @@ export default function RootLayout({
         {/* End Meta Pixel (noscript) */}
 
         <PostHogProvider>
-          <SnowfallEffect />
           <PageTracker>
             <Navigation />
             {/* Montserrat Bold logo font name */}
