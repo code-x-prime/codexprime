@@ -48,18 +48,18 @@ export const initPostHog = () => {
             capture_pageview: true,
             capture_pageleave: true,
 
-            loaded: (ph) => {
+            loaded: () => {
                 const isProduction = window.location.hostname === 'codexprime.in'
 
                 if (!isProduction) {
                     console.log('✅ PostHog loaded successfully')
                     console.log('🔧 PostHog config:', {
-                        api_host: ph.config.api_host,
-                        ui_host: ph.config.ui_host,
-                        session_recording_enabled: !ph.config.disable_session_recording,
-                        distinct_id: ph.get_distinct_id(),
-                        session_id: ph.get_session_id(),
-                        session_recording_started: ph.sessionRecordingStarted?.(),
+                        api_host: posthog.config.api_host,
+                        ui_host: posthog.config.ui_host,
+                        session_recording_enabled: !posthog.config.disable_session_recording,
+                        distinct_id: posthog.get_distinct_id(),
+                        session_id: posthog.get_session_id(),
+                        session_recording_started: posthog.sessionRecordingStarted?.(),
                     })
                 }
 
@@ -68,7 +68,7 @@ export const initPostHog = () => {
                     console.log('🎥 Force starting session recording...')
                 }
 
-                ph.startSessionRecording({
+                posthog.startSessionRecording({
                     url_trigger: true,
                     sampling: true,
                     linked_flag: true,
@@ -77,33 +77,33 @@ export const initPostHog = () => {
 
                 // Verify after 1 second
                 setTimeout(() => {
-                    const isRecording = ph.sessionRecordingStarted?.()
+                    const isRecording = posthog.sessionRecordingStarted?.()
                     if (!isProduction) {
                         if (isRecording) {
                             console.log('✅ Session recording is ACTIVE')
                         } else {
                             console.error('❌ Session recording failed to start - retrying...')
                             // Try one more time with true parameter
-                            ph.startSessionRecording(true)
+                            posthog.startSessionRecording(true)
                         }
                     } else if (!isRecording) {
                         // Production: Silent retry if not recording
-                        ph.startSessionRecording(true)
+                        posthog.startSessionRecording(true)
                     }
                 }, 1000)
 
                 // Additional retry after 3 seconds (ultimate fallback)
                 setTimeout(() => {
-                    if (!ph.sessionRecordingStarted?.()) {
+                    if (!posthog.sessionRecordingStarted?.()) {
                         if (!isProduction) {
                             console.error('🔴 FINAL RETRY - Recording still not started!')
                         }
-                        ph.startSessionRecording(true)
+                        posthog.startSessionRecording(true)
 
                         // Check one last time after 2 more seconds
                         setTimeout(() => {
                             if (!isProduction) {
-                                console.log('🎬 Final status:', ph.sessionRecordingStarted?.() ? '✅ ACTIVE' : '❌ FAILED')
+                                console.log('🎬 Final status:', posthog.sessionRecordingStarted?.() ? '✅ ACTIVE' : '❌ FAILED')
                             }
                         }, 2000)
                     }
