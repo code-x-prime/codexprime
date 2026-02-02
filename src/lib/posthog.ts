@@ -48,7 +48,7 @@ export const initPostHog = () => {
             capture_pageview: true,
             capture_pageleave: true,
 
-            loaded: (ph: typeof posthog) => {
+            loaded: (ph) => {
                 const isProduction = window.location.hostname === 'codexprime.in'
 
                 if (!isProduction) {
