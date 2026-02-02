@@ -1,6 +1,8 @@
 "use client";
 import React, { useState } from 'react';
 import { toast } from 'sonner';
+import { motion } from 'framer-motion';
+import Typewriter from 'typewriter-effect';
 
 interface FormData {
     name: string;
@@ -166,7 +168,12 @@ const HeroComponent = () => {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center">
 
                         {/* Left Content with Grid Background */}
-                        <div className="relative md:text-black text-white space-y-8 order-first lg:order-first p-5">
+                        <motion.div
+                            initial={{ x: -100, opacity: 0 }}
+                            animate={{ x: 0, opacity: 1 }}
+                            transition={{ duration: 0.8, ease: "easeOut" }}
+                            className="relative md:text-black text-white space-y-8 order-first lg:order-first p-5"
+                        >
                             {/* Grid Background - Only on desktop, covers full left area */}
                             <div className="hidden md:block absolute inset-0 -left-8 -right-8">
                                 <AnimatedGrid />
@@ -178,27 +185,43 @@ const HeroComponent = () => {
                                     TRANSFORM YOUR BUSINESS
                                 </p>
 
-                                <h1 className="text-4xl lg:text-6xl font-bold leading-tight text-white md:text-gray-900 drop-shadow-lg">
-                                    CodeXprime - Premier IT Services for Growing Businesses
+                                <h1 className=" text-2xl sm:text-4xl lg:text-7xl font-bold leading-tight text-white md:text-gray-900 drop-shadow-lg">
+                                    CodeXprime – Turning Ideas into Scalable Products
                                 </h1>
-                                <div className="flex flex-col space-y-2">
-                                    <p className="text-lg text-gray-100 md:text-gray-700 font-medium drop-shadow">
-                                        Web Designing •  Digital Marketing •  Graphic Designing
-                                    </p>
-                                    <p className="text-lg text-gray-100 md:text-gray-700 font-medium drop-shadow">
-                                        Web Development • MVP Development • IT Solutions
-                                    </p>
+                                <div className="flex flex-col space-y-2 text-lg text-gray-100 md:text-gray-700 font-medium drop-shadow">
+                                    <div className='flex gap-2 items-center'>
+                                        <span>We provide</span>
+                                        <span className='text-2xl md:text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 leading-normal py-2 inline-block'>
+                                            <Typewriter
+                                                options={{
+                                                    strings: ['Web Designing', 'Digital Marketing', 'IT Solutions', 'MVP Development', 'Graphic Designing', 'Web Development'],
+                                                    autoStart: true,
+                                                    loop: true,
+                                                    cursor: "|",
+                                                    delay: 50,
+                                                    deleteSpeed: 30,
+                                                }}
+                                            />
+                                        </span>
+
+                                    </div>
+
                                 </div>
                             </div>
-                        </div>
+                        </motion.div>
 
                         {/* Right Form */}
-                        <div className="flex justify-center lg:justify-end order-first lg:order-last">
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.8, delay: 0.2 }}
+                            className="flex justify-center lg:justify-end order-first lg:order-last"
+                        >
                             <div className="w-full max-w-md sm:max-w-md relative z-20">
-                                <div className="bg-white/90 backdrop-blur-sm rounded p-6 sm:p-8 shadow-2xl border border-gray-200/50">
+                                <div className="bg-white/50 backdrop-blur-sm rounded p-6 sm:p-8 shadow-2xl border border-white/20">
                                     {!isSubmitted ? (
                                         <>
-                                            <h3 className="text-2xl font-bold mb-6 text-gray-800">
+                                            <h3 className="text-2xl font-bold mb-6 text-white md:text-gray-800">
                                                 Get Free Consultation
                                             </h3>
 
@@ -210,9 +233,9 @@ const HeroComponent = () => {
                                                         placeholder="Your Name"
                                                         value={formData.name}
                                                         onChange={(e) => handleInputChange('name', e.target.value)}
-                                                        className={`w-full p-4 sm:p-3 rounded border-2 outline-none bg-gray-50 text-black placeholder:text-gray-600 transition-all duration-200 focus:bg-white focus:shadow-md ${errors.name
+                                                        className={`w-full p-4 sm:p-3 rounded border-2 outline-none bg-white/50 text-black placeholder:text-gray-600 transition-all duration-200 focus:bg-white focus:shadow-md ${errors.name
                                                             ? 'border-red-400 focus:border-red-500'
-                                                            : 'border-gray-200 focus:border-black'
+                                                            : 'border-white/30 focus:border-black'
                                                             }`}
                                                     />
                                                     {errors.name && (
@@ -227,9 +250,9 @@ const HeroComponent = () => {
                                                         placeholder="Your Email"
                                                         value={formData.email}
                                                         onChange={(e) => handleInputChange('email', e.target.value)}
-                                                        className={`w-full p-4 sm:p-3 rounded border-2 outline-none bg-gray-50 text-black placeholder:text-gray-600 transition-all duration-200 focus:bg-white focus:shadow-md ${errors.email
+                                                        className={`w-full p-4 sm:p-3 rounded border-2 outline-none bg-white/50 text-black placeholder:text-gray-600 transition-all duration-200 focus:bg-white focus:shadow-md ${errors.email
                                                             ? 'border-red-400 focus:border-red-500'
-                                                            : 'border-gray-200 focus:border-black'
+                                                            : 'border-white/30 focus:border-black'
                                                             }`}
                                                     />
                                                     {errors.email && (
@@ -244,9 +267,9 @@ const HeroComponent = () => {
                                                         placeholder="Your Phone"
                                                         value={formData.phone}
                                                         onChange={(e) => handleInputChange('phone', e.target.value)}
-                                                        className={`w-full p-4 sm:p-3 rounded border-2 outline-none bg-gray-50 text-black placeholder:text-gray-600 transition-all duration-200 focus:bg-white focus:shadow-md ${errors.phone
+                                                        className={`w-full p-4 sm:p-3 rounded border-2 outline-none bg-white/50 text-black placeholder:text-gray-600 transition-all duration-200 focus:bg-white focus:shadow-md ${errors.phone
                                                             ? 'border-red-400 focus:border-red-500'
-                                                            : 'border-gray-200 focus:border-black'
+                                                            : 'border-white/30 focus:border-black'
                                                             }`}
                                                     />
                                                     {errors.phone && (
@@ -262,7 +285,7 @@ const HeroComponent = () => {
                                                         rows={4}
                                                         value={formData.message}
                                                         onChange={(e) => handleInputChange('message', e.target.value)}
-                                                        className="w-full p-4 sm:p-3 rounded border-2 border-gray-200 bg-gray-50 text-black placeholder:text-gray-600 outline-none resize-none focus:border-black focus:bg-white focus:shadow-md transition-all duration-200"
+                                                        className="w-full p-4 sm:p-3 rounded border-2 border-gray-200 bg-white/50 text-black placeholder:text-gray-600 outline-none resize-none focus:border-black focus:bg-white focus:shadow-md transition-all duration-200"
                                                     />
                                                 </div>
 
@@ -282,20 +305,20 @@ const HeroComponent = () => {
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                                 </svg>
                                             </div>
-                                            <h3 className="text-xl font-bold mb-2 text-gray-800">Thank You!</h3>
-                                            <p className="text-gray-600">We will contact you soon.</p>
-                                            <p className="text-gray-500 text-sm mt-2">
+                                            <h3 className="text-xl font-bold mb-2 text-white md:text-gray-800">Thank You!</h3>
+                                            <p className="text-gray-200 md:text-gray-600">We will contact you soon.</p>
+                                            <p className="text-gray-300 md:text-gray-500 text-sm mt-2">
                                                 Our team will try to call you within 12 hours.
                                             </p>
                                         </div>
                                     )}
                                 </div>
                             </div>
-                        </div>
+                        </motion.div>
 
                     </div>
                 </div>
-            </div>
+            </div >
 
             <style jsx>{`
                 @keyframes float {
@@ -307,7 +330,7 @@ const HeroComponent = () => {
                     background: radial-gradient(circle, var(--tw-gradient-stops));
                 }
             `}</style>
-        </div>
+        </div >
     );
 };
 

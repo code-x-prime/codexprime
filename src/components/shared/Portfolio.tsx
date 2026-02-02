@@ -22,84 +22,93 @@ interface PortfolioProps {
 
 const projects: Project[] = [
     {
+        title: "Shrestha Academy",
+        category: "EdTech Platform",
+        description:
+            "A complete MERN stack education platform offering online courses, e-books, progress indicators, and offline classroom management for students.",
+        image:
+            "https://pub-a3d2b35862c1483894ffbee942bb995e.r2.dev/shreeshta.jpeg",
+        tags: [
+            "Next.js",
+            "React",
+            "Node.js",
+            "Express",
+            "PostgreSQL",
+            "MERN Stack",
+        ],
+        results: "Centralized learning with online & offline course management",
+        link: "https://shresthaacademy.com/",
+    },
+    {
         title: "Monark FX",
         category: "Financial Services",
         description:
-            "A modern financial services platform that integrates seamless payment systems and live Zoom sessions for an enhanced user experience in trading and consultations.",
-        image: "https://g0p7auwucr.ufs.sh/f/ULWZqXBivs80g1M2zj90TDwQ1qFAjO9JoI2uaLHf4ZBU8vPk",
-        tags: ["React", "NextJS", "NodeJS", "PostgreSQL", "Razorpay", "Zoom SDK", "CI/CD (GitHub Actions)"],
-        results: "Streamlined payment and live session features",
+            "A modern financial services platform with integrated payment systems and live Zoom sessions for trading consultations and financial education.",
+        image:
+            "https://pub-a3d2b35862c1483894ffbee942bb995e.r2.dev/monark.jpeg",
+        tags: [
+            "Next.js",
+            "React",
+            "Node.js",
+            "PostgreSQL",
+            "Razorpay",
+            "Zoom SDK",
+        ],
+        results: "Streamlined payments and live trading sessions",
         link: "https://monarkfx.com",
-    },
-    {
-        title: "EDAWS",
-        category: "NGO Platform",
-        description:
-            "An intuitive donation platform crafted for NGOs, enabling smooth online contributions and campaign tracking to boost transparency and donor trust.",
-        image: "https://utfs.io/f/1e42b816-777d-4944-8aa3-dfc8b3c2991a-qmpdsf.jpg",
-        tags: ["Next.js", "Tailwind CSS", "React", "Prisma", "Razorpay"],
-        results: "Increased donations for NGOs",
-        link: "https://www.edaws.in",
     },
     {
         title: "Nifty Nitesh",
         category: "Stock Market Platform",
         description:
-            "A comprehensive stock market education and trading platform offering both online and offline resources for traders and investors to stay ahead.",
-        image: "https://g0p7auwucr.ufs.sh/f/ULWZqXBivs80Mb0Qz3TSLB512YwCRDUN9ynZh8mf0v6akAK4",
-        tags: ["Next.js", "React", "Google Sheet (DB)", "Cloudinary"],
-        results: "Improved data management and performance",
+            "A stock market education platform providing practical trading knowledge, tools, and resources for investors and traders.",
+        image:
+            "https://pub-a3d2b35862c1483894ffbee942bb995e.r2.dev/nifty.jpeg",
+        tags: ["Next.js", "React", "Cloudinary", "Google Sheets"],
+        results: "Improved learning experience and data handling",
         link: "https://niftynitesh.com",
     },
     {
-        title: "TRX SOL",
-        category: "Stock Market Platform",
+        title: "EDAWS",
+        category: "NGO Platform",
         description:
-            "TRX SOL bridges offline and online stock trading with smart communication tools, making financial insights more accessible to all users.",
-        image: "https://g0p7auwucr.ufs.sh/f/ULWZqXBivs806BjgsRFSjeMkAxVIgZocBUl7f23DdOuvHqNn",
-        tags: ["Next.js", "React", "Brevo", "Nodemailer"],
-        results: "Optimized client communication",
-        link: "https://trxsol.com",
+            "A donation and campaign management platform for NGOs to increase transparency, donor trust, and online contributions.",
+        image:
+            "https://pub-a3d2b35862c1483894ffbee942bb995e.r2.dev/edaws.jpeg",
+        tags: ["Next.js", "React", "Prisma", "Razorpay", "Tailwind CSS"],
+        results: "Boosted NGO donations and campaign tracking",
+        link: "https://www.edaws.in",
     },
     {
-        title: "Equity Tank",
-        category: "Stock Market Platform",
+        title: "DFIX Kart",
+        category: "E-commerce Platform",
         description:
-            "An engaging and user-friendly stock trading platform focused on simplifying investments with real-time tools and visually rich dashboards.",
-        image: "https://utfs.io/f/add4e9aa-851e-48f6-bb30-e8c8a0b564cd-iyt33x.jpg",
-        tags: ["React", "NextJS", "TailwindCSS", "Framer Motion"],
-        results: "Improved user engagement and performance",
-        link: "https://equitytank.com",
+            "A full-scale tape-selling e-commerce platform with a Next.js client, React (Vite) admin panel, and Node.js backend using PostgreSQL.",
+        image:
+            "https://pub-a3d2b35862c1483894ffbee942bb995e.r2.dev/difx.jpeg",
+        tags: [
+            "Next.js 14",
+            "React (Vite)",
+            "Node.js",
+            "PostgreSQL",
+            "E-commerce",
+        ],
+        results: "Scalable multi-panel e-commerce system",
+        link: "https://dfixkart.com/",
     },
     {
-        title: "EOAN",
-        category: "E-commerce",
+        title: "Panacea Medcare",
+        category: "Healthcare Website",
         description:
-            "A beautifully designed online furniture store showcasing an extensive range of high-quality products with optimized shopping experience.",
-        image: "https://utfs.io/f/0cb7d590-e0d1-4ce8-8807-7db34d50d1be-da5jf4.jpg",
-        tags: ["WordPress", "Elementor", "PHP", "CSS", "HTML", "WooCommerce", "JavaScript", "Theme Customization"],
-        results: "Boosted online sales and traffic",
-        link: "https://eoan.in",
-    },
-    {
-        title: "TRX Academy",
-        category: "Stock Market Platform",
-        description:
-            "A dedicated learning hub for stock market education offering live sessions, tutorials, and offline classes for beginner to advanced traders.",
-        image: "https://g0p7auwucr.ufs.sh/f/ULWZqXBivs80DwIeWWmEwLedJguv0UbtiA6GHWYay4nfP9BK",
-        tags: ["React", "NextJS", "NodeJS", "PostgreSQL", "Razorpay", "Zoom SDK", "CI/CD (GitHub Actions)"],
-        results: "Enhanced user trading experience",
-    },
-    {
-        title: "Sharma Fitness",
-        category: "E-commerce",
-        description:
-            "An e-commerce platform for gym equipment and accessories, designed for smooth shopping and mobile-first performance across devices.",
-        image: "https://utfs.io/f/0d43ad81-130f-481f-9567-37e491bff626-hswoyi.jpg",
-        tags: ["WordPress", "Elementor", "PHP", "CSS", "HTML", "WooCommerce", "JavaScript", "Theme Customization"],
-        results: "Increased sales in gym equipment",
+            "A multilingual doctor and healthcare website built with Next.js, supporting English, French, and Arabic for a global audience.",
+        image:
+            "https://pub-a3d2b35862c1483894ffbee942bb995e.r2.dev/panacea.jpeg",
+        tags: ["Next.js", "Internationalization (i18n)", "Healthcare"],
+        results: "Expanded reach with multilingual support",
+        link: "https://panaceamedcare.com/",
     },
 ];
+
 
 
 const Portfolio: React.FC<PortfolioProps> = ({ limit }) => {

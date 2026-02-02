@@ -1,3 +1,4 @@
+"use client";
 import React from 'react';
 import {
     Shield,
@@ -12,6 +13,7 @@ import {
     IndianRupee
 } from 'lucide-react';
 import HeadText from './Head-Text';
+import CountUp from 'react-countup';
 
 const WhyChooseUsSection = () => {
     const benefits = [
@@ -43,7 +45,7 @@ const WhyChooseUsSection = () => {
             icon: <Headphones className="w-7 h-7" />,
             title: "24/7 Support",
             description: "Round-the-clock technical support and maintenance. We're always available when you need us.",
-            stat: "24/7",
+            stat: "24 hours",
             label: "Available",
             accent: "border-[#00C49A] text-[#00C49A]"
         },
@@ -95,7 +97,15 @@ const WhyChooseUsSection = () => {
                                     </h3>
                                 </div>
                                 <div className={`text-left md:text-right border-l-2 pl-3 ${benefit.accent}`}>
-                                    <div className="text-lg font-bold">{benefit.stat}</div>
+                                    <div className="text-lg font-bold">
+                                        <CountUp
+                                            end={parseInt(benefit.stat.replace(/[^0-9]/g, '')) || 0}
+                                            duration={2.5}
+                                            suffix={benefit.stat.replace(/[0-9]/g, '')}
+                                            enableScrollSpy
+                                            scrollSpyOnce
+                                        />
+                                    </div>
                                     <div className="text-xs text-gray-500">{benefit.label}</div>
                                 </div>
                             </div>

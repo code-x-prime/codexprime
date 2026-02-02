@@ -111,7 +111,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en-IN">
+    <html lang="en-IN" className="scroll-smooth">
       <head>
         {/* Preconnect to Meta/Facebook domains for faster loading */}
         <link rel="preconnect" href="https://connect.facebook.net" />

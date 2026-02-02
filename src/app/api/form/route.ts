@@ -6,6 +6,7 @@ const ALLOWED_ORIGINS = [
   "https://www.codexprime.in",
   "https://landing.codexprime.in",
   "http://localhost:3000",
+  "http://localhost:3001",
 ];
 
 // Email configuration
