@@ -1,6 +1,6 @@
-const { createServer } = require('http');
-const next = require('next');
-const dotenv = require('dotenv');
+import { createServer } from 'http';
+import next from 'next';
+import dotenv from 'dotenv';
 
 // Load environment variables
 dotenv.config();
@@ -17,7 +17,7 @@ app.prepare()
                 // Forward NextAuth API requests to Next.js handler
                 return handle(req, res);
             }
-            handle(req, res); // Handle the regular requests
+            handle(req, res); // Forward the regular requests
         }).listen(port, (err) => {
             if (err) throw err;
             console.log(`> Ready on http://localhost:${port}`); // Log that the server is ready
