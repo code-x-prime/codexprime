@@ -1,12 +1,15 @@
-# Sirf test: push par chalne par iska run dikhega - matlab push trigger kaam kar raha hai
+# Test: KISI BHI branch par push hone par chalega - branch name log me dikhega
 name: Test push trigger
 
 on:
   push:
-    branches: [main, master]
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Push trigger kaam kar raha hai - main/master par push hua"
+      - name: Kaunsi branch par push hua
+        run: |
+          echo "Branch = ${{ github.ref_name }}"
+          echo "Ref = ${{ github.ref }}"
+          echo "Agar ye run dikha to push trigger kaam kar raha hai, lekin branch main/master nahi thi"
