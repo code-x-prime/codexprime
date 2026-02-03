@@ -2,7 +2,8 @@ name: 🚀 Deploy to VPS
 
 on:
   push:
-    branches: [main]
+    branches: [main, master]
+  workflow_dispatch: # Actions tab se "Run workflow" se bhi chala sakte ho
 
 jobs:
   deploy:
@@ -20,7 +21,7 @@ jobs:
 
             echo "📥 Pulling latest code..."
             cd ~/codexprime
-            git pull origin main
+            git pull origin main || git pull origin master
 
             echo "📦 Installing dependencies..."
             pnpm install --frozen-lockfile
