@@ -1,9 +1,9 @@
-name: 🚀 Deploy to VPS
+name: Deploy to VPS
 
 on:
   push:
     branches: [main, master]
-  workflow_dispatch: # Actions tab se "Run workflow" se bhi chala sakte ho
+  workflow_dispatch:
 
 jobs:
   deploy:
