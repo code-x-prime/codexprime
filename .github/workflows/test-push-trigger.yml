@@ -1,0 +1,12 @@
+# Sirf test: push par chalne par iska run dikhega - matlab push trigger kaam kar raha hai
+name: Test push trigger
+
+on:
+  push:
+    branches: [main, master]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Push trigger kaam kar raha hai - main/master par push hua"
