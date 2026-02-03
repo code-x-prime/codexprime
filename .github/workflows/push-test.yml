@@ -1,0 +1,14 @@
+# Minimal test: sirf push par chalega. Chal gaya to push trigger sahi hai.
+name: Push test
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  one-step:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Push trigger OK - ${{ github.ref }}"
