@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx tsc:*)",
+      "Bash(pnpm build:*)",
+      "Bash(node -e \"const si = require\\('react-icons/si'\\); const check = ['SiAmazonwebservices','SiNodedotjs','SiNextdotjs','SiExpress','SiPrisma','SiLinux','SiUbuntu','SiGithub','SiGit','SiDocker','SiNginx']; check.forEach\\(n => console.log\\(n, ':', si[n] ? 'OK' : 'MISSING'\\)\\);\")"
+    ]
+  }
+}

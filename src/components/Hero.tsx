@@ -1,336 +1,201 @@
 "use client";
-import React, { useState } from 'react';
-import { toast } from 'sonner';
+import React from 'react';
 import { motion } from 'framer-motion';
 import Typewriter from 'typewriter-effect';
+import Link from 'next/link';
+import { FiArrowRight, FiZap, FiClock, FiUsers } from 'react-icons/fi';
 
-interface FormData {
-    name: string;
-    email: string;
-    phone: string;
-    age?: string;
-    message?: string;
-}
+const fadeUp = {
+    initial: { opacity: 0, y: 24 },
+    animate: { opacity: 1, y: 0 },
+};
 
-interface FormErrors {
-    name?: string;
-    email?: string;
-    phone?: string;
-    age?: string;
-}
+const avatars = [
+    { initials: 'DV', bg: 'bg-blue-500' },
+    { initials: 'SK', bg: 'bg-violet-500' },
+    { initials: 'N', bg: 'bg-emerald-500' },
+];
+
+const floatStats = [
+    { icon: <FiZap className="w-4 h-4" />, value: '150+', label: 'Projects Done', color: 'text-blue-500', bg: 'bg-blue-50' },
+    { icon: <FiClock className="w-4 h-4" />, value: '98%', label: 'On-Time Delivery', color: 'text-violet-500', bg: 'bg-violet-50' },
+    { icon: <FiUsers className="w-4 h-4" />, value: '5+', label: 'Years Experience', color: 'text-emerald-500', bg: 'bg-emerald-50' },
+];
 
 const HeroComponent = () => {
-    const [isSubmitted, setIsSubmitted] = useState(false);
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [formData, setFormData] = useState<FormData>({
-        name: '',
-        email: '',
-        phone: '',
-        message: ''
-    });
-    const [errors, setErrors] = useState<FormErrors>({});
-
-    const validateForm = (): boolean => {
-        const newErrors: FormErrors = {};
-
-        if (!formData.name.trim()) {
-            newErrors.name = 'Name is required';
-        }
-
-        const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-        if (!formData.email.trim()) {
-            newErrors.email = 'Email is required';
-        } else if (!emailRegex.test(formData.email)) {
-            newErrors.email = 'Invalid email';
-        }
-
-        if (!formData.phone.trim()) {
-            newErrors.phone = 'Phone number is required';
-        }
-
-        if (formData.age && formData.age.trim()) {
-            const a = Number(formData.age.replace(/[^0-9]/g, ''));
-            if (isNaN(a) || a < 1 || a > 120) newErrors.phone = 'Enter a valid age';
-        }
-
-        setErrors(newErrors);
-        return Object.keys(newErrors).length === 0;
-    };
-
-    const handleInputChange = (field: keyof FormData, value: string) => {
-        setFormData(prev => ({ ...prev, [field]: value }));
-        if (errors[field as keyof FormErrors]) {
-            setErrors(prev => ({ ...prev, [field]: undefined }));
-        }
-    };
-
-    const handleSubmit = async () => {
-        if (!validateForm()) return;
-
-        setIsSubmitting(true);
-
-        try {
-            const res = await fetch('/api/form', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    name: formData.name,
-                    email: formData.email,
-                    mobileNumber: formData.phone,
-                    age: formData.age,
-                    message: formData.message,
-                }),
-            });
-
-            const json = await res.json();
-            if (!res.ok) {
-                toast.error(json?.error || 'Failed to send message');
-                setIsSubmitting(false);
-                return;
-            }
-
-            toast.success(json?.message || 'Message sent');
-            setIsSubmitted(true);
-            setIsSubmitting(false);
-
-            setTimeout(() => {
-                setIsSubmitted(false);
-                setFormData({ name: '', email: '', phone: '', age: '', message: '' });
-                setErrors({});
-            }, 3000);
-        } catch (err) {
-            console.error(err);
-            toast.error('Network error. Please try again later.');
-            setIsSubmitting(false);
-        }
-    };
-
-    // Simple Grid Lines Component
-    const AnimatedGrid = () => {
-        return (
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                {/* Simple Grid Lines Pattern */}
-                <div
-                    className="absolute inset-0 opacity-40"
-                    style={{
-                        backgroundImage: `
-                            linear-gradient(rgba(0, 0, 0, 0.18) 1px, transparent 1px),
-                            linear-gradient(90deg, rgba(0, 0, 0, 0.18) 1px, transparent 1px)
-                        `,
-                        backgroundSize: '80px 80px'
-                    }}
-                />
-
-                {/* Fade out gradient overlays for center disappearing effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-white/95 pointer-events-none" />
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-white/60 pointer-events-none" />
-
-                {/* Center radial fade */}
-                <div
-                    className="absolute inset-0 pointer-events-none"
-                    style={{
-                        background: 'radial-gradient(circle at center, rgba(255,255,255,0.3) 20%, transparent 70%)'
-                    }}
-                />
-            </div>
-        );
-    };
-
     return (
-        <div className="relative w-full lg:h-[85dvh] md:bg-white p-2 overflow-hidden">
-            {/* Desktop Video Background */}
-            <div className="hidden md:block absolute top-0 right-0 w-1/2 h-full overflow-hidden">
-                <video
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    className="w-full h-full object-cover"
-                >
-                    <source src="https://pub-a3d2b35862c1483894ffbee942bb995e.r2.dev/bgvideo.mp4" type="video/webm" />
-                </video>
-                <div className="absolute inset-0 bg-black/30"></div>
-            </div>
+        <section className="relative w-full min-h-[calc(100vh-4.5rem)] bg-white overflow-hidden flex items-center justify-center">
 
-            {/* Mobile Background Image */}
+            {/* ── Grid lines background ── */}
+            <div className="absolute inset-0 bg-grid-lines opacity-100 pointer-events-none" />
+
+            {/* ── Edge fade mask so grid fades at all 4 edges ── */}
             <div
-                className="md:hidden absolute inset-0 bg-cover bg-center bg-no-repeat"
+                className="absolute inset-0 pointer-events-none"
                 style={{
-                    backgroundImage: `url('https://pub-a3d2b35862c1483894ffbee942bb995e.r2.dev/photo-1460925895917-afdab827c52f%5B1%5D')`
+                    background: `
+                        radial-gradient(ellipse 80% 60% at 50% 50%, transparent 40%, white 100%)
+                    `,
                 }}
-            >
-                <div className="absolute inset-0 bg-black/75"></div>
+            />
+
+            {/* ── Animated color blobs ── */}
+            <div className="absolute top-10 left-[10%] w-[480px] h-[480px] rounded-full bg-blue-400/10 blur-[120px] animate-blob pointer-events-none" />
+            <div className="absolute top-20 right-[8%] w-[380px] h-[380px] rounded-full bg-violet-400/12 blur-[100px] animate-blob animation-delay-2 pointer-events-none" />
+            <div className="absolute bottom-10 left-[35%] w-[340px] h-[340px] rounded-full bg-pink-300/10 blur-[90px] animate-blob animation-delay-4 pointer-events-none" />
+            <div className="absolute top-1/2 right-[20%] w-[260px] h-[260px] rounded-full bg-cyan-300/08 blur-[80px] animate-blob animation-delay-6 pointer-events-none" />
+
+            {/* ── Content ── */}
+            <div className="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 py-14 md:py-20 text-center">
+                <motion.div
+                    className="flex flex-col items-center gap-6"
+                    initial="initial"
+                    animate="animate"
+                    transition={{ staggerChildren: 0.09 }}
+                >
+                    {/* Badge */}
+                    <motion.div variants={fadeUp} transition={{ duration: 0.45 }}>
+                        <span className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-50 to-violet-50 border border-blue-100/80 text-blue-600 text-xs font-semibold px-4 py-1.5 rounded-full shadow-sm">
+                            <span className="relative flex h-2 w-2">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-60" />
+                                <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500" />
+                            </span>
+                            Transform Your Business
+                        </span>
+                    </motion.div>
+
+                    {/* Main heading */}
+                    <motion.h1
+                        variants={fadeUp}
+                        transition={{ duration: 0.6 }}
+                        className="text-5xl sm:text-6xl md:text-7xl lg:text-[84px] font-black text-[#0a0a0a] leading-[1.04] tracking-tight"
+                    >
+                        Turning Ideas Into
+                        <br />
+                        <span
+                            className="bg-clip-text text-transparent"
+                            style={{
+                                backgroundImage: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 45%, #06b6d4 100%)',
+                            }}
+                        >
+                            Scalable Products
+                        </span>
+                    </motion.h1>
+
+                    {/* Typewriter */}
+                    <motion.div
+                        variants={fadeUp}
+                        transition={{ duration: 0.45 }}
+                        className="flex items-center justify-center gap-2 text-base sm:text-lg text-gray-500"
+                    >
+                        <span>We provide</span>
+                        <span className="font-semibold text-[#0a0a0a] min-w-[200px] text-left">
+                            <Typewriter
+                                options={{
+                                    strings: ['Web Designing', 'Digital Marketing', 'MVP Development', 'Graphic Designing', 'IT Solutions'],
+                                    autoStart: true,
+                                    loop: true,
+                                    cursor: '|',
+                                    delay: 55,
+                                    deleteSpeed: 30,
+                                }}
+                            />
+                        </span>
+                    </motion.div>
+
+                    {/* Floating stat cards */}
+                    <motion.div
+                        variants={fadeUp}
+                        transition={{ duration: 0.5 }}
+                        className="flex flex-wrap items-center justify-center gap-3"
+                    >
+                        {floatStats.map((s, i) => (
+                            <motion.div
+                                key={i}
+                                initial={{ opacity: 0, y: 16 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5, delay: 0.4 + i * 0.1 }}
+                                whileHover={{ y: -3, transition: { duration: 0.2 } }}
+                                className="flex items-center gap-2.5 bg-white/90 backdrop-blur-md border border-gray-100/80 rounded-2xl px-4 py-2.5 shadow-[0_2px_16px_rgba(0,0,0,0.06)] hover:shadow-[0_4px_24px_rgba(0,0,0,0.1)] transition-shadow"
+                            >
+                                <div className={`w-7 h-7 ${s.bg} ${s.color} rounded-lg flex items-center justify-center flex-shrink-0`}>
+                                    {s.icon}
+                                </div>
+                                <div className="text-left">
+                                    <div className="text-sm font-black text-[#0a0a0a] leading-none">{s.value}</div>
+                                    <div className="text-xs text-gray-400 mt-0.5 whitespace-nowrap">{s.label}</div>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </motion.div>
+
+                    {/* CTA buttons */}
+                    <motion.div
+                        variants={fadeUp}
+                        transition={{ duration: 0.45 }}
+                        className="flex flex-wrap gap-3 items-center justify-center"
+                    >
+                        <a
+                            href="#contact"
+                            className="group relative inline-flex items-center gap-2 text-white px-8 py-3.5 rounded-full font-semibold text-sm overflow-hidden transition-all duration-200 hover:scale-[1.03] shadow-[0_4px_24px_rgba(99,102,241,0.35)] hover:shadow-[0_6px_32px_rgba(99,102,241,0.5)]"
+                            style={{ background: 'linear-gradient(135deg, #3b82f6 0%, #7c3aed 100%)' }}
+                        >
+                            {/* Shine sweep on hover */}
+                            <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                                style={{ background: 'linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.18) 50%, transparent 60%)' }}
+                            />
+                            Get Free Consultation
+                            <FiArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                        </a>
+                        <Link
+                            href="/portfolio"
+                            className="inline-flex items-center gap-2 bg-white border border-gray-200 text-[#0a0a0a] px-8 py-3.5 rounded-full font-semibold text-sm hover:bg-gray-50 hover:border-gray-300 hover:scale-[1.02] transition-all duration-200 shadow-sm"
+                        >
+                            View Our Work
+                        </Link>
+                    </motion.div>
+
+                    {/* Trust avatars */}
+                    <motion.div
+                        variants={fadeUp}
+                        transition={{ duration: 0.45 }}
+                        className="flex items-center justify-center gap-3"
+                    >
+                        <div className="flex items-center">
+                            {avatars.map((av, i) => (
+                                <div
+                                    key={i}
+                                    className={`w-8 h-8 rounded-full ${av.bg} text-white flex items-center justify-center text-[10px] font-bold border-2 border-white flex-shrink-0 ${i !== 0 ? '-ml-2.5' : ''}`}
+                                    style={{ zIndex: avatars.length - i }}
+                                >
+                                    {av.initials}
+                                </div>
+                            ))}
+                        </div>
+                        <span className="text-sm text-gray-500">
+                            Trusted by{' '}
+                            <span className="font-bold text-[#0a0a0a]">150+ Businesses</span>
+                        </span>
+                    </motion.div>
+
+                    {/* Scroll indicator */}
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 1.2, duration: 0.6 }}
+                        className="flex flex-col items-center gap-1.5 mt-2"
+                    >
+                        <span className="text-[10px] text-gray-300 tracking-[0.2em] uppercase">Scroll</span>
+                        <motion.div
+                            animate={{ y: [0, 6, 0] }}
+                            transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
+                            className="w-px h-7 rounded-full"
+                            style={{ background: 'linear-gradient(to bottom, #9ca3af, transparent)' }}
+                        />
+                    </motion.div>
+                </motion.div>
             </div>
-
-            {/* Content Container */}
-            <div className="relative z-10 min-h-full flex items-center">
-                <div className="w-full max-w-7xl mx-auto px-3 md:px-6">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center">
-
-                        {/* Left Content with Grid Background */}
-                        <motion.div
-                            initial={{ x: -100, opacity: 0 }}
-                            animate={{ x: 0, opacity: 1 }}
-                            transition={{ duration: 0.8, ease: "easeOut" }}
-                            className="relative md:text-black text-white space-y-8 order-first lg:order-first p-5"
-                        >
-                            {/* Grid Background - Only on desktop, covers full left area */}
-                            <div className="hidden md:block absolute inset-0 -left-8 -right-8">
-                                <AnimatedGrid />
-                            </div>
-
-                            {/* Content */}
-                            <div className="relative z-20 space-y-6">
-                                <p className="text-sm uppercase tracking-widest font-medium text-gray-300 md:text-gray-600">
-                                    TRANSFORM YOUR BUSINESS
-                                </p>
-
-                                <h1 className=" text-2xl sm:text-4xl lg:text-7xl font-bold leading-tight text-white md:text-gray-900 drop-shadow-lg">
-                                    CodeXprime – Turning Ideas into Scalable Products
-                                </h1>
-                                <div className="flex flex-col space-y-2 text-lg text-gray-100 md:text-gray-700 font-medium drop-shadow">
-                                    <div className='flex gap-2 items-center'>
-                                        <span>We provide</span>
-                                        <span className='text-2xl md:text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 leading-normal py-2 inline-block'>
-                                            <Typewriter
-                                                options={{
-                                                    strings: ['Web Designing', 'Digital Marketing', 'IT Solutions', 'MVP Development', 'Graphic Designing', 'Web Development'],
-                                                    autoStart: true,
-                                                    loop: true,
-                                                    cursor: "|",
-                                                    delay: 50,
-                                                    deleteSpeed: 30,
-                                                }}
-                                            />
-                                        </span>
-
-                                    </div>
-
-                                </div>
-                            </div>
-                        </motion.div>
-
-                        {/* Right Form */}
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 0.8, delay: 0.2 }}
-                            className="flex justify-center lg:justify-end order-first lg:order-last"
-                        >
-                            <div className="w-full max-w-md sm:max-w-md relative z-20">
-                                <div className="bg-white/50 backdrop-blur-sm rounded p-6 sm:p-8 shadow-2xl border border-white/20">
-                                    {!isSubmitted ? (
-                                        <>
-                                            <h3 className="text-2xl font-bold mb-6 text-white md:text-gray-800">
-                                                Get Free Consultation
-                                            </h3>
-
-                                            <div className="space-y-4">
-                                                <div>
-                                                    <input
-                                                        aria-label="Your name"
-                                                        type="text"
-                                                        placeholder="Your Name"
-                                                        value={formData.name}
-                                                        onChange={(e) => handleInputChange('name', e.target.value)}
-                                                        className={`w-full p-4 sm:p-3 rounded border-2 outline-none bg-white/50 text-black placeholder:text-gray-600 transition-all duration-200 focus:bg-white focus:shadow-md ${errors.name
-                                                            ? 'border-red-400 focus:border-red-500'
-                                                            : 'border-white/30 focus:border-black'
-                                                            }`}
-                                                    />
-                                                    {errors.name && (
-                                                        <p className="text-red-500 text-sm mt-2">{errors.name}</p>
-                                                    )}
-                                                </div>
-
-                                                <div>
-                                                    <input
-                                                        aria-label="Your email"
-                                                        type="email"
-                                                        placeholder="Your Email"
-                                                        value={formData.email}
-                                                        onChange={(e) => handleInputChange('email', e.target.value)}
-                                                        className={`w-full p-4 sm:p-3 rounded border-2 outline-none bg-white/50 text-black placeholder:text-gray-600 transition-all duration-200 focus:bg-white focus:shadow-md ${errors.email
-                                                            ? 'border-red-400 focus:border-red-500'
-                                                            : 'border-white/30 focus:border-black'
-                                                            }`}
-                                                    />
-                                                    {errors.email && (
-                                                        <p className="text-red-500 text-sm mt-2">{errors.email}</p>
-                                                    )}
-                                                </div>
-
-                                                <div>
-                                                    <input
-                                                        aria-label="Your phone"
-                                                        type="tel"
-                                                        placeholder="Your Phone"
-                                                        value={formData.phone}
-                                                        onChange={(e) => handleInputChange('phone', e.target.value)}
-                                                        className={`w-full p-4 sm:p-3 rounded border-2 outline-none bg-white/50 text-black placeholder:text-gray-600 transition-all duration-200 focus:bg-white focus:shadow-md ${errors.phone
-                                                            ? 'border-red-400 focus:border-red-500'
-                                                            : 'border-white/30 focus:border-black'
-                                                            }`}
-                                                    />
-                                                    {errors.phone && (
-                                                        <p className="text-red-500 text-sm mt-2">{errors.phone}</p>
-                                                    )}
-                                                </div>
-
-
-                                                <div>
-                                                    <textarea
-                                                        aria-label="Optional message"
-                                                        placeholder="Message (Optional)"
-                                                        rows={4}
-                                                        value={formData.message}
-                                                        onChange={(e) => handleInputChange('message', e.target.value)}
-                                                        className="w-full p-4 sm:p-3 rounded border-2 border-gray-200 bg-white/50 text-black placeholder:text-gray-600 outline-none resize-none focus:border-black focus:bg-white focus:shadow-md transition-all duration-200"
-                                                    />
-                                                </div>
-
-                                                <button
-                                                    onClick={handleSubmit}
-                                                    disabled={isSubmitting}
-                                                    className="w-full bg-gradient-to-r from-gray-900 to-black text-white py-5 sm:py-4 px-6 rounded font-medium hover:from-gray-800 hover:to-gray-900 disabled:opacity-50 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02] text-lg"
-                                                >
-                                                    {isSubmitting ? 'Submitting...' : 'Get Free Consultation'}
-                                                </button>
-                                            </div>
-                                        </>
-                                    ) : (
-                                        <div className="text-center py-8">
-                                            <div className="w-16 h-16 bg-green-100 rounded-full mx-auto mb-4 flex items-center justify-center animate-pulse">
-                                                <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                                </svg>
-                                            </div>
-                                            <h3 className="text-xl font-bold mb-2 text-white md:text-gray-800">Thank You!</h3>
-                                            <p className="text-gray-200 md:text-gray-600">We will contact you soon.</p>
-                                            <p className="text-gray-300 md:text-gray-500 text-sm mt-2">
-                                                Our team will try to call you within 12 hours.
-                                            </p>
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-                        </motion.div>
-
-                    </div>
-                </div>
-            </div >
-
-            <style jsx>{`
-                @keyframes float {
-                    0%, 100% { transform: translateY(0px); }
-                    50% { transform: translateY(-10px); }
-                }
-                
-                .bg-gradient-radial {
-                    background: radial-gradient(circle, var(--tw-gradient-stops));
-                }
-            `}</style>
-        </div >
+        </section>
     );
 };
 

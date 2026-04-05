@@ -1,108 +1,88 @@
 "use client";
 import React, { useState } from 'react';
-import { FiPhone, FiX } from 'react-icons/fi';
-import { IoLogoWhatsapp } from 'react-icons/io';
-import CallDialog from './shared/CallDialog';
+import { FaWhatsapp, FaInstagram } from 'react-icons/fa';
+import { FiPhone } from 'react-icons/fi';
 import WhatsAppDialog from './shared/WhatsAppDialog';
-import { trackContactInteraction, trackButtonClick } from '@/lib/posthog';
+import CallDialog from './shared/CallDialog';
+import { trackContactInteraction } from '@/lib/posthog';
 
 const FloatingContactButton = () => {
-    const [isOpen, setIsOpen] = useState(false);
-    const [showCallDialog, setShowCallDialog] = useState(false);
     const [showWhatsAppDialog, setShowWhatsAppDialog] = useState(false);
+    const [showCallDialog, setShowCallDialog] = useState(false);
 
     const phoneNumber = "+919354734436";
     const whatsappMessage = "Hi! I'm interested in CodeXprime IT services. Can you help me?";
 
-    const toggleMenu = () => {
-        setIsOpen(!isOpen);
-        trackButtonClick('Floating Contact Toggle', 'floating_button', { action: isOpen ? 'close' : 'open' });
-    };
-
     return (
         <>
-            {/* Main Floating Button */}
-            <div className="fixed bottom-6 right-6 z-50">
-                {/* Action Buttons - Show when menu is open */}
-                <div className={`absolute bottom-16 right-0 flex flex-col gap-3 transition-all duration-300 ${isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
-                    }`}>
-                    {/* WhatsApp Button */}
+            {/* ── Desktop only: Instagram bottom-left + WhatsApp bottom-right ── */}
+            <a
+                href="https://www.instagram.com/codexprime_official"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="hidden md:flex fixed bottom-6 left-6 z-50 w-12 h-12 rounded-full items-center justify-center shadow-lg hover:scale-110 transition-transform duration-200"
+                style={{
+                    background: 'radial-gradient(circle at 30% 110%, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)',
+                }}
+            >
+                <FaInstagram size={22} className="text-white" />
+            </a>
+
+            <button
+                onClick={() => {
+                    setShowWhatsAppDialog(true);
+                    trackContactInteraction('whatsapp', { location: 'floating_whatsapp_desktop' });
+                }}
+                aria-label="WhatsApp"
+                className="hidden md:flex fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-[#25D366] items-center justify-center shadow-lg hover:scale-110 hover:bg-[#20bd5a] transition-all duration-200"
+            >
+                <FaWhatsapp size={24} className="text-white" />
+            </button>
+
+            {/* ── Mobile only: clean bottom action bar ── */}
+            <div className="fixed bottom-0 left-0 right-0 md:hidden z-50">
+                {/* Gradient top fade */}
+                <div className="h-6 bg-gradient-to-t from-white/80 to-transparent pointer-events-none" />
+                <div className="flex border-t border-gray-100 bg-white/95 backdrop-blur-sm">
                     <button
                         onClick={() => {
                             setShowWhatsAppDialog(true);
-                            trackContactInteraction('whatsapp', { location: 'floating_button_desktop' });
+                            trackContactInteraction('whatsapp', { location: 'mobile_bottom_bar' });
                         }}
-                        className="flex items-center gap-3 bg-white hover:bg-gray-50 text-gray-800 border border-gray-300 px-4 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"
+                        className="flex-1 flex items-center justify-center gap-2 bg-[#25D366] text-white py-4 text-sm font-semibold active:bg-[#20bd5a] transition-colors"
                     >
-                        <IoLogoWhatsapp size={20} className="text-green-600" />
-                        <span className="hidden md:block text-sm font-medium whitespace-nowrap">WhatsApp</span>
+                        <FaWhatsapp size={19} />
+                        WhatsApp
                     </button>
-
-                    {/* Call Button */}
+                    <div className="w-px bg-white/30" />
                     <button
                         onClick={() => {
                             setShowCallDialog(true);
-                            trackContactInteraction('call', { location: 'floating_button_desktop' });
+                            trackContactInteraction('call', { location: 'mobile_bottom_bar' });
                         }}
-                        className="flex items-center gap-3 bg-white hover:bg-gray-50 text-gray-800 border border-gray-300 px-4 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"
+                        className="flex-1 flex items-center justify-center gap-2 bg-[#0a0a0a] text-white py-4 text-sm font-semibold active:bg-gray-800 transition-colors"
                     >
-                        <FiPhone size={20} className="text-blue-600" />
-                        <span className="hidden md:block text-sm font-medium whitespace-nowrap">Call Now</span>
+                        <FiPhone size={17} />
+                        Call Now
                     </button>
                 </div>
-
-                {/* Main Toggle Button */}
-                <button
-                    onClick={toggleMenu}
-                    className={`hidden md:flex w-14 h-14 rounded shadow-lg hover:shadow-xl transition-all duration-300  items-center justify-center border ${isOpen
-                        ? 'bg-black hover:bg-gray-950 text-gray-200 rotate-180'
-                        : 'bg-black hover:bg-gray-950 text-gray-100 border-gray-300'
-                        }`}
-                >
-                    {isOpen ? <FiX size={24} /> : <FiPhone size={24} />}
-                </button>
             </div>
 
-            <CallDialog
-                phoneNumber={phoneNumber}
-                show={showCallDialog}
-                onClose={() => setShowCallDialog(false)}
-            />
+            {/* Safe area spacer so content isn't hidden behind bar on mobile */}
+            <div className="h-[64px] md:hidden" />
 
-
-            {/* WhatsApp Confirmation Dialog */}
             <WhatsAppDialog
                 show={showWhatsAppDialog}
                 onClose={() => setShowWhatsAppDialog(false)}
                 phoneNumber={phoneNumber}
                 whatsappMessage={whatsappMessage}
             />
-
-            {/* Mobile Bottom Fixed Buttons - Show on small screens */}
-            <div className="fixed bottom-0 left-0 right-0 md:hidden bg-white border-t border-gray-200  z-40">
-                <div className="flex ">
-                    <button
-                        onClick={() => {
-                            setShowWhatsAppDialog(true);
-                            trackContactInteraction('whatsapp', { location: 'floating_button_mobile' });
-                        }}
-                        className="flex-1 bg-green-600 hover:bg-green-500 border border-gray-300 text-gray-100 py-3 px-4  font-medium transition-colors flex items-center justify-center gap-2"
-                    >
-                        <IoLogoWhatsapp size={25} className="text-green-600 p-[0.5px] rounded-full bg-white" />
-                        WhatsApp
-                    </button>
-                    <button
-                        onClick={() => {
-                            setShowCallDialog(true);
-                            trackContactInteraction('call', { location: 'floating_button_mobile' });
-                        }}
-                        className="flex-1 bg-black hover:bg-gray-950 text-white py-3 px-4  font-medium transition-colors flex items-center justify-center gap-2"
-                    >
-                        <FiPhone size={20} />
-                        Call Now
-                    </button>
-                </div>
-            </div>
+            <CallDialog
+                phoneNumber={phoneNumber}
+                show={showCallDialog}
+                onClose={() => setShowCallDialog(false)}
+            />
         </>
     );
 };
