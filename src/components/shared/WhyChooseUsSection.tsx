@@ -1,108 +1,136 @@
 "use client";
 import React from 'react';
+import {
+    Shield,
+    Clock,
+    Users,
+    Headphones,
+    CheckCircle,
+
+    Zap,
+    Trophy,
+    ArrowRight,
+    IndianRupee
+} from 'lucide-react';
+import HeadText from './Head-Text';
 import CountUp from 'react-countup';
-import { motion } from 'framer-motion';
-
-const stats = [
-    { value: 150, suffix: '+', label: 'Projects Delivered', color: 'text-blue-400', glow: 'shadow-[0_0_24px_rgba(96,165,250,0.15)]' },
-    { value: 98, suffix: '%', label: 'On-Time Delivery', color: 'text-emerald-400', glow: 'shadow-[0_0_24px_rgba(52,211,153,0.15)]' },
-    { value: 40, suffix: '%', label: 'Cost Savings', color: 'text-orange-400', glow: 'shadow-[0_0_24px_rgba(251,146,60,0.15)]' },
-    { value: 5, suffix: '+', label: 'Years Experience', color: 'text-purple-400', glow: 'shadow-[0_0_24px_rgba(167,139,250,0.15)]' },
-    { value: 24, suffix: '/7', label: 'Support Available', color: 'text-amber-400', glow: 'shadow-[0_0_24px_rgba(251,191,36,0.15)]' },
-    { value: 99, suffix: '%', label: 'Client Satisfaction', color: 'text-teal-400', glow: 'shadow-[0_0_24px_rgba(45,212,191,0.15)]' },
-];
-
-const marqueeText = [
-    'We Don\'t Just Code',
-    'We Create Success',
-    'We Don\'t Just Code',
-    'We Create Success',
-    'We Don\'t Just Code',
-    'We Create Success',
-    'We Don\'t Just Code',
-    'We Create Success',
-];
-
-const fadeUp = {
-    initial: { opacity: 0, y: 28 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true, margin: '-50px' } as const,
-    transition: { duration: 0.6 },
-};
 
 const WhyChooseUsSection = () => {
+    const benefits = [
+        {
+            icon: <Users className="w-7 h-7" />,
+            title: "Expert Team",
+            description: "Skilled developers with 5+ years experience delivering world-class solutions for your business growth.",
+            stat: "50+",
+            label: "Experts",
+            accent: "border-[#00C49A] text-[#00C49A]"
+        },
+        {
+            icon: <Clock className="w-7 h-7" />,
+            title: "On-Time Delivery",
+            description: "98% projects delivered on time. Your deadlines are our priority with guaranteed project completion.",
+            stat: "98%",
+            label: "Success Rate",
+            accent: "border-[#00C49A] text-[#00C49A]"
+        },
+        {
+            icon: <IndianRupee className="w-7 h-7" />,
+            title: "Best Pricing",
+            description: "Premium quality at competitive rates. Get 40% more value compared to other agencies in market.",
+            stat: "40%",
+            label: "Cost Saving",
+            accent: "border-[#00C49A] text-[#00C49A]"
+        },
+        {
+            icon: <Headphones className="w-7 h-7" />,
+            title: "24/7 Support",
+            description: "Round-the-clock technical support and maintenance. We're always available when you need us.",
+            stat: "24 hours",
+            label: "Available",
+            accent: "border-[#00C49A] text-[#00C49A]"
+        },
+        {
+            icon: <Zap className="w-7 h-7" />,
+            title: "Latest Tech",
+            description: "Cutting-edge technology stack and modern frameworks to build future-ready scalable solutions.",
+            stat: "100%",
+            label: "Modern Stack",
+            accent: "border-[#00C49A] text-[#00C49A]"
+        },
+        {
+            icon: <Trophy className="w-7 h-7" />,
+            title: "Proven Results",
+            description: "150+ successful projects with 99% client satisfaction rate and industry-leading performance.",
+            stat: "150+",
+            label: "Projects Done",
+            accent: "border-[#00C49A] text-[#00C49A]"
+        }
+    ];
+
+
+
     return (
-        <section className="bg-[#0a0a0a] text-white relative overflow-hidden">
-            {/* Warm gradient glow at top */}
-            <div
-                className="absolute top-0 left-0 right-0 h-64 pointer-events-none"
-                style={{ background: 'radial-gradient(ellipse 80% 100% at 50% 0%, rgba(120,60,10,0.18) 0%, transparent 70%)' }}
-            />
+        <section className="py-10 md:py-16 px-6 bg-white text-black relative">
 
-            {/* Subtle grain texture overlay */}
-            <div
-                className="absolute inset-0 opacity-[0.03] pointer-events-none"
-                style={{
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
-                    backgroundSize: '200px 200px',
-                }}
-            />
+            <div className="max-w-7xl mx-auto relative z-10">
 
-            {/* Scrolling marquee strip at top */}
-            <div className="relative overflow-hidden border-b border-white/10 py-4">
-                <div className="flex animate-marquee-dark whitespace-nowrap">
-                    {[...marqueeText, ...marqueeText].map((text, i) => (
-                        <span
-                            key={i}
-                            className="inline-flex items-center gap-4 mx-8 text-white/50 text-sm font-semibold tracking-widest uppercase select-none"
+                <HeadText title="We Don't Just Code, We Create Success" icon={<Shield className="w-4 h-4" />} icontitle="  WHY CHOOSE CODEXPRIME"
+                    description="150+ businesses trust us for their digital transformation.
+                        Here's why we're the right choice for your next project." />
+
+
+                {/* Benefits Grid */}
+                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 md:gap-6 mb-10">
+                    {benefits.map((benefit, index) => (
+                        <div
+                            key={index}
+                            className="group p-4 sm:p-5 border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:bg-gray-50"
                         >
-                            <span className="w-1 h-1 rounded-full bg-white/30 flex-shrink-0" />
-                            {text}
-                        </span>
-                    ))}
-                </div>
-            </div>
-
-            <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-20 md:py-28">
-                {/* Header */}
-                <motion.div {...fadeUp} className="text-center mb-16">
-                    <span className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white/70 text-xs font-semibold tracking-widest uppercase px-4 py-2 rounded-full mb-5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-white/60 inline-block" />
-                        Why Choose CodeXprime
-                    </span>
-                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white leading-tight tracking-tight max-w-3xl mx-auto">
-                        We Don&apos;t Just Code &mdash;{' '}
-                        <span className="text-white/50">We Create Success</span>
-                    </h2>
-                    <p className="text-white/50 mt-4 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
-                        150+ businesses trust us for their digital transformation. Here&apos;s why we&apos;re the right choice.
-                    </p>
-                </motion.div>
-
-                {/* Stats grid */}
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mb-12">
-                    {stats.map((stat, i) => (
-                        <motion.div
-                            key={i}
-                            initial={{ opacity: 0, y: 24 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: '-30px' }}
-                            transition={{ duration: 0.5, delay: i * 0.08, ease: 'easeOut' }}
-                            className={`bg-white/5 border border-white/10 rounded-2xl p-5 text-center hover:bg-white/10 transition-all duration-300 ${stat.glow}`}
-                        >
-                            <div className={`text-3xl sm:text-4xl font-black mb-1 leading-none ${stat.color}`}>
-                                <CountUp
-                                    end={stat.value}
-                                    duration={2.2}
-                                    suffix={stat.suffix}
-                                    enableScrollSpy
-                                    scrollSpyOnce
-                                />
+                            {/* Header with icon and stat */}
+                            <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4 gap-4 md:gap-5">
+                                <div className="flex items-center gap-2">
+                                    <div className="text-[#00C49A] bg-[rgba(0,196,154,0.1)] p-2">
+                                        {benefit.icon}
+                                    </div>
+                                    <h3 className="text-[15px] sm:text-base font-semibold text-black leading-tight">
+                                        {benefit.title}
+                                    </h3>
+                                </div>
+                                <div className={`text-left md:text-right border-l-2 pl-3 ${benefit.accent}`}>
+                                    <div className="text-lg font-bold">
+                                        <CountUp
+                                            end={parseInt(benefit.stat.replace(/[^0-9]/g, '')) || 0}
+                                            duration={2.5}
+                                            suffix={benefit.stat.replace(/[0-9]/g, '')}
+                                            enableScrollSpy
+                                            scrollSpyOnce
+                                        />
+                                    </div>
+                                    <div className="text-xs text-gray-500">{benefit.label}</div>
+                                </div>
                             </div>
-                            <div className="text-white/70 text-xs font-semibold leading-snug">{stat.label}</div>
-                        </motion.div>
+
+                            <p className="text-gray-600 text-xs md:text-sm leading-relaxed mb-4">
+                                {benefit.description}
+                            </p>
+
+                            {/* Bottom indicator */}
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-1.5 text-[#00C49A] text-xs md:text-sm font-medium">
+                                    <CheckCircle className="w-4 h-4" />
+                                    <span>Guaranteed</span>
+                                </div>
+                                <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-black group-hover:translate-x-1 transition-all duration-200" />
+                            </div>
+                        </div>
                     ))}
                 </div>
+
+
+
+
+
+
             </div>
         </section>
     );

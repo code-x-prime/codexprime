@@ -35,14 +35,14 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
-
+    
     /* Satoshi Font Variables */
     --font-satoshi-regular: 'Satoshi Regular', sans-serif;
     --font-satoshi-medium: 'Satoshi Medium', sans-serif;
     --font-satoshi-bold: 'Satoshi Bold', sans-serif;
     --font-satoshi-black: 'Satoshi Black', sans-serif;
   }
-
+  
   .dark {
     --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
@@ -72,172 +72,73 @@
 }
 
 @layer base {
-  html {
-    scroll-behavior: smooth;
-    background-color: #f7f7f8;
-    background-image: radial-gradient(circle, #c2c2c8 1px, transparent 1px);
-    background-size: 28px 28px;
-  }
-
   * {
     @apply border-border;
   }
-
   body {
-    background: transparent;
-    font-family: var(--font-satoshi-regular);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    color: #0a0a0a;
+    @apply bg-background text-foreground font-satoshi-regular;
   }
-
-  /* Satoshi Font Classes */
+  
+  /* Satoshi Font Classes for easy usage */
   .font-satoshi-regular {
     font-family: var(--font-satoshi-regular);
     font-weight: 400;
   }
-
+  
   .font-satoshi-medium {
     font-family: var(--font-satoshi-medium);
     font-weight: 500;
   }
-
+  
   .font-satoshi-bold {
     font-family: var(--font-satoshi-bold);
     font-weight: 700;
   }
-
+  
   .font-satoshi-black {
     font-family: var(--font-satoshi-black);
     font-weight: 900;
   }
-
+  
+  /* Headings default to different Satoshi weights */
   h1 {
     @apply font-satoshi-black;
   }
-
+  
   h2 {
-    @apply font-satoshi-bold;
+    @apply font-satoshi-bold ;
   }
-
+  
   h3 {
-    @apply font-satoshi-bold;
+    @apply font-satoshi-bold ;
   }
-
+  
   h4 {
-    @apply font-satoshi-medium;
+    @apply font-satoshi-medium ;
   }
-
+  
   h5 {
     @apply font-satoshi-medium;
   }
-
+  
   h6 {
     @apply font-satoshi-medium;
   }
-
+  
+  /* Utility classes for quick font switching */
   .heading-primary {
     @apply font-satoshi-black;
   }
-
+  
   .heading-secondary {
     @apply font-satoshi-bold;
   }
-
+  
   .text-body {
     @apply font-satoshi-regular;
   }
-
+  
   .text-caption {
-    @apply font-satoshi-medium;
+    @apply font-satoshi-medium ;
   }
-
-  /* Scroll margin for sticky header offset */
-  section[id] {
-    scroll-margin-top: 5rem;
-  }
-}
-
-/* ─── Marquee animation ─── */
-@keyframes marquee-left {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-@keyframes marquee-right {
-  0% {
-    transform: translateX(-50%);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
-
-.animate-marquee {
-  animation: marquee-left 30s linear infinite;
-  will-change: transform;
-}
-
-.animate-marquee-reverse {
-  animation: marquee-right 30s linear infinite;
-  will-change: transform;
-}
-
-.animate-marquee:hover,
-.animate-marquee-reverse:hover {
-  animation-play-state: paused;
-}
-
-/* ─── Dark section marquee ─── */
-.animate-marquee-dark {
-  animation: marquee-left 20s linear infinite;
-  will-change: transform;
-}
-
-/* ─── Dot grid background ─── */
-.bg-dot-grid {
-  background-image: radial-gradient(circle, #d1d5db 1px, transparent 1px);
-  background-size: 24px 24px;
-}
-
-/* ─── Subtle grid lines background ─── */
-.bg-grid-lines {
-  background-image:
-    linear-gradient(rgba(0, 0, 0, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.035) 1px, transparent 1px);
-  background-size: 72px 72px;
-}
-
-/* ─── Animated blob ─── */
-@keyframes blob-float {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  25%       { transform: translate(20px, -30px) scale(1.05); }
-  50%       { transform: translate(-15px, 20px) scale(0.97); }
-  75%       { transform: translate(25px, 10px) scale(1.03); }
-}
-.animate-blob {
-  animation: blob-float 10s ease-in-out infinite;
-  will-change: transform;
-}
-.animation-delay-2 { animation-delay: 2s; }
-.animation-delay-4 { animation-delay: 4s; }
-.animation-delay-6 { animation-delay: 6s; }
-
-/* ─── Section spacing utility ─── */
-.section-padding {
-  @apply py-20 md:py-28 px-4 sm:px-6;
-}
-
-/* ─── Subtle card hover lift ─── */
-.card-hover {
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.card-hover:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
 }
