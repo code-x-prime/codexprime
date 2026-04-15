@@ -1,0 +1,96 @@
+[33mab56d7a[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m HEAD@{0}: reset: moving to HEAD~1
+[33m13418ac[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{1}: commit: feat: add Portfolio component to display project showcases with interactive cards
+[33mab56d7a[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m HEAD@{2}: commit: ci: update deployment workflow for improved SSH handling and branch support
+[33m578963b[m HEAD@{3}: commit: ci: remove on-any-push workflow file to streamline CI configuration
+[33m3de9cf0[m HEAD@{4}: commit: ci: refine deployment workflow to ensure compatibility with both main and master branches, enhancing SSH deployment process
+[33m8ee5e08[m HEAD@{5}: commit: ci: add workflow files for push trigger
+[33m41ae038[m HEAD@{6}: commit: ci: add deployment workflow for VPS with SSH, supporting main and master branches
+[33mbf87ab5[m HEAD@{7}: commit: ci: remove outdated deployment and push test workflows
+[33m690136b[m HEAD@{8}: commit: ci: trigger deploy workflow
+[33mfaa7cc6[m HEAD@{9}: commit: ci: enhance push trigger workflow to include detailed logging of branch names and improve clarity of trigger functionality
+[33m3ba3782[m HEAD@{10}: commit: test
+[33m904efb8[m HEAD@{11}: commit: ci: modify push trigger workflow to log branch name for all pushes and clarify trigger functionality
+[33m973ba28[m HEAD@{12}: commit: ci: update deployment configuration to enhance trigger options and streamline workflow
+[33mda7516b[m HEAD@{13}: commit: ci: trigger deploy run
+[33mfb028ea[m HEAD@{14}: commit: feat: update deployment workflow to support both main and master branches, and allow manual triggering via workflow_dispatch
+[33m5dcddcf[m HEAD@{15}: commit: feat: update navigation and footer components to include blog link with correct URL structure
+[33m7393fa4[m HEAD@{16}: commit: refactor: streamline PostHog initialization by enhancing session recording logic and improving code clarity
+[33m4d5378b[m HEAD@{17}: commit: refactor: update PostHog initialization to use the posthog object directly, improving clarity and consistency in session recording logic
+[33mc3113fb[m HEAD@{18}: commit: refactor: simplify the loaded callback in PostHog initialization by removing type annotation
+[33m24044c4[m HEAD@{19}: commit: feat: update configuration and dependencies, enhance layout with smooth scrolling, and improve service and portfolio sections with new projects and animations
+[33m2d07061[m HEAD@{20}: commit: feat: update configuration and enhance components with new features, including additional CORS origin, improved animations, and new service and portfolio entries
+[33mc6c9e8d[m HEAD@{21}: commit: feat: Add robots.txt, implement a new root layout with comprehensive SEO metadata and analytics scripts, and remove the react-snowfall dependency.
+[33mf7de43a[m HEAD@{22}: commit: add snow fall effect
+[33mc50a11a[m HEAD@{23}: commit: feat: Add Google Ads conversion tracking utilities and integrate into a new thank you page.
+[33ma0e291a[m HEAD@{24}: commit: feat: implement Google Ads conversion tracking with a new component and gtag utilities, integrating it into the thank-you page.
+[33m0c13610[m HEAD@{25}: commit: refactor: clean up layout.tsx by standardizing import statements and improving metadata formatting
+[33mcf67acb[m HEAD@{26}: commit: refactor: remove unused components and optimize layout structure
+[33m6fdfb67[m HEAD@{27}: commit: feat: implement CORS handling and enhance POST request validation
+[33m6061f3c[m HEAD@{28}: commit: refactor: remove CORS handling and streamline email configuration
+[33mfa3187e[m HEAD@{29}: commit: refactor: streamline CORS handling and enhance email templates for clarity
+[33m62c696f[m HEAD@{30}: commit: fix: ensure SMTP transporter configuration has secure option set to false
+[33m7de0938[m HEAD@{31}: commit: fix: remove secure option from SMTP transporter configuration
+[33m1604377[m HEAD@{32}: commit: fix: update SMTP transporter configuration to use fixed host and port values
+[33m88bca75[m HEAD@{33}: commit: refactor: update SMTP transporter configuration and enhance email templates for consistency
+[33mf97f7da[m HEAD@{34}: commit: feat: refactor email sending logic to use parallel processing and update template comments
+[33m9f798d7[m HEAD@{35}: commit: feat: enhance email templates and update CORS configuration for improved functionality
+[33m5d2e7fc[m HEAD@{36}: commit: feat: add Google Ads tracking script for enhanced advertising analytics
+[33m93d6958[m HEAD@{37}: commit: fix: update CORS allowed origins to match production environment
+[33mb896305[m HEAD@{38}: commit: feat: implement CORS support in API routes and remove PostHogDebug component
+[33m4ca338c[m HEAD@{39}: commit: feat: add additional Meta Pixel tracking for enhanced analytics
+[33m8d4d512[m HEAD@{40}: commit: feat: add PostHogEmergencyDebug component for enhanced session recording monitoring and troubleshooting
+[33m1700041[m HEAD@{41}: commit: fix: remove unnecessary whitespace in PostHog initialization for cleaner code
+[33ma83a132[m HEAD@{42}: commit: feat: implement force start for session recording and enhance production logging
+[33m12405a3[m HEAD@{43}: commit: feat: enhance session recording setup with localhost support and detailed troubleshooting steps
+[33m7b60dde[m HEAD@{44}: commit: feat: improve PostHog initialization logging and configuration clarity
+[33maede092[m HEAD@{45}: commit: feat: remove outdated PostHog setup guide and add comprehensive session replay setup instructions
+[33mc0d02bd[m HEAD@{46}: commit: feat: update PostHog host to use the new default URL for initialization
+[33m1f4bc1a[m HEAD@{47}: commit: feat: update PostHog initialization with explicit UI host and enhanced configuration options
+[33ma8e69ea[m HEAD@{48}: commit: feat: update PostHog initialization for improved logging and automatic session recording
+[33me68ff61[m HEAD@{49}: commit: feat: enhance PostHog configuration logging and session recording settings
+[33m56d8291[m HEAD@{50}: commit: feat: add PostHogDebug component for session recording controls and status monitoring
+[33mc522ae9[m HEAD@{51}: commit: fix: disable debug mode and improve logging for PostHog initialization
+[33m43be100[m HEAD@{52}: commit: feat: enable automatic pageview capture and add debug logging for PostHog initialization
+[33mbc3250d[m HEAD@{53}: commit: feat: integrate PostHog analytics for enhanced tracking across components
+[33md248135[m HEAD@{54}: commit: fix: update contact phone number in layout
+[33m74b9162[m HEAD@{55}: commit: fix: update contact phone number in layout and remove Google verification section
+[33m38b391f[m HEAD@{56}: commit: feat: enhance Meta Pixel integration with preconnect and improved loading strategy
+[33m9c8352a[m HEAD@{57}: commit: fix: update Meta Pixel integration to use raw HTML for noscript tag
+[33m7b15f5c[m HEAD@{58}: commit: udpate tag
+[33m151035e[m HEAD@{59}: commit: feat: add Meta Pixel integration for enhanced tracking
+[33ma7feef7[m HEAD@{60}: commit: fix: update contact phone number across multiple components
+[33m0ef3887[m HEAD@{61}: commit: feat: integrate Google Analytics for improved tracking and analytics
+[33m0aab601[m HEAD@{62}: commit: feat: integrate Google Tag Manager for enhanced tracking
+[33mf568e17[m HEAD@{63}: commit: refactor: remove outdated FAQ question about website development timeline
+[33m954445e[m HEAD@{64}: commit: fix: adjust padding for About page layout
+[33m3e2df3b[m HEAD@{65}: commit: feat: add Testimonials component to About page
+[33m2a40bc8[m HEAD@{66}: commit: feat: enhance Testimonials component with detailed client feedback and carousel functionality
+[33mb0949e5[m HEAD@{67}: commit: refactor: remove HighlightsBlogs component and related blog API functions
+[33m7a58ad1[m HEAD@{68}: commit: refactor: remove commented-out blog page and post page components
+[33m2ed9093[m HEAD@{69}: commit: Refactor: Comment out image optimization script and blog components
+[33mca9e1fb[m HEAD@{70}: commit: refactor: comment out HighlightsBlogs component and Blog navigation link
+[33m2ba7b58[m HEAD@{71}: commit: feat: update blog API fetch logic for improved error handling and default URL
+[33me2b8511[m HEAD@{72}: commit: feat: add HighlightsBlogs component to display featured blog posts
+[33m0dd2845[m HEAD@{73}: commit: feat: update base URL to use production site for robots and sitemap
+[33m24d029b[m HEAD@{74}: commit: feat: Enhance SEO and sitemap functionality
+[33m66ff594[m HEAD@{75}: commit: feat: restructure ServicesPage to consolidate process information and remove redundant quick facts section
+[33mbead5d0[m HEAD@{76}: commit: feat: add robots.txt and sitemap.xml for SEO optimization
+[33mb072274[m HEAD@{77}: commit: feat: add robots and sitemap generation for SEO optimization
+[33m7eef924[m HEAD@{78}: commit: feat: move Analytics component to render within the body of RootLayout
+[33m79514cf[m HEAD@{79}: commit: feat: add Vercel Analytics integration and update package dependencies
+[33m3f42222[m HEAD@{80}: commit: feat: integrate toast notifications and add age field to contact forms
+[33m6d54946[m HEAD@{81}: commit: feat: Update Hero, Faq, ServicesSection, Testimonials, and various pages with new content and styles; enhance layout and accessibility
+[33m9cd4151[m HEAD@{82}: commit: update code
+[33m22653a0[m HEAD@{83}: commit: feat: Add FAQ, Portfolio, Process, Testimonials, and Why Choose Us sections
+[33md8ecf38[m HEAD@{84}: commit: Add HeadText and ServicesSection components for service offerings display
+[33mc94a746[m HEAD@{85}: commit: feat: add FloatingContactButton component with call and WhatsApp functionality; update video source in HeroComponent
+[33mf4539e4[m HEAD@{86}: commit: style: enhance layout and accessibility in HeroComponent, update text and input styles
+[33mcea2a4c[m HEAD@{87}: commit: Trigger Vercel deploy (author: code-x-prime)
+[33m317a414[m HEAD@{88}: commit: style: update input fields to change background color on focus in HeroComponent
+[33mf5cd285[m HEAD@{89}: commit: style: update button hover color in HeroComponent
+[33m012ffc4[m HEAD@{90}: commit: feat: implement HeroComponent with form validation and submission handling
+[33m1e38577[m HEAD@{91}: commit: feat: add ThemeProvider component and Button component with variants
+[33m06f61e2[m HEAD@{92}: commit: update code
+[33mbdeb241[m HEAD@{93}: Branch: renamed refs/heads/master to refs/heads/main
+[33mbdeb241[m HEAD@{95}: commit: first commit
+[33m3dfb6fd[m HEAD@{96}: commit (initial): Initial commit from Create Next App
